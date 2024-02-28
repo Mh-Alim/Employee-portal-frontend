@@ -13,25 +13,18 @@ const Login = () => {
   return (
     <div className="min-h-[100vh] p-10 sm:p-5 flex justify-center items-center  bg-[#3E3E66]  ">
       {/*  */}
-      <div className=" gap-7 p-5 sm:p-5 bg-[#0F102B] flex flex-col sm:flex-row justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
-        <section className=" p-10  flex justify-center items-center  bg-glassmorphism  flex-col  shadow-slate-400 text-white  shadow-lg min-h-[50vh] max-w-96 sm:w-96   rounded-lg ">  
-          <h1 className=" text-center text-4xl " > Employee Portal </h1>
-          <p className= " mt-10 text-center " >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur est quas excepturi, asperiores assumenda alias,
-            
-          </p>
-        </section>
-        <main className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[50vh] p-10 rounded-lg ">
-          <h1 className="  text-center uppercase tracking-wide font-medium text-3xl ">
-            Login
-          </h1>
+      <div className=" gap-7 p-5 sm:p-5 bg-[#0F102B] flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
+        <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
+          Login
+        </h1>
+        <main className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg ">
           <br />
-          <label htmlFor="email">Email</label>
+          {/* <label htmlFor="email">Email</label> */}
           <input
             className="mb-5 w-full p-2 outline-none border-2 bg-[#434459] border-slate-500 rounded-sm"
             id="email"
             type="email"
+            placeholder="Email"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTextFields((prev: TextFieldsType) => ({
                 ...prev,
@@ -40,11 +33,12 @@ const Login = () => {
             }
           />
           <br />
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             className="mb-5 p-2 w-full  outline-none border-2 bg-[#434459] border-slate-500 rounded-sm"
             id="password"
             type="password"
+            placeholder="Password"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTextFields((prev: TextFieldsType) => ({
                 ...prev,

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 type TextFieldsType = {
-  gender: string;
-  dob: String;
+  email: string;
+  password: String;
 };
 const Login = () => {
   const [textFields, setTextFields] = useState<TextFieldsType>({
-    gender: "",
-    dob: "",
+    email: "",
+    password: "",
   });
   return (
     <div className="min-h-[100vh] p-10 sm:p-5 flex justify-center items-center  bg-[#3E3E66]  ">
@@ -28,7 +28,7 @@ const Login = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTextFields((prev: TextFieldsType) => ({
                 ...prev,
-                dob: e.target.value,
+                email: e.target.value,
               }))
             }
           />
@@ -42,7 +42,7 @@ const Login = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTextFields((prev: TextFieldsType) => ({
                 ...prev,
-                dob: e.target.value,
+                password: e.target.value,
               }))
             }
           />

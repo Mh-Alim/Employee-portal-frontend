@@ -1,6 +1,17 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+*{ 
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
 
 @layer utilities {
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -12,4 +23,36 @@
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
     }
+
+    .timeline::before{
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(148 163 184 /1);
+        
+        top: -0.3rem;
+        border-radius: 100%;
+        transform: translateX(-30%);
+        
+    }
+    .timeline::after{
+        content: '';
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background-color: #0D1117;
+        
+        top: -0.23rem;
+        border-radius: 100%;
+        transform: translateX(-25%);
+    }
+
+
+    .button-shadow {
+        box-shadow: 0px 0px 40px 0px #08924F;
+    }
+   
+
+    
 }

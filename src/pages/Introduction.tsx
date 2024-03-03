@@ -7,7 +7,7 @@ const About = () => {
     <div className="min-h-full  ">
       <div className=" w-full pl-10 md:pl-16  pt-52  lg:p-52 relative  ">
         <img
-          className=" w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left  absolute right-0 top-0 z-10 "
+          className=" w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left  absolute right-0 top-14 z-10 "
           src="https://github.githubassets.com/assets/hero-desktop-a38b0fd77b6c.webp"
           alt=""
         />
@@ -101,7 +101,7 @@ const TreeCard = () => {
         <p className=" text-4xl font-semibold tracking-wider ">
           <span className=" text-[#08924F]  ">Organization</span> Tree View
         </p>
-        <div className="  mt-10 h-96 bg-glassmorphism flex justify-between flex-col sm:flex-row lg:w-3/4  ">
+        <div className="  mt-10 h-96 bg-glassmorphism flex justify-between flex-col sm:flex-row lg:w-3/4``  ">
           <div className="   rounded-lg p-5 h-1/2  sm:w-1/2 sm:h-full sm:flex sm:flex-col sm:justify-between  ">
             <p className=" text-md text-slate-400 text-xl ">
               {" "}

@@ -10,9 +10,11 @@ import AddEmployee from "./pages/AddEmployee";
 import SearchEmployee from "./pages/SearchEmployee";
 import OrganizationTreeView from "./pages/OrganizationTreeView";
 import About from "./pages/Introduction";
+import Navbar from "./components/Navbar";
 const App = () => {
   const dispatch = useAppDispatch();
   const val = useAppSelector((state) => state.count.value);
+
   return (
     <div className=" ">
       {/* App
@@ -27,6 +29,7 @@ const App = () => {
       <AddEmployee /> */}
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
+      <Navbar />/
       <About />
     </div>
   );

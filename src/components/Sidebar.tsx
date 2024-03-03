@@ -18,7 +18,7 @@ import { FiLogOut } from "react-icons/fi";
 const dashboardLiData = [
   {
     text: "Profile",
-    url: "/profile",
+    url: "/user/profile",
     Icon: <CgProfile />,
   },
   {
@@ -54,7 +54,7 @@ const Sidebar = () => {
       <div
         className={` -translate-x-80 md:-translate-x-0 transition-all duration-500 ${
           show ? "translate-x-0" : ""
-        } w-72 p-5 h-[100vh] text-white absolute md:relative md:z-50 top-0 left-0  bg-slate-800 overflow-y-scroll `}
+        } w-72 p-5 h-[100vh] text-white absolute md:relative z-50 top-0 left-0  bg-slate-800 overflow-y-scroll `}
       >
         <h1 className=" flex justify-between items-center  mb-5 font-medium text-2xl  ">
           <p className=" uppercase tracking-widest font-work_sans ">Eportal</p>

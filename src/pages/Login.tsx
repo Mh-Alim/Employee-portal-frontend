@@ -1,14 +1,36 @@
 import React, { useState } from "react";
 
 type TextFieldsType = {
-  email: string;
+  user_name: string;
   password: String;
 };
+
 const Login = () => {
   const [textFields, setTextFields] = useState<TextFieldsType>({
-    email: "",
+    user_name: "",
     password: "",
   });
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(textFields), // Convert data to JSON string
+      };
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        options
+      );
+      const json = await res.json();
+      localStorage.setItem("token", json.data);
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
   return (
     <div className="min-h-[100vh] p-10 sm:p-5 flex justify-center items-center  bg-[#3E3E66]  ">
       {/*  */}
@@ -16,7 +38,10 @@ const Login = () => {
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
           Login
         </h1>
-        <main className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg ">
+        <form
+          onSubmit={submitHandler}
+          className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
+        >
           <br />
           {/* <label htmlFor="email">Email</label> */}
           <input
@@ -27,7 +52,7 @@ const Login = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTextFields((prev: TextFieldsType) => ({
                 ...prev,
-                email: e.target.value,
+                user_name: e.target.value,
               }))
             }
           />
@@ -46,11 +71,14 @@ const Login = () => {
             }
           />
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
-            <p className=" px-10  py-2 text-slate-500 bg-white-500 bg-white rounded-3xl ">
+            <button
+              type="submit"
+              className=" px-10  py-2 text-slate-500 bg-white-500 bg-white rounded-3xl "
+            >
               Log in
-            </p>
+            </button>
           </div>
-        </main>
+        </form>
       </div>
     </div>
   );

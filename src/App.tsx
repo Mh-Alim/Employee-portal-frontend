@@ -14,6 +14,8 @@ import Navbar from "./components/Navbar";
 import { Link, Route, Routes } from "react-router-dom";
 import Introduction from "./pages/Introduction.tsx";
 import Sidebar from "./components/Sidebar.tsx";
+import Profile from "./pages/Profile.tsx";
+import Logout from "./pages/Logout.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +51,8 @@ const App = () => {
         <Route path="/user" element={<Sidebar />} >
           <Route path="search" element={<SearchEmployee />} />
           <Route path="tree-view" element={<OrganizationTreeView />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
       </Routes>
     </div>

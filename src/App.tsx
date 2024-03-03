@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import AddEmployee from "./pages/AddEmployee";
 import SearchEmployee from "./pages/SearchEmployee";
 import OrganizationTreeView from "./pages/OrganizationTreeView";
-import About from "./pages/About";
+import About from "./pages/Introduction";
 const App = () => {
   const dispatch = useAppDispatch();
   const val = useAppSelector((state) => state.count.value);

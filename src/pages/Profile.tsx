@@ -4,7 +4,7 @@ const Profile = () => {
   const [showDetials, setShowDetails] = useState(true);
   return (
     <div className=" p-5 w-full h-[100vh] text-white flex justify-center flex-col items-center overflow-y-scroll ">
-      <div className=" w-full sm:w-8/12 md:w-11/12 h-5/6 bg-slate-600 rounded-lg ">
+      <div className=" w-full sm:w-8/12 md:w-11/12 lg:w-8/12  h-5/6 bg-slate-600 rounded-lg ">
         <div className=" w-full h-1/3 bg-slate-800 rounded-t-lg  "></div>
         <p className=" flex justify-center items-center  ">
           <img

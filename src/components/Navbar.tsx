@@ -6,7 +6,7 @@ const Navbar = () => {
     x.classList.toggle("hidden");
   }
   return (
-    <nav className="bg-white border-gray-200 dark:bg-[#0D1117]  absolute w-full z-30 ">
+    <nav className="bg-white border-gray-200 dark:bg-[#0D1117]  fixed w-full z-30 top-0 ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a
           href="https://flowbite.com/"

@@ -10,8 +10,8 @@ const SearchEmployee = () => {
     e.preventDefault();
   };
   return (
-    <div className=" bg-slate-200  h-[100vh] w-full flex justify-center items-center  ">
-      <main className=" m-3  w-11/12 md:w-9/12 lg:w-7/12 bg-white rounded-lg   p-5 ">
+    <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center  ">
+      <main className=" m-3  w-10/12 sm:w-9/12 lg:w-10/12 bg-white rounded-lg   p-5 ">
         {/* search */}
         <form
           onSubmit={submitHandler}

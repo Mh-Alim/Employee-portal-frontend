@@ -11,6 +11,10 @@ import SearchEmployee from "./pages/SearchEmployee";
 import OrganizationTreeView from "./pages/OrganizationTreeView";
 import About from "./pages/Introduction";
 import Navbar from "./components/Navbar";
+import { Link, Route, Routes } from "react-router-dom";
+import Introduction from "./pages/Introduction.tsx";
+import Sidebar from "./components/Sidebar.tsx";
+
 const App = () => {
   const dispatch = useAppDispatch();
   const val = useAppSelector((state) => state.count.value);
@@ -29,8 +33,24 @@ const App = () => {
       <AddEmployee /> */}
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
-      <Navbar />/
-      <About />
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Introduction />
+            </>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/tree-view" element={<OrganizationTreeView />} />
+        <Route path="/user" element={<Sidebar />} >
+          <Route path="search" element={<SearchEmployee />} />
+          <Route path="tree-view" element={<OrganizationTreeView />} />
+        </Route>
+      </Routes>
     </div>
   );
 };

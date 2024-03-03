@@ -4,21 +4,28 @@ import { useCenteredTree } from "../customHook/useCenteredTree";
 
 const orgChartJson = {
   name: "CEO",
+  attributes: {
+    department: "sdhfkh",
+    // isVisible: "false",
+  },
   children: [
     {
       name: "Manager",
       attributes: {
         department: "Production",
+        // isVisible: "false"
       },
       children: [
         {
           name: "Foreman",
           attributes: {
             department: "Fabrication",
+            // isVisible: "false",
           },
           children: [
             {
               name: "Workers",
+              // isVisible: "false",
             },
           ],
         },
@@ -79,37 +86,46 @@ const img1 =
 const renderRectSvgNode = ({
   nodeDatum,
   toggleNode,
-}: CustomNodeElementProps) => (
-  <g width="1000px">
-    {/* <circle r="10" fill="blue" onClick={toggleNode} /> */}
-    <foreignObject x="-25" y="-10" width="300px" height="400px">
-      <div className=" relative flex gap-5 group ">
-        <img
-          className=" z-0 rounded-full w-10 h-10 object-cover "
-          src={img1}
-          onClick={toggleNode}
-        />
-
-        <div className=" relative z-50 bg-slate-200 p-5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500  ">
-          <p>{nodeDatum.name}</p>
-          {nodeDatum.attributes && (
-            <p> Department: {nodeDatum.attributes?.department} </p>
-          )}
-        </div>
-      </div>
-    </foreignObject>
-
-    <text fill="black" strokeWidth="1" x="30">
+}: CustomNodeElementProps) => {
+  console.log("nodeDatumn: ", nodeDatum);
+  return (
+    <g width="1000px">
+      {/* <circle r="10" fill="blue" onClick={toggleNode} /> */}
       <foreignObject x="-25" y="-10" width="300px" height="400px">
-        <div className=" relative z-50 bg-slate-200 p-5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500  ">
-          <p>{nodeDatum.name}</p>
-          {nodeDatum.attributes && (
-            <p> Department: {nodeDatum.attributes?.department} </p>
-          )}
+        <div
+          className={` relative flex gap-5 group ${
+            nodeDatum?.attributes?.isVisible && "hidden"
+          } `}
+        >
+          <img
+            className=" z-0 rounded-full w-10 h-10 object-cover "
+            src={img1}
+            onClick={toggleNode}
+          />
+
+          <div className=" relative z-50 bg-slate-200 p-5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500  ">
+            <p>{nodeDatum.name}</p>
+            {nodeDatum.attributes && (
+              <>
+                <p> Department: {nodeDatum.attributes?.department} </p>
+                <p> isVisible : {nodeDatum.attributes?.isVisible} </p>
+              </>
+            )}
+          </div>
         </div>
       </foreignObject>
-    </text>
-    {/* <text fill="black" strokeWidth="1" x="30">
+
+      <text fill="black" strokeWidth="1" x="30">
+        <foreignObject x="-25" y="-10" width="300px" height="400px">
+          <div className=" relative z-50 bg-slate-200 p-5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500  ">
+            <p>{nodeDatum.name}</p>
+            {nodeDatum.attributes && (
+              <p> Department: {nodeDatum.attributes?.department} </p>
+            )}
+          </div>
+        </foreignObject>
+      </text>
+      {/* <text fill="black" strokeWidth="1" x="30">
       {nodeDatum.name}
     </text>
     {nodeDatum.attributes?.department && (
@@ -117,13 +133,14 @@ const renderRectSvgNode = ({
         Department: {nodeDatum.attributes?.department}
       </text>
     )} */}
-  </g>
-);
+    </g>
+  );
+};
 
 export default function OrganizationTreeView() {
   const [dimension, translate, containerRef] = useCenteredTree();
   return (
-    <div style={containerStyles} ref={containerRef}>
+    <div className=" w-full "  style={containerStyles} ref={containerRef}>
       <Tree
         data={orgChartJson}
         translate={translate}

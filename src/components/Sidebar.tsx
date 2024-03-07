@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FaPeopleGroup } from "react-icons/fa6";
+import { FaFeather, FaPeopleGroup } from "react-icons/fa6";
 import { FaBagShopping } from "react-icons/fa6";
 import { GrTransaction } from "react-icons/gr";
 import { FaRegChartBar, FaSearch } from "react-icons/fa";
@@ -12,7 +12,7 @@ import { RiCoupon2Line } from "react-icons/ri";
 import { BsCoin } from "react-icons/bs";
 import { Outlet } from "react-router-dom";
 import { RiOrganizationChart } from "react-icons/ri";
-import { CgProfile } from "react-icons/cg";
+import { CgAdd, CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 
 const dashboardLiData = [
@@ -30,6 +30,16 @@ const dashboardLiData = [
     text: "Search",
     url: "/user/search",
     Icon: <FaSearch />,
+  },
+  {
+    text: "Add Employe",
+    url: "/user/add-employee",
+    Icon: <CgAdd/>,
+  },
+  {
+    text: "Feature Request",
+    url: "/user/feature-request",
+    Icon: <FaFeather/>,
   },
   {
     text: "Logout",

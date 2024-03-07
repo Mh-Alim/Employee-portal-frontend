@@ -19,14 +19,7 @@ body {
 }
 
 @layer utilities {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    /* .bg-glassmorphism {
-        background: rgba( 22, 27, 34, 0.25 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 7.5px );
--webkit-backdrop-filter: blur( 7.5px );
-border-radius: 10px;
-    } */
+ 
 
     .timeline::before{
         content: '';
@@ -58,18 +51,23 @@ border-radius: 10px;
     }
 
     .bg-glassmorphism {
-        /* background: rgba( 22, 27, 34, 0.25 );
-box-shadow: 0 8px 32px 0 rgba(28, 55, 107, 0.37);
-backdrop-filter: blur( 7.5px );
--webkit-backdrop-filter: blur( 7.5px );
-border-radius: 10px; */
-
 background: rgba( 106, 106, 209, 0.1 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 20px );
 -webkit-backdrop-filter: blur( 20px );
 border-radius: 10px;
     }
+
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+ 
    
 
     

@@ -1,25 +1,27 @@
-import React, { useState } from "react";
-
-type TextFieldsType = {
-  user_name: string;
-  password: String;
-};
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [textFields, setTextFields] = useState<TextFieldsType>({
-    user_name: "",
-    password: "",
-  });
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+
+      const user_email = emailRef.current?.value;
+      const password = passRef.current?.value;
+      console.log(emailRef, password);
+
+      if (!user_email || !password) return alert("Fill the form");
+
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(textFields), // Convert data to JSON string
+        body: JSON.stringify({ user_email, password }), // Convert data to JSON string
       };
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/login`,
@@ -27,7 +29,9 @@ const Login = () => {
       );
       const json = await res.json();
       localStorage.setItem("token", json.data);
+      navigate("/user/profile");
     } catch (err) {
+      alert("some error in login ");
       console.log("err: ", err);
     }
   };
@@ -49,12 +53,7 @@ const Login = () => {
             id="email"
             type="email"
             placeholder="Email"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTextFields((prev: TextFieldsType) => ({
-                ...prev,
-                user_name: e.target.value,
-              }))
-            }
+            ref={emailRef}
           />
           <br />
           {/* <label htmlFor="password">Password</label> */}
@@ -63,12 +62,7 @@ const Login = () => {
             id="password"
             type="password"
             placeholder="Password"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTextFields((prev: TextFieldsType) => ({
-                ...prev,
-                password: e.target.value,
-              }))
-            }
+            ref={passRef}
           />
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button

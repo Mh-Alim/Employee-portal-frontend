@@ -56,6 +56,7 @@ const App = () => {
           <Route path="/tree-view" element={<OrganizationTreeView />} />
           <Route path="/user" element={<Sidebar />}>
             <Route path="search" element={<SearchEmployee />} />
+            <Route path="add-employee" element={<AddEmployee />} />
             <Route path="tree-view" element={<TreeTry1 />} />
             <Route path="feature-request" element={<FeatureRequest />} />
             <Route path="profile" element={<Profile />} />

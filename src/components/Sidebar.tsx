@@ -110,9 +110,9 @@ const Li = ({ text, Icon, url, setShow }: LiPropType) => {
     <li
       className={` ${
         location.pathname.includes(url)
-          ? `bg-green-600 text-white`
-          : `bg-slate-200 text-black`
-      }  mb-3 group transition-all rounded-lg  p-3 mt-10 `}
+          ? `bg-green-400`
+          : `bg-[#08924F]`
+      }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 `}
       onClick={() => setShow(false)}
     >
       <Link className=" flex items-center " to={url}>

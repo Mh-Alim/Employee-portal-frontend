@@ -9,22 +9,20 @@ const FeatureRequest = () => {
     console.log(selectVal, textRef.current?.value);
   };
   return (
-    <div className="  dis-bg-red-950 h-[100vh] flex justify-center items-center ">
+    <div className=" bg-[#0D1000] text-white  dis-bg-red-950 h-[100vh] flex justify-center items-center ">
       <form onSubmit={submitHandler} className=" flex flex-col  w-3/5  ">
         <select
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             setSelectVal(e.target.value);
           }}
-          className=" bg-slate-200 p-3 outline-none rounded-lg my-4 "
+          className=" bg-slate-200  my-4 mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent "
           name=""
           id=""
         >
           <option selected value="feedback">
             General Feedback
           </option>
-          <option value="bug">
-            Bug
-          </option>
+          <option value="bug">Bug</option>
           <option value="feature">Feature</option>
         </select>
 
@@ -36,7 +34,7 @@ const FeatureRequest = () => {
           id=""
           cols={30}
           rows={10}
-          className="  p-5 rounded-lg font-work_sans outline-none  "
+          className="  font-work_sans  mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent "
           ref={textRef}
         ></textarea>
         <button

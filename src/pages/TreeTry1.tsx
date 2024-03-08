@@ -4,35 +4,37 @@ import {
   GoogleChartControlOptions,
   GoogleChartOptions,
 } from "react-google-charts";
+import { useAppSelector } from "../app/hooks";
+import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
 
-const getNodeJsx = (id: string, name: string) => {
+const getNodeJsx = (id: string, name: string, designation: string) => {
   return `<div style=" background:"white"; color:"white" ; padding:15px; margin-bottom: 5px ;height:60px;border-radius:100%; display:flex; justify-content:center; align-item:center;flex-direction:column; " >
       <p style="display:none;"> ${id} </p>
       <p style="margin:10px; margin"  >${name}</p>
-      <p style="margin:10px; margin"> ${"Senor Software Engineer"} </p>
+      <p style="margin:10px; margin"> ${designation} </p>
     </div>`;
 };
 
-export const data = [
-  ["", "", ""],
-  [getNodeJsx("sparshId", "Sparsh"), "", "sparshId"],
-  [getNodeJsx("myId", "Alim"), getNodeJsx("sparshId", "Sparsh"), "myId"],
-  [
-    getNodeJsx("alimSubId1", "alimSub1"),
-    getNodeJsx("myId", "Alim"),
-    "alimSubId1",
-  ],
-  [
-    getNodeJsx("alimSubId2", "alimSub2"),
-    getNodeJsx("myId", "Alim"),
-    "alimSubId2",
-  ],
-  [
-    getNodeJsx("alimSubId3", "alimSub3"),
-    getNodeJsx("myId", "Alim"),
-    "alimSubId3",
-  ],
-];
+// export const data = [
+//   ["", "", ""],
+//   [getNodeJsx("sparshId", "Sparsh"), "", "sparshId"],
+//   [getNodeJsx("myId", "Alim"), getNodeJsx("sparshId", "Sparsh"), "myId"],
+//   [
+//     getNodeJsx("alimSubId1", "alimSub1"),
+//     getNodeJsx("myId", "Alim"),
+//     "alimSubId1",
+//   ],
+//   [
+//     getNodeJsx("alimSubId2", "alimSub2"),
+//     getNodeJsx("myId", "Alim"),
+//     "alimSubId2",
+//   ],
+//   [
+//     getNodeJsx("alimSubId3", "alimSub3"),
+//     getNodeJsx("myId", "Alim"),
+//     "alimSubId3",
+//   ],
+// ];
 
 export const options = {
   allowHtml: true,
@@ -40,7 +42,7 @@ export const options = {
   nodeClass:
     "text-white bg-glassmorphism cursor-pointer font-work_sans min-w-[14rem]",
 
-  selectedNodeClass: "bg-red-300",
+  // selectedNodeClass: "bg-red-300",
   size: "medium",
   compactRows: true,
 
@@ -49,71 +51,189 @@ export const options = {
   },
 };
 
-let usersId = ["myId"];
+// let usersId = ["myId"];
+
+// this is the email of the user for which we dont have to do the api call  to get their neightbours data
+
+let usersId = [""];
+
+type ChildType = {
+  user_email: string;
+  first_name: string;
+  designation: string;
+};
+
 const TreeTry1 = () => {
-  const [dummyData, setDummyData] = useState<any>(data);
-  const getMoreData = (id: string, row: number) => {
-    // make api calls and get Data
-    console.log(id);
-    if (usersId.includes(id)) return;
-    else usersId.push(id);
+  const [dummyData, setDummyData] = useState<any>(["","",""]);
 
-    console.log(id, typeof id, typeof usersId[0]);
-    const moreData = {
-      parent: {
-        id: "3439834839834893",
-        name: "Sachin",
+  const mySelf = useAppSelector((state) => state.user);
+
+  // start main thing
+
+  const getNeighboursDetails = async () => {
+    let user_email = getEmailFromLocalStorage();
+    let token = getTokenFromLocalStorage();
+    if (!token || !user_email) {
+      alert("Login to access this resource");
+      return;
+    }
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
       },
-      childs: [
-        { id: "unique1", name: "orjbcljzxhcz1" },
-        { id: "unique2", name: "orsdbfldshbfsjdlfb2" },
-        { id: "unique3", name: "odsbfjhsdfsdljbfsdr3" },
-        { id: "unique4", name: "o,dsbfhsdbfsdr4" },
-        { id: "unique5", name: "orbdsfhbdshfjbds5" },
-        { id: "unique6", name: "bsf,sdfsdbsdb" },
-        { id: "unique7", name: "nbsd,bsd" },
-        { id: "unique8", name: "orbs,fdjbsdbfs,bf8" },
-        { id: "unique9", name: "ojsbfsbfmsbfbsdbfsmr9" },
-      ],
+      body: JSON.stringify({ user_email, requested_user_email: user_email }), // Convert data to JSON string
     };
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/getNeighbours`,
+      options
+    );
+    const json = await res.json();
+    const output = json.data;
 
-    const copyData = [...dummyData];
+    console.log("output: ", output);
 
-    const parentId = moreData.parent.id;
-    if (!usersId.includes(parentId)) {
+    const childs = output.reportee.map((child: ChildType) => {
+      return [
+        getNodeJsx(child.user_email, child.first_name, child.designation),
+        getNodeJsx(
+          user_email ? user_email : "",
+          mySelf.name,
+          mySelf.designation
+        ),
+        child.user_email,
+      ];
+    });
+
+    console.log("name: ", mySelf.name);
+    const firstLevelData = [
+      ["", "", ""],
+      [getNodeJsx(
+        output.manager.user_email,
+        output.manager.first_name,
+        output.manager.designation
+      ),"",output.manager.user_email],
+      [
+        getNodeJsx(user_email, mySelf.name, mySelf.designation),
+        getNodeJsx(
+          output.manager.user_email,
+          output.manager.first_name,
+          output.manager.designation
+        ),
+        user_email,
+      ],
+      ...childs,
+    ];
+    console.log("firstLevelData: ", firstLevelData);
+    setDummyData(firstLevelData);
+  };
+
+  useEffect(() => {
+    // api call to setup first level and me
+
+    console.log("mySelf", mySelf);
+
+    getNeighboursDetails();
+
+    // to restrict neightbours api call
+    usersId.push(mySelf.email);
+  }, [mySelf]);
+
+  // end main thing
+  
+
+  const getNeighboursByEmail = async (id: string,row: number,prev: any) => {
+    
+    let token = getTokenFromLocalStorage();
+    let user_email = id;
+    let requested_user_email = getEmailFromLocalStorage();
+
+    console.log("getNeighboursBgEmail : ",token,user_email,requested_user_email)
+    if (!user_email || !requested_user_email || !token) {
+      alert("Login to access this resource");
+      return;
+    }
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      body: JSON.stringify({ user_email, requested_user_email }), // Convert data to JSON string
+    };
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/getNeighbours`,
+      options
+    );
+    const json = await res.json();
+    const moreData = json.data;
+
+    console.log("more-data: ", user_email, moreData);
+
+    // for parent
+
+    const copyData = [...prev];
+
+    const parentId = moreData.manager?.user_email;
+    if (parentId && !usersId.includes(parentId)) {
       // sparsh
       console.log("copyData: ", copyData, typeof copyData);
       copyData.shift();
       row--;
       // here make the connection
-
-      copyData[row][1] = getNodeJsx(parentId, moreData.parent.name);
+      console.log("copyDataRow: ",copyData[row]);
+      copyData[row][1] = getNodeJsx(parentId, moreData.manager.first_name,moreData.manager.designation);
       copyData.unshift([
-        getNodeJsx(parentId, moreData.parent.name),
+        getNodeJsx(parentId, moreData.manager.first_name,moreData.manager.designation),
         "",
         parentId,
       ]);
       copyData.unshift(["", "", ""]);
-      console.log(copyData);
+      
     }
 
-    for (let i = 0; i < moreData.childs.length; i++) {
-      const child = moreData.childs[i];
-      console.log("child : ", child);
+    // for childs
+    const childs = moreData.reportee.map((child: ChildType) => {
+      if(usersId.includes(child.user_email)) return ;
+      return [
+        getNodeJsx(child.user_email, child.first_name, child.designation),
+        getNodeJsx(
+          user_email ? user_email : "", // this is correct - node clicked kiya vo email
+          moreData.node.first_name, // jis email pe click hua uska name
+          moreData.node.designation // 
+        ),
+        child.user_email,
+      ];
+    });
 
-      if (usersId.includes(child.id)) continue;
-      copyData.push([
-        getNodeJsx(child.id, child.name),
-        copyData[1][0],
-        child.id,
-      ]);
+    const newChilds =[];
+    for(let i = 0; i < childs.length;i++) {
+      if(childs[i]) newChilds.push(childs[i]);
     }
 
-    console.log("final: ", copyData);
-    setDummyData(copyData);
+    console.log("childs: ",newChilds)
+    const final = [...copyData, ...newChilds];
+
+    console.log("final: ",final);
+    setDummyData(final)
+    return final;
+  
+  };
+  const getMoreData = async (id: string, row: number,prev: any) => {
+    console.log("getMoreData: ",id,row,prev);
+    if (usersId.includes(id)) {
+      console.log("id Exists");
+      return;
+    }
+    else usersId.push(id);
+    console.log("User ids: ",usersId)
+    console.log(id, typeof id, typeof usersId[0]);
+
+    // make api call for extra data
+    return await getNeighboursByEmail(id,row,prev);
   };
 
-  console.log(dummyData);
   return (
     <div className=" relative w-full h-[100vh] overflow-scroll no-scrollbar  ">
       <Chart
@@ -127,24 +247,27 @@ const TreeTry1 = () => {
             eventName: "ready",
             callback: ({ chartWrapper, google }) => {
               const chart: any = chartWrapper.getChart();
-              // chart.container.addEventListener("click", (ev: any) =>
-              //   console.log(ev.target)
-              // );
 
               google.visualization.events.addListener(
                 chart,
+
+                // after selection sending request
                 "select",
                 function () {
-                  // alert('sel');
-                  // this.blur;
-                  const selectedItem = chart.getSelection()[0].row + 1;
+                  // console.log("data curr: ",dummyData)
 
-                  // const id =
+                
+                  setDummyData( (prev:any) => {
+                      const cprev = [...prev];
+                      console.log("chart: ",chart.getSelection())
+                      const selectedItem = chart.getSelection()[0].row + 1; // index in copyData
+                      const uniqueId = prev[selectedItem][2]; // email
+                      console.log("selectedItem: ",selectedItem, uniqueId)
+                      getMoreData(uniqueId, selectedItem,cprev);
+                      return [...prev];
+                      
+                  })
 
-                  console.log(selectedItem);
-                  const uniqueId = data[selectedItem][2];
-
-                  getMoreData(uniqueId, selectedItem);
                 }
               );
             },

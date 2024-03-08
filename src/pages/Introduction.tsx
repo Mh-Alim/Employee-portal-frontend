@@ -1,13 +1,14 @@
 import React from "react";
 import { TbBracketsAngle } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
     <div className="min-h-full  ">
       <div className=" w-full pl-10 md:pl-16  pt-52  lg:p-52 relative  ">
         <img
-          className=" w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left  absolute right-0 top-14 z-10 "
+          className=" w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left  absolute right-0 top-14 z-0 "
           src="https://github.githubassets.com/assets/hero-desktop-a38b0fd77b6c.webp"
           alt=""
         />
@@ -37,9 +38,12 @@ const About = () => {
             </svg>
           </p>
           <p className=" rounded-b-xl w-1 h-full absolute -left-4 md:-left-10  top-10 bg-[linear-gradient(#0D1117,#8471d5)] "></p>
-          <p className=" ml-2 cursor-pointer  button-shadow  text-white py-4 px-8 rounded-xl bg-[#08924F] w-fit ">
+          <Link
+            to={"/login"}
+            className=" ml-2 cursor-pointer  button-shadow  text-white py-4 px-8 rounded-xl bg-[#08924F] w-fit "
+          >
             Sign in for Employee Portal
-          </p>
+          </Link>
         </div>
         {/* third */}
         <div className=" mt-10 relative min-h-64 w-full sm:w-3/5  ">
@@ -105,13 +109,13 @@ const TreeCard = () => {
           <div className="   rounded-lg p-5 h-1/2  sm:w-1/2 sm:h-full sm:flex sm:flex-col sm:justify-between  ">
             <p className=" text-md text-slate-400 text-xl ">
               {" "}
-              <span  className=" text-white ">Organizational Tree View is </span>basically we are showing the organization in the form of
-              tree
+              <span className=" text-white ">Organizational Tree View is </span>
+              basically we are showing the organization in the form of tree
             </p>
             <p className=" text-xl cursor-pointer  group  w-fit py-2 mt-5 ">
               {" "}
               Go to Tree View <br />{" "}
-              <p className=" transition-all duration-500 w-0 h-[0.2rem]  group-hover:w-full bg-[linear-gradient(#0D1117,#8471d5)] "></p>{" "}
+              <span className=" transition-all duration-500 w-0 h-[0.2rem]  group-hover:w-full bg-[linear-gradient(#0D1117,#8471d5)] "></span>{" "}
             </p>
           </div>
           <div className=" w-full sm:w-1/2 h-1/2 sm:h-full ">

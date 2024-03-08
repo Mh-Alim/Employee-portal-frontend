@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import {
   increment,
@@ -40,28 +40,30 @@ const App = () => {
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
 
-      <Routes>
-        {/* <Route
-          path="/"
-          element={
-            <>
-              <Navbar />
-              <Introduction />
-            </>
-          }
-        /> */}
-        <Route path="/try1" element={<TreeTry1 />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/tree-view" element={<OrganizationTreeView />} />
-        <Route path="/user" element={<Sidebar />}>
-          <Route path="search" element={<SearchEmployee />} />
-          <Route path="tree-view" element={<OrganizationTreeView />} />
-          <Route path="feature-request" element={<FeatureRequest />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="feature-request" element={<FeatureRequest />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<h1>Loading....</h1>}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Introduction />
+              </>
+            }
+          />
+          <Route path="/try1" element={<TreeTry1 />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/tree-view" element={<OrganizationTreeView />} />
+          <Route path="/user" element={<Sidebar />}>
+            <Route path="search" element={<SearchEmployee />} />
+            <Route path="tree-view" element={<TreeTry1 />} />
+            <Route path="feature-request" element={<FeatureRequest />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="logout" element={<Logout />} />
+            <Route path="feature-request" element={<FeatureRequest />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </div>
   );
 };

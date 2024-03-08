@@ -1,7 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
+import { addUser } from "../app/features/userSlice";
+import { useAppDispatch } from "../app/hooks";
 
+type ProfileDataType = {
+  name: string;
+  email: string;
+  contact: number;
+  emp_id: number;
+  designation: string;
+  joinedAt: string;
+};
 const Profile = () => {
+  const dispatch = useAppDispatch();
   const [showDetials, setShowDetails] = useState(true);
+  const [profileData, setProfileData] = useState<ProfileDataType>({
+    name: "",
+    email: "",
+    contact: 0,
+    emp_id: 0,
+    designation: "",
+    joinedAt: "",
+  });
+
+  const getProfileDetails = async () => {
+    let user_email = getEmailFromLocalStorage();
+    let token = getTokenFromLocalStorage();
+    if (!token || !user_email) {
+      alert("Login to access this resource");
+      return;
+    }
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      body: JSON.stringify({ user_email, requested_user_email: user_email }), // Convert data to JSON string
+    };
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/getByUserEmail`,
+      options
+    );
+    const json = await res.json();
+    const details = json.data;
+    
+
+    const userData = {
+      name: `${details.firstName} ${details.lastName}`,
+      email: details.userEmail,
+      contact: details.contactNumber,
+      designation: details.designation,
+      emp_id: details.empCode,
+      joinedAt: details.dateCreated.substring(0,10),
+    }
+    setProfileData(userData);
+    dispatch(addUser(userData))
+  };
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
   return (
     <div className=" p-5 w-full h-[100vh] text-white flex justify-center flex-col items-center overflow-y-scroll ">
       <div className=" w-full sm:w-8/12 md:w-11/12 lg:w-8/12  h-5/6 bg-slate-600 rounded-lg ">
@@ -34,12 +92,13 @@ const Profile = () => {
 
         {showDetials ? (
           <div className=" w-full p-5 ">
-            <Details keyName="Name" name="alim khan" />
-            <Details keyName="Email" name="samsoon7789@gmail.com" />
-            <Details keyName="Contact " name="7489167363" />
+            <Details keyName="Name" name={profileData.name} />
+            <Details keyName="Email" name={profileData.email} />
+            <Details keyName="Contact " name={profileData.contact} />
             <hr className=" my-5 border-dashed  " />
-            <Details keyName="Employee id " name="3423" />
-            <Details keyName="Designation " name="L1" />
+            <Details keyName="Employee id " name={profileData.emp_id} />
+            <Details keyName="Designation " name={profileData.designation} />
+            <Details keyName="JoinedAt" name={profileData.joinedAt} />
           </div>
         ) : (
           <div className=" p-5 flex justify-center flex-wrap gap-4 w-full h-[28vh] overflow-y-scroll ">
@@ -78,7 +137,7 @@ const Image = () => {
 
 type DetailsType = {
   keyName: string;
-  name: string;
+  name: string | number;
 };
 const Details = ({ keyName, name }: DetailsType) => {
   return (

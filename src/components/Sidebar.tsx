@@ -34,12 +34,12 @@ const dashboardLiData = [
   {
     text: "Add Employe",
     url: "/user/add-employee",
-    Icon: <CgAdd/>,
+    Icon: <CgAdd />,
   },
   {
     text: "Feature Request",
     url: "/user/feature-request",
-    Icon: <FaFeather/>,
+    Icon: <FaFeather />,
   },
   {
     text: "Logout",
@@ -64,7 +64,7 @@ const Sidebar = () => {
       <div
         className={` -translate-x-80 md:-translate-x-0 transition-all duration-500 ${
           show ? "translate-x-0" : ""
-        } w-72 p-5 h-[100vh] text-white absolute md:relative z-50 top-0 left-0  bg-slate-800 overflow-y-scroll `}
+        } w-72 p-5 h-[100vh] text-white absolute md:relative z-50 top-0 left-0  dis-bg-slate-800 overflow-y-scroll `}
       >
         <h1 className=" flex justify-between items-center  mb-5 font-medium text-2xl  ">
           <p className=" uppercase tracking-widest font-work_sans ">Eportal</p>
@@ -110,8 +110,8 @@ const Li = ({ text, Icon, url, setShow }: LiPropType) => {
     <li
       className={` ${
         location.pathname.includes(url)
-          ? `bg-green-500 text-white`
-          : `bg-white text-black`
+          ? `bg-green-600 text-white`
+          : `bg-slate-200 text-black`
       }  mb-3 group transition-all rounded-lg  p-3 mt-10 `}
       onClick={() => setShow(false)}
     >

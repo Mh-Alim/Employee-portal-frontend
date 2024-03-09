@@ -1,0 +1,56 @@
+
+.red {
+    background: red !important;
+}
+
+.each-node {
+    min-width: 14rem;
+    font-size: 1rem;
+}
+.each-node > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.each-node  img {
+    width: 14rem;
+    border-radius: 1rem;
+}
+.tree-node {
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    min-width: 14rem;
+    opacity: 0.7;
+
+    background: rgba( 255, 255, 255, 0.05 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 0px );
+    -webkit-backdrop-filter: blur( 0px );
+    border-radius: 10px;
+    border: 4px solid rgba( 255, 255, 255, 0.18 );
+    transition: all 0.4s;
+}
+
+.tree-node:hover{
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+.selected-tree-node {
+
+    
+
+    background: rgb(91, 9, 223);
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 0px );
+    -webkit-backdrop-filter: blur( 0px );
+    border-radius: 10px;
+    border: 4px solid rgba( 255, 255, 255, 0.18 );
+}
+.google-visualization-orgchart-connrow-medium {
+    height: 3rem !important;
+}

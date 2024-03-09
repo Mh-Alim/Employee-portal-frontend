@@ -36,13 +36,13 @@ const getNodeJsx = (id: string, name: string, designation: string) => {
 //   ],
 // ];
 
-export const options = {
+const options = {
   allowHtml: true,
   allowCollapse: true,
   nodeClass:
     "text-white bg-glassmorphism cursor-pointer font-work_sans min-w-[14rem]",
 
-  selectedNodeClass: "bg-red-300",
+  selectedNodeClass: "red",
   size: "medium",
   compactRows: true,
 
@@ -274,10 +274,10 @@ const TreeTry1 = () => {
 
                   setDummyData((prev: any) => {
                     const cprev = [...prev];
-                    console.log("prev: ", prev);
                     let selectedItem = 1;
                     if (chart.getSelection().length > 0)
                       selectedItem = chart.getSelection()[0].row + 1;
+                    else return prev;
 
                     console.log(chart.getSelection());
                     const uniqueId = prev[selectedItem][2]; // email

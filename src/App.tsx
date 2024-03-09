@@ -20,6 +20,7 @@ import Profile from "./pages/Profile.tsx";
 import Logout from "./pages/Logout.tsx";
 import TreeTry1 from "./pages/TreeTry1.jsx";
 import FeatureRequest from "./pages/FeatureRequest.tsx";
+import ButtonMake from "./pages/ ButtonMake.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,7 @@ const App = () => {
       <AddEmployee /> */}
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
-
+        <ButtonMake />
       <Suspense fallback={<h1>Loading....</h1>}>
         <Routes>
           <Route

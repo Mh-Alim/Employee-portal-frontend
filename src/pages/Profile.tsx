@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
 import { addUser } from "../app/features/userSlice";
 import { useAppDispatch } from "../app/hooks";
+import { MdLocalPhone } from "react-icons/md";
+import { CiLocationOn } from "react-icons/ci";
+import { RiHomeOfficeLine } from "react-icons/ri";
+import { MdOutlineLocalPostOffice } from "react-icons/md";
+import { BsSlack } from "react-icons/bs";
+import { IoLogoLinkedin } from "react-icons/io5";
+import { FaTwitter } from "react-icons/fa6";
+import { AiFillInstagram } from "react-icons/ai";
+import { MdAttachment } from "react-icons/md";
+import { MdHomeRepairService } from "react-icons/md";
+import { RxResume } from "react-icons/rx";
+import { FaFileDownload } from "react-icons/fa";
+import { FaUserTie } from "react-icons/fa";
+import { LuUser2 } from "react-icons/lu";
 
 type ProfileDataType = {
   name: string;
@@ -44,7 +58,6 @@ const Profile = () => {
     );
     const json = await res.json();
     const details = json.data;
-    
 
     const userData = {
       name: `${details.firstName} ${details.lastName}`,
@@ -52,73 +65,184 @@ const Profile = () => {
       contact: details.contactNumber,
       designation: details.designation,
       emp_id: details.empCode,
-      joinedAt: details.dateCreated.substring(0,10),
-    }
+      joinedAt: details.dateCreated.substring(0, 10),
+    };
     setProfileData(userData);
-    dispatch(addUser(userData))
+    dispatch(addUser(userData));
   };
   useEffect(() => {
     getProfileDetails();
   }, []);
   return (
-    <div className=" p-5 w-full h-[100vh] text-white flex justify-center flex-col items-center overflow-y-scroll ">
-      <div className=" w-full sm:w-8/12 md:w-11/12 lg:w-8/12  h-5/6 bg-slate-600 rounded-lg ">
-        <div className=" w-full h-1/3 bg-slate-800 rounded-t-lg  "></div>
-        <p className=" flex justify-center items-center  ">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1SdQtedd5Hf2MSihKD3frREpjMZrfVAufDw&usqp=CAU"
-            alt=""
-            className=" w-28 rounded-full relative -top-10 z-0 "
-          />
-        </p>
-        <div className=" mb-2 flex justify-center gap-3 ">
-          <p
-            onClick={() => setShowDetails((prev) => !prev)}
-            className={`transition-all duration-500 ${
-              showDetials ? "text-blue-300" : "text-slate-500"
-            }  font-work_sans cursor-pointer `}
-          >
-            Details
-          </p>
-          <p
-            onClick={() => setShowDetails((prev) => !prev)}
-            className={`transition-all duration-500 ${
-              !showDetials ? "text-blue-300" : "text-slate-700"
-            }  font-work_sans cursor-pointer `}
-          >
-            Images
-          </p>
+    <div className=" p-5 text-emerald-50 ">
+      <section className=" bg-glassmorphism h-72 flex gap-20 justify-between  ">
+        <div className=" flex gap-10 ">
+          <div className=" object-cover flex justify-center items-center ml-10  ">
+            <img
+              src="https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg"
+              alt="hello"
+              className=" rounded-lg w-64 h-64 object-cover  "
+            />
+          </div>
+          <div className=" flex gap-10 pt-5 flex-col  justify-between ">
+            <div className=" pl-4 ">
+              <h1 className=" text-5xl tracking-wider ">Alim Khan</h1>
+              <p className=" mt-5 text-emerald-50 tracking-wider ">
+                Software Engineer
+              </p>
+            </div>
+
+            <div className=" flex gap-10 pb-3 ">
+              <div>
+                <div className=" m-3 flex gap-1 items-center ">
+                  <CiLocationOn />
+                  <span>Masjid Road Akaltara</span>
+                </div>
+                <div className=" m-3 flex gap-1 items-center ">
+                  <MdLocalPhone />
+                  <span>7489167363</span>
+                </div>
+              </div>
+              <div>
+                <div className="  m-3 flex gap-1 items-center ">
+                  <RiHomeOfficeLine />
+                  <span>Growth Pod</span>
+                </div>
+                <div className=" m-3 flex gap-1 items-center ">
+                  <MdOutlineLocalPostOffice />
+                  <span>alim.khan@moneyview.in</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {showDetials ? (
-          <div className=" w-full p-5 ">
-            <Details keyName="Name" name={profileData.name} />
-            <Details keyName="Email" name={profileData.email} />
-            <Details keyName="Contact " name={profileData.contact} />
-            <hr className=" my-5 border-dashed  " />
-            <Details keyName="Employee id " name={profileData.emp_id} />
-            <Details keyName="Designation " name={profileData.designation} />
-            <Details keyName="JoinedAt" name={profileData.joinedAt} />
+        <div className=" p-5 flex flex-col justify-between  ">
+          <div className=" flex gap-5 text-xl ">
+            <span className=" cursor-pointer ">
+              <BsSlack />
+            </span>
+            <span className=" cursor-pointer ">
+              <IoLogoLinkedin />
+            </span>
+            <span className=" cursor-pointer ">
+              <FaTwitter />
+            </span>
+            <span className=" cursor-pointer ">
+              <AiFillInstagram />
+            </span>
           </div>
-        ) : (
-          <div className=" p-5 flex justify-center flex-wrap gap-4 w-full h-[28vh] overflow-y-scroll ">
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
-            <Image />
+          <div className=" text-right ">
+            {" "}
+            <button className="  w-fit px-4 py-1 bg-[#6e40c9] tracking-wider font-bold rounded-lg  ">
+              {" "}
+              Edit{" "}
+            </button>{" "}
           </div>
-        )}
-      </div>
-      <div className=" mt-3 mx-auto  px-6 py-2 bg-blue-500 w-fit rounded-lg ">
-        Edit Profile
-      </div>
+        </div>
+      </section>
+
+      <section className=" p-5 flex ">
+        <div className=" flex-1 flex flex-col  ">
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 "> Skills </h1>
+            <div className=" flex flex-wrap ">
+              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Frontend Developement
+              </p>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Backend Developement
+              </span>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Node Js Developer
+              </span>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Mern Developer
+              </span>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Mean Developer
+              </span>
+            </div>
+          </div>
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 "> Languages </h1>
+            <div className=" flex flex-wrap ">
+              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                English
+              </p>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Hindi
+              </span>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Spanish
+              </span>
+            </div>
+          </div>
+
+          {/* sector of expertise  */}
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 ">
+              {" "}
+              Sector of Interests{" "}
+            </h1>
+            <div className=" flex flex-wrap ">
+              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Cricket
+              </p>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Socker
+              </span>
+              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
+                Chess
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className=" flex flex-col flex-1 ">
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
+            <div className=" flex flex-col flex-wrap ">
+              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center  ">
+                <MdHomeRepairService />
+                <span>OfferLetter.pdf </span>
+              </p>
+              <p className=" cursor-pointer px-4 flex gap-2 items-center ">
+                <RxResume /> <span>Resume.pdf</span>{" "}
+              </p>
+              <p className="  cursor-pointer py-2 px-4 flex gap-2 items-center ">
+                <FaFileDownload />
+                <span>fs.pdf</span>
+              </p>
+            </div>
+          </div>
+
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 ">Manager</h1>
+            <div className=" flex flex-col flex-wrap ">
+              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center  ">
+                <FaUserTie />
+                <span>Abhishek </span>
+              </p>
+            </div>
+          </div>
+          <div className=" m-5 ">
+            <h1 className=" text-2xl tracking-wider mb-5 ">Reportee</h1>
+            <div className=" flex flex-col flex-wrap ">
+              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center  ">
+                <LuUser2 />
+                <span>Animesh </span>
+              </p>
+              <p className=" cursor-pointer px-4 flex gap-2 items-center ">
+                <LuUser2 /> <span>Tarun Jayadevan</span>{" "}
+              </p>
+              <p className="  cursor-pointer py-2 px-4 flex gap-2 items-center ">
+                <LuUser2 />
+                <span>Anurag Rout</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

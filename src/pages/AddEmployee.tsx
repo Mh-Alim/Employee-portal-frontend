@@ -3,7 +3,8 @@ import { addEmployeeApi,uploadFile } from "../api/AddEmployee";
 
 const AddEmployee = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  // const selectedFile = useRef<File | null>(null);
+  // const [fileUrl, setFileUrl] = useState<string | null>(null);
   const fnameRef = useRef<HTMLInputElement | null>(null);
   const lnameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -16,8 +17,7 @@ const AddEmployee = () => {
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      const url = await uploadFile(event.target.files[0]);
-      setFileUrl(url);
+      setSelectedFile(event.target.files[0]);
     }
   };
   
@@ -51,7 +51,7 @@ const AddEmployee = () => {
 
     const formData = new FormData();
     if (selectedFile) {
-       formData.append("file", selectedFile);
+       formData.set("file", selectedFile);
     }
 
     const data = {
@@ -66,7 +66,7 @@ const AddEmployee = () => {
       dob,
     };
 
-    addEmployeeApi(data);
+    addEmployeeApi(data,formData);
     
   };
 
@@ -159,13 +159,13 @@ const AddEmployee = () => {
             onChange={handleFileChange}
           />
           <br />
-          {fileUrl && (
+          {/* {fileUrl && (
         <div>
           <p>File uploaded successfully!</p>
           <p>File URL: {fileUrl}</p>
           <img src={fileUrl} alt="Uploaded file" />
-        </div>
-      )}
+        </div> */}
+      {/* )} */}
 
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button

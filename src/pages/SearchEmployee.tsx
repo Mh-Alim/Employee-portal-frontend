@@ -1,19 +1,17 @@
 import React, { useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { getTokenFromLocalStorage } from "../utility";
+import { debounce } from "../api/Search";
 
 const img1 =
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 const SearchEmployee = () => {
   const [border, setBorder] = useState(1);
+  const [results, setResults] = useState([["", "", ""]]);
+  const changeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let query = e.target.value;
 
-  const searchRef = useRef<HTMLInputElement | null>(null);
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    let token = getTokenFromLocalStorage();
-    const query = searchRef.current?.value;
-    if (!query || !token) return;
+    if (!query) return;
 
     try {
       let queryParams = "";
@@ -21,38 +19,22 @@ const SearchEmployee = () => {
       if (border === 2) queryParams = "user_email";
       if (border === 3) queryParams = "designation";
       if (border === 4) queryParams = "expertise";
-      
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "token":token
-        },
-        body: JSON.stringify({ query }), // Convert data to JSON string
-      };
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/search?${queryParams}=${query}`,
-        options
-      );
-      const json = await res.json();
-      console.log("queryParams: ", queryParams, json);
-    } catch (err) {}
-    if(searchRef.current) searchRef.current.value = "";
 
+      debounce(query, queryParams, setResults, 500);
+    } catch (err) {}
   };
+
+  console.log("results: ", results);
   return (
     <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center  ">
       <main className=" m-3  w-10/12 sm:w-9/12 lg:w-10/12 bg-glassmorphism text-white rounded-lg   p-5 ">
         {/* search */}
-        <form
-          onSubmit={submitHandler}
-          className=" flex items-center s-bg-white p-1 rounded-tl-md rounded-tr-md border-b-slate-500 border-b-2  "
-        >
+        <form className=" flex items-center s-bg-white p-1 rounded-tl-md rounded-tr-md border-b-slate-500 border-b-2  ">
           <CiSearch className=" ml-2 text-2xl " />
           <input
             className=" pl-4 pr-2 py-2 w-full outline-none  s-bg-white bg-transparent "
             type="text"
-            ref={searchRef}
+            onChange={changeHandler}
           />
         </form>
         {/* heading */}
@@ -87,14 +69,11 @@ const SearchEmployee = () => {
           />
         </div>
         {/* // show search Results */}
-        <div className=" h-[60vh] my-3 overflow-y-auto ">
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
-          <User name="Jenny James" email="email@gmail.com" img={img1} />
+        <div className=" transition-all duration-1000 h-fit max-h-[40vh] my-3 overflow-y-auto ">
+          {results.map(
+            (user: string[]) =>
+              user[0] && <User name={user[0]} email={user[1]} img={img1} />
+          )}
         </div>
       </main>
     </div>

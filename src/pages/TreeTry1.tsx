@@ -42,10 +42,14 @@ export const options = {
   nodeClass:
     "text-white bg-glassmorphism cursor-pointer font-work_sans min-w-[14rem]",
 
-  // selectedNodeClass: "bg-red-300",
+  selectedNodeClass: "bg-red-300",
   size: "medium",
   compactRows: true,
 
+  animation: {
+    duration: 1000,
+    easing: "out",
+  },
   collapse: (e: any) => {
     console.log(e);
   },
@@ -64,7 +68,7 @@ type ChildType = {
 };
 
 const TreeTry1 = () => {
-  const [dummyData, setDummyData] = useState<any>(["","",""]);
+  const [dummyData, setDummyData] = useState<any>(["", "", ""]);
 
   const mySelf = useAppSelector((state) => state.user);
 
@@ -109,11 +113,15 @@ const TreeTry1 = () => {
     console.log("name: ", mySelf.name);
     const firstLevelData = [
       ["", "", ""],
-      [getNodeJsx(
+      [
+        getNodeJsx(
+          output.manager.user_email,
+          output.manager.first_name,
+          output.manager.designation
+        ),
+        "",
         output.manager.user_email,
-        output.manager.first_name,
-        output.manager.designation
-      ),"",output.manager.user_email],
+      ],
       [
         getNodeJsx(user_email, mySelf.name, mySelf.designation),
         getNodeJsx(
@@ -133,7 +141,7 @@ const TreeTry1 = () => {
     // api call to setup first level and me
 
     console.log("mySelf", mySelf);
-
+    usersId = [];
     getNeighboursDetails();
 
     // to restrict neightbours api call
@@ -141,15 +149,18 @@ const TreeTry1 = () => {
   }, [mySelf]);
 
   // end main thing
-  
 
-  const getNeighboursByEmail = async (id: string,row: number,prev: any) => {
-    
+  const getNeighboursByEmail = async (id: string, row: number, prev: any) => {
     let token = getTokenFromLocalStorage();
     let user_email = id;
     let requested_user_email = getEmailFromLocalStorage();
 
-    console.log("getNeighboursBgEmail : ",token,user_email,requested_user_email)
+    console.log(
+      "getNeighboursBgEmail : ",
+      token,
+      user_email,
+      requested_user_email
+    );
     if (!user_email || !requested_user_email || !token) {
       alert("Login to access this resource");
       return;
@@ -182,56 +193,61 @@ const TreeTry1 = () => {
       copyData.shift();
       row--;
       // here make the connection
-      console.log("copyDataRow: ",copyData[row]);
-      copyData[row][1] = getNodeJsx(parentId, moreData.manager.first_name,moreData.manager.designation);
+      console.log("copyDataRow: ", copyData[row]);
+      copyData[row][1] = getNodeJsx(
+        parentId,
+        moreData.manager.first_name,
+        moreData.manager.designation
+      );
       copyData.unshift([
-        getNodeJsx(parentId, moreData.manager.first_name,moreData.manager.designation),
+        getNodeJsx(
+          parentId,
+          moreData.manager.first_name,
+          moreData.manager.designation
+        ),
         "",
         parentId,
       ]);
       copyData.unshift(["", "", ""]);
-      
     }
 
     // for childs
     const childs = moreData.reportee.map((child: ChildType) => {
-      if(usersId.includes(child.user_email)) return ;
+      if (usersId.includes(child.user_email)) return;
       return [
         getNodeJsx(child.user_email, child.first_name, child.designation),
         getNodeJsx(
           user_email ? user_email : "", // this is correct - node clicked kiya vo email
           moreData.node.first_name, // jis email pe click hua uska name
-          moreData.node.designation // 
+          moreData.node.designation //
         ),
         child.user_email,
       ];
     });
 
-    const newChilds =[];
-    for(let i = 0; i < childs.length;i++) {
-      if(childs[i]) newChilds.push(childs[i]);
+    const newChilds = [];
+    for (let i = 0; i < childs.length; i++) {
+      if (childs[i]) newChilds.push(childs[i]);
     }
 
-    console.log("childs: ",newChilds)
+    console.log("childs: ", newChilds);
     const final = [...copyData, ...newChilds];
 
-    console.log("final: ",final);
-    setDummyData(final)
+    console.log("final: ", final);
+    setDummyData(final);
     return final;
-  
   };
-  const getMoreData = async (id: string, row: number,prev: any) => {
-    console.log("getMoreData: ",id,row,prev);
+  const getMoreData = async (id: string, row: number, prev: any) => {
+    console.log("getMoreData: ", id, row, prev);
     if (usersId.includes(id)) {
       console.log("id Exists");
       return;
-    }
-    else usersId.push(id);
-    console.log("User ids: ",usersId)
+    } else usersId.push(id);
+    console.log("User ids: ", usersId);
     console.log(id, typeof id, typeof usersId[0]);
 
     // make api call for extra data
-    return await getNeighboursByEmail(id,row,prev);
+    return await getNeighboursByEmail(id, row, prev);
   };
 
   return (
@@ -256,18 +272,19 @@ const TreeTry1 = () => {
                 function () {
                   // console.log("data curr: ",dummyData)
 
-                
-                  setDummyData( (prev:any) => {
-                      const cprev = [...prev];
-                      console.log("chart: ",chart.getSelection())
-                      const selectedItem = chart.getSelection()[0].row + 1; // index in copyData
-                      const uniqueId = prev[selectedItem][2]; // email
-                      console.log("selectedItem: ",selectedItem, uniqueId)
-                      getMoreData(uniqueId, selectedItem,cprev);
-                      return [...prev];
-                      
-                  })
+                  setDummyData((prev: any) => {
+                    const cprev = [...prev];
+                    console.log("prev: ", prev);
+                    let selectedItem = 1;
+                    if (chart.getSelection().length > 0)
+                      selectedItem = chart.getSelection()[0].row + 1;
 
+                    console.log(chart.getSelection());
+                    const uniqueId = prev[selectedItem][2]; // email
+                    console.log("selectedItem: ", selectedItem, uniqueId);
+                    getMoreData(uniqueId, selectedItem, cprev);
+                    return prev;
+                  });
                 }
               );
             },

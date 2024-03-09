@@ -110,8 +110,8 @@ const Li = ({ text, Icon, url, setShow }: LiPropType) => {
     <li
       className={` ${
         location.pathname.includes(url)
-          ? `bg-green-400`
-          : `bg-[#08924F]`
+          ? `bg-[#6e00a0]`
+          : `bg-[#6e40c9]`
       }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 `}
       onClick={() => setShow(false)}
     >

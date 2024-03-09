@@ -4,15 +4,14 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passRef = useRef<HTMLInputElement | null>(null);
-  const buttonRef = useRef <HTMLButtonElement| null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    emailRef.current?.focus()
-  },[])
+    emailRef.current?.focus();
+  }, []);
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    if(buttonRef.current) buttonRef.current.disabled = true;
+    if (buttonRef.current) buttonRef.current.disabled = true;
     try {
       e.preventDefault();
 
@@ -36,17 +35,16 @@ const Login = () => {
       const json = await res.json();
       localStorage.setItem("eportal_token", json.data);
       localStorage.setItem("eportal_user_email", user_email);
-      if(buttonRef.current) buttonRef.current.disabled = false;
+      if (buttonRef.current) buttonRef.current.disabled = false;
       navigate("/user/profile");
-
     } catch (err) {
-      if(buttonRef.current) buttonRef.current.disabled = false;
+      if (buttonRef.current) buttonRef.current.disabled = false;
       alert("some error in login ");
       console.log("err: ", err);
     }
   };
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center    ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center     ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
@@ -76,7 +74,6 @@ const Login = () => {
           />
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button
-          
               type="submit"
               className=" px-10  py-2 text-slate-500 bg-white-500 bg-white rounded-3xl "
               ref={buttonRef}

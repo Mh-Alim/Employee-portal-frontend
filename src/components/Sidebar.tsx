@@ -52,7 +52,7 @@ const Sidebar = () => {
   const location = useLocation();
   const [show, setShow] = useState(false);
   return (
-    <div className=" flex  relative ">
+    <div className=" flex  relative h-[90vh]  ">
       <p
         onClick={() => setShow((prev) => !prev)}
         className=" z-30 cursor-pointer md:hidden absolute right-3 top-3 "
@@ -109,9 +109,7 @@ const Li = ({ text, Icon, url, setShow }: LiPropType) => {
   return (
     <li
       className={` ${
-        location.pathname.includes(url)
-          ? `bg-[#6e00a0]`
-          : `bg-[#6e40c9]`
+        location.pathname.includes(url) ? `bg-[#6e00a0]` : `bg-[#6e40c9]`
       }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 `}
       onClick={() => setShow(false)}
     >

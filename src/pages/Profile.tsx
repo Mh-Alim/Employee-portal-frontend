@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
 import { addUser } from "../app/features/userSlice";
 import { useAppDispatch } from "../app/hooks";
 import { MdLocalPhone } from "react-icons/md";
-import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn, CiSearch } from "react-icons/ci";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import { BsSlack } from "react-icons/bs";
@@ -15,6 +15,7 @@ import { MdHomeRepairService } from "react-icons/md";
 import { RxResume } from "react-icons/rx";
 import { FaFileDownload, FaRegEdit } from "react-icons/fa";
 import { LuUser2 } from "react-icons/lu";
+import { RxCross2 } from "react-icons/rx";
 
 type ProfileDataType = {
   name: string;
@@ -27,6 +28,7 @@ type ProfileDataType = {
 const Profile = () => {
   const dispatch = useAppDispatch();
   const [showDetials, setShowDetails] = useState(true);
+
   const [profileData, setProfileData] = useState<ProfileDataType>({
     name: "",
     email: "",
@@ -36,6 +38,7 @@ const Profile = () => {
     joinedAt: "",
   });
 
+  const modelRef = useRef(null);
   const getProfileDetails = async () => {
     let user_email = getEmailFromLocalStorage();
     let token = getTokenFromLocalStorage();
@@ -72,8 +75,15 @@ const Profile = () => {
   useEffect(() => {
     getProfileDetails();
   }, []);
+
+  const editClickHandler = () => {
+    const dialog = document.querySelector("#model");
+    dialog?.classList.toggle("!z-10");
+    dialog?.classList.toggle("!opacity-100");
+    dialog?.classList.toggle("!scale-100");
+  };
   return (
-    <div className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll ">
+    <div className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
       <section className=" bg-glassmorphism min-h-72 flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
         <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
           <div className=" object-cover flex justify-center items-center mt-5    ">
@@ -135,7 +145,10 @@ const Profile = () => {
           </div>
           <div className=" text-right ">
             {" "}
-            <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
+            <button
+              onClick={editClickHandler}
+              className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   "
+            >
               {" "}
               <FaRegEdit />{" "}
             </button>{" "}
@@ -245,6 +258,71 @@ const Profile = () => {
           </div>
         </div>
       </section>
+      <EditProfileModel editClickHandler={editClickHandler} />
+    </div>
+  );
+};
+
+type EditProfileModelType = {
+  editClickHandler: () => void;
+};
+const EditProfileModel = ({ editClickHandler }: EditProfileModelType) => {
+  return (
+    <div
+      id="model"
+      className=" absolute top-1/4 left-1/4 min-w-96 min-h-96 bg-slate-800 transition-transform duration-300 px-8 z-[-1] opacity-0 rounded-lg scale-50 backdrop-blur-md "
+    >
+      <div>
+        <p className=" flex justify-end text-3xl py-2  ">
+          <RxCross2 className=" cursor-pointer " onClick={editClickHandler} />
+        </p>
+        <form className="  py-5 " action="">
+          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
+            <MdLocalPhone className=" ml-2 text-2xl " />
+            <input
+              className=" pl-4 pr-2 py-1 w-full outline-none remove-arrow  s-bg-white bg-transparent "
+              type="number"
+              placeholder="phone number"
+            />
+          </div>
+
+          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
+            <FaTwitter className=" ml-2 text-2xl " />
+            <input
+              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
+              type="text"
+              placeholder="profile link"
+            />
+          </div>
+
+          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
+            <IoLogoLinkedin className=" ml-2 text-2xl " />
+            <input
+              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
+              type="text"
+              placeholder="profile link"
+            />
+          </div>
+
+          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
+            <BsSlack className=" ml-2 text-2xl " />
+            <input
+              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
+              type="text"
+              placeholder="profile link"
+            />
+          </div>
+
+          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
+            <AiFillInstagram className=" ml-2 text-2xl " />
+            <input
+              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
+              type="text"
+              placeholder="profile link"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

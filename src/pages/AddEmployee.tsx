@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
-import { addEmployeeApi } from "../api/AddEmployee";
+import React, { useRef ,useState} from "react";
+import { addEmployeeApi,uploadFile } from "../api/AddEmployee";
 
 const AddEmployee = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const fnameRef = useRef<HTMLInputElement | null>(null);
   const lnameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -11,6 +13,14 @@ const AddEmployee = () => {
   const contactRef = useRef<HTMLInputElement | null>(null);
   const dobRef = useRef<HTMLInputElement | null>(null);
   const managerEmailRef = useRef<HTMLInputElement | null>(null);
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const url = await uploadFile(event.target.files[0]);
+      setFileUrl(url);
+    }
+  };
+  
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,6 +49,11 @@ const AddEmployee = () => {
       return;
     }
 
+    const formData = new FormData();
+    if (selectedFile) {
+       formData.append("file", selectedFile);
+    }
+
     const data = {
       first_name,
       last_name,
@@ -52,6 +67,7 @@ const AddEmployee = () => {
     };
 
     addEmployeeApi(data);
+    
   };
 
   return (
@@ -136,6 +152,20 @@ const AddEmployee = () => {
             placeholder="Manager Email"
             ref={managerEmailRef}
           />
+
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            onChange={handleFileChange}
+          />
+          <br />
+          {fileUrl && (
+        <div>
+          <p>File uploaded successfully!</p>
+          <p>File URL: {fileUrl}</p>
+          <img src={fileUrl} alt="Uploaded file" />
+        </div>
+      )}
 
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button

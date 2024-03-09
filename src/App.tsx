@@ -21,6 +21,8 @@ import Logout from "./pages/Logout.tsx";
 import TreeTry1 from "./pages/TreeTry1.jsx";
 import FeatureRequest from "./pages/FeatureRequest.tsx";
 
+import DefaultChart from "./Charts/ChartTypes/DefaultChart.tsx"
+
 const App = () => {
   const dispatch = useAppDispatch();
   const val = useAppSelector((state) => state.count.value);
@@ -65,6 +67,8 @@ const App = () => {
           </Route>
         </Routes>
       </Suspense>
+        {/* <DefaultChart /> */}
+      
     </div>
   );
 };

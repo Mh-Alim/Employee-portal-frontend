@@ -262,7 +262,7 @@ const TreeTry1 = () => {
           {
             eventName: "ready",
             callback: ({ chartWrapper, google }) => {
-              const chart: any = chartWrapper.getChart();
+              var chart: any = chartWrapper.getChart();
 
               google.visualization.events.addListener(
                 chart,
@@ -278,7 +278,7 @@ const TreeTry1 = () => {
                     let selectedItem = 1;
                     if (chart.getSelection().length > 0)
                       selectedItem = chart.getSelection()[0].row + 1;
-
+                    else return prev;
                     console.log(chart.getSelection());
                     const uniqueId = prev[selectedItem][2]; // email
                     console.log("selectedItem: ", selectedItem, uniqueId);

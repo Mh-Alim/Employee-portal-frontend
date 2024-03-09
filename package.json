@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dabeng/react-orgchart": "^1.0.3",
     "@reduxjs/toolkit": "^2.2.1",
     "lucide-react": "^0.344.0",
     "papaparse": "^5.4.1",

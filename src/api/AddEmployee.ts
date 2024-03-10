@@ -53,40 +53,40 @@ export const addEmployeeApi = async (data: EmployeeType, formData: FormData) => 
 
 };
 
-export const uploadFile = async (file: File) => {
-  console.log("Firing uploadFile");
-  let token = getTokenFromLocalStorage();
-  if (!token) {
-    alert("Login to access this resource");
-    return;
-  }
+// export const uploadFile = async (file: File) => {
+//   console.log("Firing uploadFile");
+//   let token = getTokenFromLocalStorage();
+//   if (!token) {
+//     alert("Login to access this resource");
+//     return;
+//   }
 
-  const formData = new FormData();
-  formData.append("file", file);
+//   const formData = new FormData();
+//   formData.append("file", file);
 
-  const options = {
-    method: "POST",
-    headers: {
-      token: token,
-    },
-    body: formData,
-  };
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       token: token,
+//     },
+//     body: formData,
+//   };
 
-  const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/uploadFile`,
-    options
-  );
+//   const res = await fetch(
+//     `${import.meta.env.VITE_BACKEND_URL}/uploadFile`,
+//     options
+//   );
 
-  console.log("printing res ", res);
+//   console.log("printing res ", res);
 
-  const json = await res.json();
-  const output = json.data;
+//   const json = await res.json();
+//   const output = json.data;
 
-  console.log("output: ", output);
-  return output;
-  if (res.status === 200) {
-    alert("File uploaded successfully");
-    return;
-  }
-  alert("Some issue on the server side");
-};
+//   console.log("output: ", output);
+//   return output;
+//   if (res.status === 200) {
+//     alert("File uploaded successfully");
+//     return;
+//   }
+//   alert("Some issue on the server side");
+// };

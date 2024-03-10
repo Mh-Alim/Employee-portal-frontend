@@ -7,6 +7,7 @@ import {
 import { useAppSelector } from "../app/hooks";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
 import "./Tree.css";
+import {  getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 const getNodeJsx = (id: string, name: string, designation: string) => {
   return `<div class="each-node" >
       <div><img src="https://www.shutterstock.com/image-vector/young-man-anime-style-character-600nw-2313503433.jpg" ></div>
@@ -49,7 +50,9 @@ const options = {
   animation: {
     duration: 1000,
     easing: "out",
+    startup: true,
   },
+  vAxis: {minValue:0, maxValue:1000},
   collapse: (e: any) => {
     console.log(e);
   },
@@ -75,27 +78,10 @@ const TreeTry1 = () => {
   // start main thing
 
   const getNeighboursDetails = async () => {
-    let user_email = getEmailFromLocalStorage();
-    let token = getTokenFromLocalStorage();
-    if (!token || !user_email) {
-      alert("Login to access this resource");
-      return;
-    }
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-      body: JSON.stringify({ user_email, requested_user_email: user_email }), // Convert data to JSON string
-    };
-    const res = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/getNeighbours`,
-      options
-    );
-    const json = await res.json();
-    const output = json.data;
-
+    let user_email = getEmailFromLocalStorage()||"";
+    
+    let output = await getManagerAndReporteeByEmail(user_email);
+    if(!output || !user_email) return;
     console.log("output: ", output);
 
     const childs = output.reportee.map((child: ChildType) => {
@@ -151,36 +137,8 @@ const TreeTry1 = () => {
   // end main thing
 
   const getNeighboursByEmail = async (id: string, row: number, prev: any) => {
-    let token = getTokenFromLocalStorage();
-    let user_email = id;
-    let requested_user_email = getEmailFromLocalStorage();
-
-    console.log(
-      "getNeighboursBgEmail : ",
-      token,
-      user_email,
-      requested_user_email
-    );
-    if (!user_email || !requested_user_email || !token) {
-      alert("Login to access this resource");
-      return;
-    }
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-      body: JSON.stringify({ user_email, requested_user_email }), // Convert data to JSON string
-    };
-    const res = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/getNeighbours`,
-      options
-    );
-    const json = await res.json();
-    const moreData = json.data;
-
-    console.log("more-data: ", user_email, moreData);
+    const moreData = await getManagerAndReporteeByEmail(id);
+    const user_email = id;
 
     // for parent
 

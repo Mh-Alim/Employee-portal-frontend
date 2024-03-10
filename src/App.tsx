@@ -16,7 +16,7 @@ import Navbar from "./components/Navbar";
 import { Link, Route, Routes } from "react-router-dom";
 import Introduction from "./pages/Introduction.tsx";
 import Sidebar from "./components/Sidebar.tsx";
-import Profile from "./pages/Profile.tsx";
+import Profile from "./pages/Profile/Profile.tsx";
 import Logout from "./pages/Logout.tsx";
 import TreeTry1 from "./pages/TreeTry1.jsx";
 import FeatureRequest from "./pages/FeatureRequest.tsx";
@@ -65,6 +65,8 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="logout" element={<Logout />} />
             <Route path="feature-request" element={<FeatureRequest />} />
+            <Route path="search/:id" element={<Profile />} />
+
           </Route>
         </Routes>
       </Suspense>

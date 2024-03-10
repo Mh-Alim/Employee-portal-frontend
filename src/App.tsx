@@ -66,7 +66,6 @@ const App = () => {
             <Route path="logout" element={<Logout />} />
             <Route path="feature-request" element={<FeatureRequest />} />
             <Route path="search/:id" element={<Profile />} />
-
           </Route>
         </Routes>
       </Suspense>

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  ScrollToTop,
   getEmailFromLocalStorage,
   getTokenFromLocalStorage,
 } from "../../utility";
@@ -23,7 +24,7 @@ import { RxCross2 } from "react-icons/rx";
 import { CiCirclePlus } from "react-icons/ci";
 import EditModel from "./EditProfile";
 import { profileDetailsApi } from "@/api/ProfileDetailsApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 // Types
 import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
@@ -91,37 +92,49 @@ const Profile = () => {
     else getProfileDetails("");
   }, [id]);
 
-
   const [managerInfo, setManagerInfo] = useState<ManagerType>({
     name: "",
     email: "",
   });
 
-  const [reportees, setReportees] = useState<ReporteesType[]>([{name:"",email:""}])
+  const [reportees, setReportees] = useState<ReporteesType[]>([
+    { name: "", email: "" },
+  ]);
 
-
-
-  console.log("ManagerInfo: ",managerInfo);
-  const getManager = async () => {
-    const myEmail = getEmailFromLocalStorage() || "";
-    const res = await getManagerAndReporteeByEmail(myEmail);
+  console.log("ManagerInfo: ", managerInfo);
+  const getManagerAndReportee = async (user_email:string) => {
+    const res = await getManagerAndReporteeByEmail(user_email);
     console.log("res: ", res);
     setManagerInfo({
       name: res.manager.first_name,
       email: res.manager.user_email,
     });
 
-    let reportees = res.reportee.map((child:{first_name:string,user_email:string, designation:string}) => {
-      return {name: child.first_name,email: child.user_email}
-    });
+    let reportees = res.reportee.map(
+      (child: {
+        first_name: string;
+        user_email: string;
+        designation: string;
+      }) => {
+        return { name: child.first_name, email: child.user_email };
+      }
+    );
     setReportees(reportees);
   };
+
+  const {pathname} = useLocation()
   useEffect(() => {
-    getManager();
-  }, []);
+    const user_email = id || getEmailFromLocalStorage() || "";
+    getManagerAndReportee(user_email);
+  }, [pathname,id]);
+
   return (
-    <div className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
-      {TopProfileSection(profileData,id || getEmailFromLocalStorage() || "",managerInfo)}
+    <div id="profile" className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
+      {TopProfileSection(
+        profileData,
+        id || getEmailFromLocalStorage() || "",
+        managerInfo
+      )}
 
       <section className=" p-5 flex flex-col lg:flex-row  ">
         <div className=" flex-1 flex flex-col  ">
@@ -209,7 +222,12 @@ const Profile = () => {
             <div className=" flex flex-col flex-wrap ">
               <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   ">
                 <FaUserTie />
-                <span onClick={() => navigate(`/user/search/${managerInfo.email}`)}> {managerInfo.name} </span>
+                <span
+                  onClick={() => navigate(`/user/search/${managerInfo.email}`)}
+                >
+                  {" "}
+                  {managerInfo.name}{" "}
+                </span>
               </p>
             </div>
           </div>
@@ -217,10 +235,15 @@ const Profile = () => {
             <h1 className=" text-2xl tracking-wider mb-5 ">Reportee</h1>
             <div className=" flex flex-col flex-wrap  ">
               {reportees.map((rep) => (
-                <p key={rep.email} className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   ">
-                <LuUser2 />
-                <span onClick={() => navigate(`/user/search/${rep.email}`)} >{rep.name} </span>
-              </p>
+                <p
+                  key={rep.email}
+                  className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   "
+                >
+                  <LuUser2 />
+                  <span onClick={() => navigate(`/user/search/${rep.email}`)}>
+                    {rep.name}{" "}
+                  </span>
+                </p>
               ))}
             </div>
           </div>
@@ -231,13 +254,15 @@ const Profile = () => {
   );
 };
 
-const TopProfileSection = (profileData: ProfileDataType,id:string,managerInfo: ManagerType) => {
+const TopProfileSection = (
+  profileData: ProfileDataType,
+  id: string,
+  managerInfo: ManagerType
+) => {
   let isAdmin = false;
   let params = false;
 
- 
   return (
-
     <section className=" bg-glassmorphism min-h-72 flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">

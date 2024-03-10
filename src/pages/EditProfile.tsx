@@ -64,21 +64,21 @@ const EditModel = ({ name,admin }: EditProfileModelType) => {
           name="Skills"
           state={skills}
           setState={setSkills}
-          options={["Mern", "Node", "Java", "Springboot"]}
+          options={["Topup", "KYC", "Starter", "Repeat","Bnpl","Nach"]}
         />
 
         <Options
           name="Languages"
           state={langs}
           setState={setLangs}
-          options={["Hindi", "English", "Marathi", "French"]}
+          options={["Hindi", "English", "Marathi", "Bengali"]}
         />
 
         <Options
-          name="Interest"
+          name="Interests"
           state={interests}
           setState={setInterests}
-          options={["Football", "Tenish", "Cricket", "French"]}
+          options={["Backend", "Database", "SQL", "ReactJs", "NodeJs","Springboot","Java","C++"]}
         />
 
         <DialogFooter>

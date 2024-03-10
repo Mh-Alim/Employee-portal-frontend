@@ -21,6 +21,8 @@ import Logout from "./pages/Logout.tsx";
 import TreeTry1 from "./pages/TreeTry1.jsx";
 import FeatureRequest from "./pages/FeatureRequest.tsx";
 
+import { Button } from "@/components/ui/button";
+
 const App = () => {
   const dispatch = useAppDispatch();
   const val = useAppSelector((state) => state.count.value);
@@ -39,6 +41,7 @@ const App = () => {
       <AddEmployee /> */}
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
+      <Button variant="destructive">Button</Button>
 
       <Suspense fallback={<h1>Loading....</h1>}>
         <Routes>

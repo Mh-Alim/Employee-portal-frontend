@@ -41,7 +41,7 @@ const App = () => {
       <AddEmployee /> */}
       {/* <SearchEmployee /> */}
       {/* <OrganizationTreeView /> */}
-      <Button variant="destructive">Button</Button>
+      {/* <Button variant="destructive">Button</Button> */}
 
       <Suspense fallback={<h1>Loading....</h1>}>
         <Routes>

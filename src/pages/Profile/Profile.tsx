@@ -26,7 +26,8 @@ import { profileDetailsApi } from "@/api/ProfileDetailsApi";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Types
-import { ProfileDataType } from "./ProfileTypes";
+import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
+import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ const Profile = () => {
   console.log("id: ", id);
   const [profileData, setProfileData] = useState<ProfileDataType>({
     firstName: "",
-    lastName:"",
+    lastName: "",
     email: "",
     contact: 0,
     emp_id: 0,
@@ -90,9 +91,37 @@ const Profile = () => {
     else getProfileDetails("");
   }, [id]);
 
+
+  const [managerInfo, setManagerInfo] = useState<ManagerType>({
+    name: "",
+    email: "",
+  });
+
+  const [reportees, setReportees] = useState<ReporteesType[]>([{name:"",email:""}])
+
+
+
+  console.log("ManagerInfo: ",managerInfo);
+  const getManager = async () => {
+    const myEmail = getEmailFromLocalStorage() || "";
+    const res = await getManagerAndReporteeByEmail(myEmail);
+    console.log("res: ", res);
+    setManagerInfo({
+      name: res.manager.first_name,
+      email: res.manager.user_email,
+    });
+
+    let reportees = res.reportee.map((child:{first_name:string,user_email:string, designation:string}) => {
+      return {name: child.first_name,email: child.user_email}
+    });
+    setReportees(reportees);
+  };
+  useEffect(() => {
+    getManager();
+  }, []);
   return (
     <div className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
-      {TopProfileSection(profileData)}
+      {TopProfileSection(profileData,id || getEmailFromLocalStorage() || "",managerInfo)}
 
       <section className=" p-5 flex flex-col lg:flex-row  ">
         <div className=" flex-1 flex flex-col  ">
@@ -154,7 +183,10 @@ const Profile = () => {
         </div>
         <div className=" flex flex-col flex-1 text-center sm:text-left ">
           <div className=" m-5 ">
-            <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
+            <div>
+              <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
+              <p></p>
+            </div>
             <div className=" flex flex-col flex-wrap ">
               <p
                 className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
@@ -177,24 +209,19 @@ const Profile = () => {
             <div className=" flex flex-col flex-wrap ">
               <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   ">
                 <FaUserTie />
-                <span>Abhishek </span>
+                <span onClick={() => navigate(`/user/search/${managerInfo.email}`)}> {managerInfo.name} </span>
               </p>
             </div>
           </div>
           <div className=" m-5 ">
             <h1 className=" text-2xl tracking-wider mb-5 ">Reportee</h1>
             <div className=" flex flex-col flex-wrap  ">
-              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   ">
+              {reportees.map((rep) => (
+                <p key={rep.email} className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start   ">
                 <LuUser2 />
-                <span>Animesh </span>
+                <span onClick={() => navigate(`/user/search/${rep.email}`)} >{rep.name} </span>
               </p>
-              <p className=" cursor-pointer px-4 flex gap-2 items-center justify-center sm:justify-start  ">
-                <LuUser2 /> <span>Tarun Jayadevan</span>{" "}
-              </p>
-              <p className="  cursor-pointer py-2 px-4 flex gap-2 items-center justify-center sm:justify-start  ">
-                <LuUser2 />
-                <span>Anurag Rout</span>
-              </p>
+              ))}
             </div>
           </div>
         </div>
@@ -204,10 +231,13 @@ const Profile = () => {
   );
 };
 
-const TopProfileSection = (profileData: ProfileDataType) => {
+const TopProfileSection = (profileData: ProfileDataType,id:string,managerInfo: ManagerType) => {
   let isAdmin = false;
   let params = false;
+
+ 
   return (
+
     <section className=" bg-glassmorphism min-h-72 flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
@@ -285,9 +315,11 @@ const TopProfileSection = (profileData: ProfileDataType) => {
             {" "}
             {(isAdmin || !params) && (
               <EditModel
+                manager={managerInfo.email}
                 profileData={profileData}
                 admin={true}
                 name="profle"
+                user_email={id}
               />
             )}
           </button>{" "}

@@ -18,3 +18,14 @@ export type ProfileDataType = {
     interests?:string[];
 
   };
+
+
+  export type ManagerType = {
+    name: string,
+    email: string
+  }
+
+  export type ReporteesType = {
+    name: string,
+    email: string,
+  }

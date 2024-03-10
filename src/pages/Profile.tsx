@@ -37,6 +37,37 @@ const Profile = () => {
     joinedAt: "",
   });
 
+  const handleDownload = async () => {
+    try {
+      console.log("Animesh here starting");
+      const options = {
+        method: "GET",
+      };
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/downloadCheck`,
+        options
+      );
+      const { url } = await res.json();
+      console.log("Animesh recievd json ",url);
+
+      const fileResponse = await fetch(url);
+      const blob = await fileResponse.blob();
+
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = blobUrl;
+      a.download = 'filename.jpg';
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(blobUrl);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+  };
+
   const getProfileDetails = async () => {
     let user_email = getEmailFromLocalStorage();
     let token = getTokenFromLocalStorage();
@@ -202,7 +233,7 @@ const Profile = () => {
           <div className=" m-5 ">
             <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
             <div className=" flex flex-col flex-wrap ">
-              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center  ">
+              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center" onClick={handleDownload}>
                 <MdHomeRepairService />
                 <span>OfferLetter.pdf </span>
               </p>

@@ -1,5 +1,5 @@
 import React, { useRef ,useState} from "react";
-import { addEmployeeApi,uploadFile } from "../api/AddEmployee";
+import { addEmployeeApi } from "../api/AddEmployee";
 
 const AddEmployee = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -20,7 +20,7 @@ const AddEmployee = () => {
       setSelectedFile(event.target.files[0]);
     }
   };
-  
+
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

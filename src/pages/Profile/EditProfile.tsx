@@ -27,19 +27,19 @@ type EditProfileModelType = {
 const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
   console.log("profiledata: ", profileData);
   const [skills, setSkills] = useState<string[]>(
-    profileData.skills ? profileData.skills : [""]
+    profileData.skills ? profileData.skills : []
   );
-  const [langs, setLangs] = useState<string[]>(
-    profileData.languages ? profileData.languages : [""]
+  const [languages, setLanguages] = useState<string[]>(
+    profileData.languages ? profileData.languages : []
   );
   const [interests, setInterests] = useState<string[]>(
-    profileData.languages ? profileData.languages : [""]
+    profileData.languages ? profileData.languages : []
   );
 
   const [firstName, setFirstName] = useState<string>(profileData.firstName);
   const [lastName, setLastName] = useState<string>(profileData.lastName);
   const [managerEmail, setManagerEmail] = useState<string>(profileData.email);
-  const [phone, setPhone] = useState<number>(profileData.contact);
+  const [contactNumber, setContactNumber] = useState<number>(profileData.contact);
   const [designation, setDesignation] = useState<string>(
     profileData.designation
   );
@@ -61,7 +61,7 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
     setFirstName(profileData.firstName);
     setLastName(profileData.lastName);
     setManagerEmail(profileData.email);
-    setPhone(profileData.contact);
+    setContactNumber(profileData.contact);
     setDesignation(profileData.designation);
     setEmpCode(profileData.emp_id);
     setJoinedAt(profileData.joinedAt);
@@ -86,7 +86,7 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
       firstName,
       lastName,
       managerEmail,
-      phone,
+      contactNumber,
       designation,
       empCode,
       joinedAt,
@@ -96,27 +96,27 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
       linkedinUrl,
       twitterUrl,
       skills,
-      langs,
+      languages,
       interests
     );
 
     const data = {
       firstName,
       lastName,
-      phone,
+      contactNumber,
       designation,
       empCode,
       joinedAt,
       pod,
       managerEmail,
-      socialMediaLinks: {
-        slackUrl,
-        instagramUrl,
-        twitterUrl,
-        linkedinUrl,
-      },
+      profileUrls: [
+        { name: "slackUrl", url: slackUrl },
+        { name: "instagramUrl", url: instagramUrl },
+        { name: "twitterUrl", url: twitterUrl },
+        { name: "linkedinUrl", url: linkedinUrl }
+      ],
       skills,
-      langs,
+      languages,
       interests,
     };
     EditInfoApi(data);
@@ -179,9 +179,9 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
           <CustomInput
             type="number"
             placeholder=""
-            name="Phone"
-            value={phone}
-            setState={setPhone}
+            name="Contact Number"
+            value={contactNumber}
+            setState={setContactNumber}
           />
         )}
         {admin && (
@@ -246,21 +246,21 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
           name="Skills"
           state={skills}
           setState={setSkills}
-          options={["Mern", "Node", "Java", "Springboot"]}
+          options={["Topup", "KYC", "Starter", "Repeat","Bnpl","Nach"]}
         />
 
         <Options
           name="Languages"
-          state={langs}
-          setState={setLangs}
-          options={["Hindi", "English", "Marathi", "French"]}
+          state={languages}
+          setState={setLanguages}
+          options={["English", "Hindi", "Marathi", "Bengali"]}
         />
 
         <Options
           name="Interest"
           state={interests}
           setState={setInterests}
-          options={["Football", "Tenish", "Cricket", "French"]}
+          options={["Frontend", "Backend", "Database", "SQL","ReactJs","NodeJs","Springboot","Java","C++"]}
         />
 
         <DialogFooter>

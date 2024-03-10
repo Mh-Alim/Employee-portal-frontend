@@ -1,21 +1,21 @@
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
+type ProfileUrl = {
+  name: string;
+  url: string;
+};
+
 type EditInfoDataType = {
   firstName: string;
   lastName : string;
-  phone: number;
+  contactNumber: number;
   designation: string;
   empCode: number;
   joinedAt: string;
   pod: string;
-  socialMediaLinks: {
-    slackUrl: string;
-    instagramUrl: string;
-    twitterUrl: string;
-    linkedinUrl: string;
-  };
+  profileUrls: ProfileUrl[];
   skills: string[];
-  langs: string[];
+  languages: string[];
   interests: string[];
 };
 

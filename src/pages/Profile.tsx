@@ -69,37 +69,6 @@ const Profile = () => {
     }
   };
 
-  const handleDownload = async () => {
-    try {
-      console.log("Animesh here starting");
-      const options = {         
-        method: "GET",
-      };
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/downloadCheck`,
-        options
-      );
-      const { url } = await res.json();
-      console.log("Animesh recievd json ",url);
-
-      const fileResponse = await fetch(url);
-      const blob = await fileResponse.blob();
-
-      const blobUrl = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = blobUrl;
-      a.download = 'filename.jpg';
-      document.body.appendChild(a);
-      a.click();
-      URL.revokeObjectURL(blobUrl);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
-  };
-
   const modelRef = useRef(null);
   const getProfileDetails = async () => {
     let user_email = getEmailFromLocalStorage();

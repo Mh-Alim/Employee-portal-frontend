@@ -35,7 +35,8 @@ const Profile = () => {
   const { id } = useParams();
   console.log("id: ", id);
   const [profileData, setProfileData] = useState<ProfileDataType>({
-    name: "",
+    firstName: "",
+    lastName:"",
     email: "",
     contact: 0,
     emp_id: 0,
@@ -219,7 +220,7 @@ const TopProfileSection = (profileData: ProfileDataType) => {
         <div className=" flex gap-5 pt-5 flex-col  justify-between text-center lg:text-left  ">
           <div className=" pl-4 ">
             <h1 className=" text-5xl tracking-wider font-work_sans font-bold ">
-              {profileData.name}
+              {profileData.firstName} {profileData.lastName}
             </h1>
             <p className=" italic mt-3 text-emerald-50 tracking-wider ">
               {profileData.designation}

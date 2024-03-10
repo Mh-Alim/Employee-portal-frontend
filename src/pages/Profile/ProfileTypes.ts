@@ -1,7 +1,8 @@
 
 
 export type ProfileDataType = {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     contact: number;
     emp_id: number;

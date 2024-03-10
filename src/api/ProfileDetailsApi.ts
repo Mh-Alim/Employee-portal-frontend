@@ -28,7 +28,8 @@ export const profileDetailsApi = async (emailInRoute:string) => {
     const details = json.data;
 
     const userData = {
-      name: `${details.firstName} ${details.lastName}`,
+      firstName: details.firstName,
+      lastName: details.lastName,
       email: details.userEmail,
       contact: details.contactNumber,
       designation: details.designation,

@@ -1,7 +1,8 @@
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
 type EditInfoDataType = {
-  username: string;
+  firstName: string;
+  lastName : string;
   phone: number;
   designation: string;
   empCode: number;
@@ -31,10 +32,12 @@ export const EditInfoApi = async (
   const modifiedData  ={
     ...data,user_email
   }
+  console.log("Printing res ",JSON.stringify(data));
   const options = {
     method: "POST",
     headers: {
       token: token,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data), // Convert data to JSON string
   };

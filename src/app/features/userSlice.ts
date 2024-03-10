@@ -4,7 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
 interface UserState {
-  name: string,
+  firstName: string,
+  lastName:string,
   email: string,
   contact : number,
   emp_id: number,
@@ -16,7 +17,8 @@ interface UserState {
 
 // Define the initial state using that type
 const initialState: UserState = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email:"",
   contact:0,
   emp_id:0,
@@ -31,7 +33,8 @@ export const userSlice = createSlice({
   reducers: {
     addUser: (state,action: PayloadAction<UserState>) => {
       console.log("useSlice: ",action.payload);
-      state.name = action.payload.name;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
       state.email = action.payload.email;
       state.contact= action.payload.contact;
       state.emp_id = action.payload.emp_id;

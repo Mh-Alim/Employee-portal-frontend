@@ -36,7 +36,8 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
     profileData.languages ? profileData.languages : [""]
   );
 
-  const [username, setUsername] = useState<string>(profileData.name);
+  const [firstName, setFirstName] = useState<string>(profileData.firstName);
+  const [lastName, setLastName] = useState<string>(profileData.lastName);
   const [managerEmail, setManagerEmail] = useState<string>(profileData.email);
   const [phone, setPhone] = useState<number>(profileData.contact);
   const [designation, setDesignation] = useState<string>(
@@ -57,7 +58,8 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
   );
 
   useEffect(() => {
-    setUsername(profileData.name);
+    setFirstName(profileData.firstName);
+    setLastName(profileData.lastName);
     setManagerEmail(profileData.email);
     setPhone(profileData.contact);
     setDesignation(profileData.designation);
@@ -81,7 +83,8 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
 
   const saveInfoClickHandler = () => {
     console.log(
-      username,
+      firstName,
+      lastName,
       managerEmail,
       phone,
       designation,
@@ -98,7 +101,8 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
     );
 
     const data = {
-      username,
+      firstName,
+      lastName,
       phone,
       designation,
       empCode,
@@ -139,9 +143,18 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
           <CustomInput
             type="text"
             placeholder=""
-            name="Name"
-            value={username}
-            setState={setUsername}
+            name="First Name"
+            value={firstName}
+            setState={setFirstName}
+          />
+        )}
+        {admin && (
+          <CustomInput
+            type="text"
+            placeholder=""
+            name="Last Name"
+            value={lastName}
+            setState={setLastName}
           />
         )}
         {admin && (

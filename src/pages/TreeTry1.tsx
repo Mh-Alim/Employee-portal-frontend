@@ -6,12 +6,13 @@ import {
 } from "react-google-charts";
 import { useAppSelector } from "../app/hooks";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
-
+import "./Tree.css";
 const getNodeJsx = (id: string, name: string, designation: string) => {
-  return `<div style=" background:"white"; color:"white" ; padding:15px; margin-bottom: 5px ;height:60px;border-radius:100%; display:flex; justify-content:center; align-item:center;flex-direction:column; " >
+  return `<div class="each-node" >
+      <div><img src="https://www.shutterstock.com/image-vector/young-man-anime-style-character-600nw-2313503433.jpg" ></div>
       <p style="display:none;"> ${id} </p>
-      <p style="margin:10px; margin"  >${name}</p>
-      <p style="margin:10px; margin"> ${designation} </p>
+      <p>${name}</p>
+      <p> ${designation} </p>
     </div>`;
 };
 
@@ -36,13 +37,12 @@ const getNodeJsx = (id: string, name: string, designation: string) => {
 //   ],
 // ];
 
-export const options = {
+const options = {
   allowHtml: true,
   allowCollapse: true,
-  nodeClass:
-    "text-white bg-glassmorphism cursor-pointer font-work_sans min-w-[14rem]",
+  nodeClass: "tree-node",
 
-  selectedNodeClass: "bg-red-300",
+  selectedNodeClass: "selected-tree-node",
   size: "medium",
   compactRows: true,
 
@@ -274,10 +274,10 @@ const TreeTry1 = () => {
 
                   setDummyData((prev: any) => {
                     const cprev = [...prev];
-                    console.log("prev: ", prev);
                     let selectedItem = 1;
                     if (chart.getSelection().length > 0)
                       selectedItem = chart.getSelection()[0].row + 1;
+                    else return prev;
 
                     console.log(chart.getSelection());
                     const uniqueId = prev[selectedItem][2]; // email

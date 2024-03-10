@@ -14,8 +14,11 @@ import { MdAttachment } from "react-icons/md";
 import { MdHomeRepairService } from "react-icons/md";
 import { RxResume } from "react-icons/rx";
 import { FaFileDownload, FaRegEdit } from "react-icons/fa";
+
 import { LuUser2 } from "react-icons/lu";
 import { RxCross2 } from "react-icons/rx";
+import { CiCirclePlus } from "react-icons/ci";
+import EditModel from "./EditProfile";
 
 type ProfileDataType = {
   name: string;
@@ -49,27 +52,28 @@ const Profile = () => {
         options
       );
       const { url } = await res.json();
-      console.log("Animesh recievd json ",url);
+      console.log("Animesh recievd json ", url);
 
       const fileResponse = await fetch(url);
       const blob = await fileResponse.blob();
 
       const blobUrl = URL.createObjectURL(blob);
 
-      const a = document.createElement('a');
-      a.style.display = 'none';
+      const a = document.createElement("a");
+      a.style.display = "none";
       a.href = blobUrl;
-      a.download = 'filename.jpg';
+      a.download = "filename.jpg";
       document.body.appendChild(a);
       a.click();
       URL.revokeObjectURL(blobUrl);
       document.body.removeChild(a);
     } catch (error) {
-      console.error('Error downloading file:', error);
+      console.error("Error downloading file:", error);
     }
   };
 
   const modelRef = useRef(null);
+
   const getProfileDetails = async () => {
     let user_email = getEmailFromLocalStorage();
     let token = getTokenFromLocalStorage();
@@ -102,6 +106,7 @@ const Profile = () => {
     };
     setProfileData(userData);
     dispatch(addUser(userData));
+    console.log("comging here");
   };
   useEffect(() => {
     getProfileDetails();
@@ -113,6 +118,9 @@ const Profile = () => {
     dialog?.classList.toggle("!opacity-100");
     dialog?.classList.toggle("!scale-100");
   };
+
+  let isAdmin = false;
+  let params = false;
   return (
     <div className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
       <section className=" bg-glassmorphism min-h-72 flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
@@ -181,7 +189,7 @@ const Profile = () => {
               className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   "
             >
               {" "}
-              <FaRegEdit />{" "}
+              {(isAdmin || !params) && <EditModel admin={true} name="profle" />}
             </button>{" "}
           </div>
         </div>
@@ -190,8 +198,8 @@ const Profile = () => {
       <section className=" p-5 flex flex-col lg:flex-row  ">
         <div className=" flex-1 flex flex-col  ">
           <div className=" m-5 ">
-            <h1 className=" text-2xl tracking-wider mb-5 text-center sm:text-left ">
-              Skills
+            <h1 className=" text-2xl tracking-wider flex gap-4 items-center mb-5 text-center sm:text-left ">
+              <span>Skills</span>
             </h1>
             <div className=" flex flex-wrap justify-center sm:justify-start  ">
               <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg  ">
@@ -249,7 +257,10 @@ const Profile = () => {
           <div className=" m-5 ">
             <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
             <div className=" flex flex-col flex-wrap ">
-              <p className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start" onClick={handleDownload}>
+              <p
+                className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
+                onClick={handleDownload}
+              >
                 <MdHomeRepairService />
                 <span>OfferLetter.pdf </span>
               </p>
@@ -289,71 +300,7 @@ const Profile = () => {
           </div>
         </div>
       </section>
-      <EditProfileModel editClickHandler={editClickHandler} />
-    </div>
-  );
-};
-
-type EditProfileModelType = {
-  editClickHandler: () => void;
-};
-const EditProfileModel = ({ editClickHandler }: EditProfileModelType) => {
-  return (
-    <div
-      id="model"
-      className=" absolute top-1/4 left-1/4 min-w-96 min-h-96 bg-slate-800 transition-transform duration-300 px-8 z-[-1] opacity-0 rounded-lg scale-50 backdrop-blur-md "
-    >
-      <div>
-        <p className=" flex justify-end text-3xl py-2  ">
-          <RxCross2 className=" cursor-pointer " onClick={editClickHandler} />
-        </p>
-        <form className="  py-5 " action="">
-          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
-            <MdLocalPhone className=" ml-2 text-2xl " />
-            <input
-              className=" pl-4 pr-2 py-1 w-full outline-none remove-arrow  s-bg-white bg-transparent "
-              type="number"
-              placeholder="phone number"
-            />
-          </div>
-
-          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
-            <FaTwitter className=" ml-2 text-2xl " />
-            <input
-              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
-              type="text"
-              placeholder="profile link"
-            />
-          </div>
-
-          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
-            <IoLogoLinkedin className=" ml-2 text-2xl " />
-            <input
-              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
-              type="text"
-              placeholder="profile link"
-            />
-          </div>
-
-          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
-            <BsSlack className=" ml-2 text-2xl " />
-            <input
-              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
-              type="text"
-              placeholder="profile link"
-            />
-          </div>
-
-          <div className=" flex items-center s-bg-white p-1 ro rounded-md outline mb-6  ">
-            <AiFillInstagram className=" ml-2 text-2xl " />
-            <input
-              className=" pl-4 pr-2 py-1 w-full outline-none  s-bg-white bg-transparent "
-              type="text"
-              placeholder="profile link"
-            />
-          </div>
-        </form>
-      </div>
+      {/* <EditProfileModel editClickHandler={editClickHandler} /> */}
     </div>
   );
 };

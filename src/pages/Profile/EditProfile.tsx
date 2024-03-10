@@ -18,13 +18,17 @@ import { Label } from "@/components/ui/label";
 import { FaRegEdit } from "react-icons/fa";
 import { EditInfoApi } from "@/api/EditProfile";
 import { ProfileDataType } from "./ProfileTypes";
+import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
+import { getEmailFromLocalStorage } from "@/utility";
 
 type EditProfileModelType = {
   name: string;
   admin: boolean;
   profileData: ProfileDataType;
+  manager: string,
+  user_email:string
 };
-const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
+const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileModelType) => {
   console.log("profiledata: ", profileData);
   const [skills, setSkills] = useState<string[]>(
     profileData.skills ? profileData.skills : []
@@ -38,7 +42,7 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
 
   const [firstName, setFirstName] = useState<string>(profileData.firstName);
   const [lastName, setLastName] = useState<string>(profileData.lastName);
-  const [managerEmail, setManagerEmail] = useState<string>(profileData.email);
+  const [managerEmail, setManagerEmail] = useState<string>(manager);
   const [contactNumber, setContactNumber] = useState<number>(profileData.contact);
   const [designation, setDesignation] = useState<string>(
     profileData.designation
@@ -47,6 +51,7 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
   const [joinedAt, setJoinedAt] = useState<string>(profileData.joinedAt);
   const [pod, setPod] = useState<string>(profileData.pod || "");
   const [slackUrl, setSlackUrl] = useState<string>(profileData.slackUrl || "");
+
   const [instagramUrl, setInstagramUrl] = useState<string>(
     profileData.instagramUrl || ""
   );
@@ -57,6 +62,8 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
     profileData.linkedinUrl || ""
   );
 
+  console.log("Mange",manager)
+  useEffect(() => {setManagerEmail(manager)},[manager])
   useEffect(() => {
     setFirstName(profileData.firstName);
     setLastName(profileData.lastName);
@@ -118,10 +125,15 @@ const EditModel = ({ name, admin, profileData }: EditProfileModelType) => {
       skills,
       languages,
       interests,
+      user_email,
+      requested_user_email : getEmailFromLocalStorage() || ""
+      
     };
+    console.log("url parseing: ",user_email)
     EditInfoApi(data);
   };
 
+  
   const changeHandler = () => {};
   return (
     <Dialog>

@@ -89,14 +89,13 @@ const TreeTry1 = () => {
         getNodeJsx(child.user_email, child.first_name, child.designation),
         getNodeJsx(
           user_email ? user_email : "",
-          mySelf.name,
+          `${mySelf.firstName} ${mySelf.lastName}`,
           mySelf.designation
         ),
         child.user_email,
       ];
     });
 
-    console.log("name: ", mySelf.name);
     const firstLevelData = [
       ["", "", ""],
       [
@@ -109,7 +108,7 @@ const TreeTry1 = () => {
         output.manager.user_email,
       ],
       [
-        getNodeJsx(user_email, mySelf.name, mySelf.designation),
+        getNodeJsx(user_email, `${mySelf.firstName} ${mySelf.lastName}`, mySelf.designation),
         getNodeJsx(
           output.manager.user_email,
           output.manager.first_name,

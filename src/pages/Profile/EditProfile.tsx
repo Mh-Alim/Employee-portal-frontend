@@ -25,11 +25,16 @@ type EditProfileModelType = {
   name: string;
   admin: boolean;
   profileData: ProfileDataType;
-  manager: string,
-  user_email:string
+  manager: string;
+  user_email: string;
 };
-const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileModelType) => {
-  console.log("profiledata: ", profileData);
+const EditModel = ({
+  name,
+  admin,
+  profileData,
+  manager,
+  user_email,
+}: EditProfileModelType) => {
   const [skills, setSkills] = useState<string[]>(
     profileData.skills ? profileData.skills : []
   );
@@ -43,7 +48,9 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
   const [firstName, setFirstName] = useState<string>(profileData.firstName);
   const [lastName, setLastName] = useState<string>(profileData.lastName);
   const [managerEmail, setManagerEmail] = useState<string>(manager);
-  const [contactNumber, setContactNumber] = useState<number>(profileData.contact);
+  const [contactNumber, setContactNumber] = useState<number>(
+    profileData.contact
+  );
   const [designation, setDesignation] = useState<string>(
     profileData.designation
   );
@@ -51,7 +58,6 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
   const [joinedAt, setJoinedAt] = useState<string>(profileData.joinedAt);
   const [pod, setPod] = useState<string>(profileData.pod || "");
   const [slackUrl, setSlackUrl] = useState<string>(profileData.slackUrl || "");
-
   const [instagramUrl, setInstagramUrl] = useState<string>(
     profileData.instagramUrl || ""
   );
@@ -62,8 +68,9 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
     profileData.linkedinUrl || ""
   );
 
-  console.log("Mange",manager)
-  useEffect(() => {setManagerEmail(manager)},[manager])
+  useEffect(() => {
+    setManagerEmail(manager);
+  }, [manager]);
   useEffect(() => {
     setFirstName(profileData.firstName);
     setLastName(profileData.lastName);
@@ -89,24 +96,6 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
   }, [profileData]);
 
   const saveInfoClickHandler = () => {
-    console.log(
-      firstName,
-      lastName,
-      managerEmail,
-      contactNumber,
-      designation,
-      empCode,
-      joinedAt,
-      pod,
-      slackUrl,
-      instagramUrl,
-      linkedinUrl,
-      twitterUrl,
-      skills,
-      languages,
-      interests
-    );
-
     const data = {
       firstName,
       lastName,
@@ -120,29 +109,23 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
         { name: "slackUrl", url: slackUrl },
         { name: "instagramUrl", url: instagramUrl },
         { name: "twitterUrl", url: twitterUrl },
-        { name: "linkedinUrl", url: linkedinUrl }
+        { name: "linkedinUrl", url: linkedinUrl },
       ],
       skills,
       languages,
       interests,
       user_email,
-      requested_user_email : getEmailFromLocalStorage() || ""
-      
+      requested_user_email: getEmailFromLocalStorage() || "",
     };
-    console.log("url parseing: ",user_email)
     EditInfoApi(data);
   };
 
-  
-  const changeHandler = () => {};
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* <Button variant="outline"> */}
         <FaRegEdit />
-        {/* </Button> */}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-black text-white">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -150,7 +133,6 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           </DialogDescription>
         </DialogHeader>
 
-        {/* my Details inputs  */}
         {admin && (
           <CustomInput
             type="text"
@@ -160,6 +142,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setFirstName}
           />
         )}
+
         {admin && (
           <CustomInput
             type="text"
@@ -169,6 +152,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setLastName}
           />
         )}
+
         {admin && (
           <CustomInput
             type="text"
@@ -178,6 +162,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setDesignation}
           />
         )}
+
         {admin && (
           <CustomInput
             setState={setPod}
@@ -187,6 +172,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             value={pod}
           />
         )}
+
         {admin && (
           <CustomInput
             type="number"
@@ -196,6 +182,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setContactNumber}
           />
         )}
+
         {admin && (
           <CustomInput
             type="email"
@@ -205,6 +192,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setManagerEmail}
           />
         )}
+
         {admin && (
           <CustomInput
             type="date"
@@ -214,6 +202,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setJoinedAt}
           />
         )}
+
         {admin && (
           <CustomInput
             type="number"
@@ -223,7 +212,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
             setState={setEmpCode}
           />
         )}
-        {/* social media url  */}
+
         <CustomInput
           setState={setSlackUrl}
           type="text"
@@ -231,6 +220,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           name="slack"
           value={slackUrl}
         />
+
         <CustomInput
           setState={setTwitterUrl}
           type="text"
@@ -238,6 +228,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           name="twitter"
           value={twitterUrl}
         />
+
         <CustomInput
           setState={setLinkedinUrl}
           type="text"
@@ -245,6 +236,7 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           name="Linkedin"
           value={linkedinUrl}
         />
+
         <CustomInput
           type="text"
           placeholder="url"
@@ -253,12 +245,11 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           setState={setInstagramUrl}
         />
 
-        {/* options inputs  */}
         <Options
           name="Skills"
           state={skills}
           setState={setSkills}
-          options={["Topup", "KYC", "Starter", "Repeat","Bnpl","Nach"]}
+          options={["Topup", "KYC", "Starter", "Repeat", "Bnpl", "Nach"]}
         />
 
         <Options
@@ -272,7 +263,17 @@ const EditModel = ({ name, admin, profileData,manager,user_email }: EditProfileM
           name="Interest"
           state={interests}
           setState={setInterests}
-          options={["Frontend", "Backend", "Database", "SQL","ReactJs","NodeJs","Springboot","Java","C++"]}
+          options={[
+            "Frontend",
+            "Backend",
+            "Database",
+            "SQL",
+            "ReactJs",
+            "NodeJs",
+            "Springboot",
+            "Java",
+            "C++",
+          ]}
         />
 
         <DialogFooter>
@@ -326,10 +327,10 @@ type EditOptionTypes = {
 
 const Options = ({ name, state, setState, options }: EditOptionTypes) => {
   return (
-    <div className="grid  ">
+    <div className="grid">
       <div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="name" className="text-white text-right">
             {name}
           </Label>
           <select
@@ -339,7 +340,7 @@ const Options = ({ name, state, setState, options }: EditOptionTypes) => {
                 return [...prev, e.target.value];
               });
             }}
-            className=" w-full p-1 col-span-3  outline-none border-2   border-slate-100 rounded-lg bg-transparent"
+            className="w-full p-1 col-span-3 outline-none border-2 border-white rounded-lg bg-black text-white"
             name=""
             id=""
           >
@@ -347,21 +348,26 @@ const Options = ({ name, state, setState, options }: EditOptionTypes) => {
               Select
             </option>
             {options.map((e) => (
-              <option value={`${e}`}>{e}</option>
+              <option key={e} value={e}>
+                {e}
+              </option>
             ))}
           </select>
         </div>
-        <div className=" pl-5 pt-3 w-full flex flex-wrap ">
+        <div className="pl-5 pt-3 w-full flex flex-wrap">
           {state.map((e, index) =>
-            e.length == 0 ? undefined : (
-              <p className=" w-fit py-1 px-3 mx-1 my-1  bg-slate-300 rounded-xl flex justify-center items-center ">
-                <span className=" mr-3 ">{e}</span>
-                <span className=" flex justify-center items-center text-white text-xl rounded-full ">
+            e.length === 0 ? undefined : (
+              <p
+                key={e}
+                className="w-fit py-1 px-3 mx-1 my-1 bg-white text-black rounded-xl flex justify-center items-center"
+              >
+                <span className="mr-3">{e}</span>
+                <span className="flex justify-center items-center text-black text-xl rounded-full">
                   <RxCrossCircled
-                    className=" cursor-pointer "
+                    className="cursor-pointer"
                     onClick={() => {
                       setState((prev: any) =>
-                        prev.filter((ele: string, idx: number) => idx != index)
+                        prev.filter((ele: string, idx: number) => idx !== index)
                       );
                     }}
                   />

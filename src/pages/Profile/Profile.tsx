@@ -1,42 +1,28 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  ScrollToTop,
-  getEmailFromLocalStorage,
-  getTokenFromLocalStorage,
-} from "../../utility";
+import React, { useEffect, useState } from "react";
+import { getEmailFromLocalStorage } from "../../utility";
 import { addUser } from "../../app/features/userSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { MdLocalPhone } from "react-icons/md";
-import { CiLocationOn, CiSearch } from "react-icons/ci";
-import { RiHomeOfficeLine } from "react-icons/ri";
-import { MdOutlineLocalPostOffice } from "react-icons/md";
-import { BsSlack } from "react-icons/bs";
-import { IoLogoLinkedin } from "react-icons/io5";
-import { FaTwitter, FaUserTie } from "react-icons/fa6";
-import { AiFillInstagram } from "react-icons/ai";
-import { MdAttachment } from "react-icons/md";
-import { MdHomeRepairService } from "react-icons/md";
-import { RxCrossCircled, RxResume } from "react-icons/rx";
-import { FaFileDownload, FaRegEdit } from "react-icons/fa";
 
-import { LuUser2 } from "react-icons/lu";
-import { RxCross2 } from "react-icons/rx";
-import { CiCirclePlus } from "react-icons/ci";
-import EditModel from "./EditProfile";
 import { profileDetailsApi } from "@/api/ProfileDetailsApi";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+// Icons
+import { FaUserTie } from "react-icons/fa6";
+import { MdHomeRepairService } from "react-icons/md";
+import { RxResume } from "react-icons/rx";
+import { FaFileDownload } from "react-icons/fa";
+import { LuUser2 } from "react-icons/lu";
 
 // Types
 import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import Attachment from "./Attachment";
+import TopProfileSection from "./TopProfileSection";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log("id: ", id);
   const [profileData, setProfileData] = useState<ProfileDataType>({
     firstName: "",
     lastName: "",
@@ -49,7 +35,6 @@ const Profile = () => {
 
   const handleDownload = async () => {
     try {
-      console.log("Animesh here starting");
       const options = {
         method: "GET",
       };
@@ -58,7 +43,6 @@ const Profile = () => {
         options
       );
       const { url } = await res.json();
-      console.log("Animesh recievd json ", url);
 
       const fileResponse = await fetch(url);
       const blob = await fileResponse.blob();
@@ -79,7 +63,6 @@ const Profile = () => {
   };
 
   const getProfileDetails = async (emailId: string) => {
-    console.log("emailInRoute: ", emailId);
     const userData = await profileDetailsApi(emailId);
     if (!userData) {
       alert("some error while callingn for profileDetailsApi ");
@@ -102,10 +85,8 @@ const Profile = () => {
     { name: "", email: "" },
   ]);
 
-  console.log("ManagerInfo: ", managerInfo);
   const getManagerAndReportee = async (user_email: string) => {
     const res = await getManagerAndReporteeByEmail(user_email);
-    console.log("res: ", res);
     setManagerInfo({
       name: res.manager.first_name,
       email: res.manager.user_email,
@@ -256,110 +237,11 @@ const Profile = () => {
         </div>
       </section>
       {/* <EditProfileModel editClickHandler={editClickHandler} /> */}
-      <button onClick={() => navigate("/tree-view")} >TreeView</button>
+      <button onClick={() => navigate("/tree-view")}>TreeView</button>
     </div>
   );
 };
 
-const TopProfileSection = (
-  profileData: ProfileDataType,
-  id: string,
-  managerInfo: ManagerType
-) => {
-  let isAdmin = false;
-  let params = false;
-
-  return (
-    <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
-      <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
-        <div className=" object-cover flex justify-center items-center mt-5    ">
-          <img
-            src="https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg"
-            alt="hello"
-            className=" rounded-lg w-64 h-64 object-cover  "
-          />
-        </div>
-        <div className=" flex gap-5 pt-5 flex-col  justify-between text-center lg:text-left  ">
-          <div className=" pl-4 ">
-            <h1 className=" text-5xl tracking-wider font-work_sans font-bold ">
-              {profileData.firstName} {profileData.lastName}
-            </h1>
-            <p className=" italic mt-3 text-emerald-50 tracking-wider ">
-              {profileData.designation}
-            </p>
-          </div>
-
-          <div className=" flex flex-col md:flex-row md:justify-center   ">
-            <div>
-              <div className=" m-3 flex gap-1  items-center justify-center md:justify-start ">
-                <CiLocationOn />
-                <span> Moneyview, Bellandur</span>
-              </div>
-              <div className=" m-3 flex gap-1  items-center justify-center md:justify-start ">
-                <MdLocalPhone />
-                <span>{profileData.contact}</span>
-              </div>
-            </div>
-            <div>
-              <div className="  m-3 flex gap-1 items-center justify-center md:justify-start ">
-                <RiHomeOfficeLine />
-                <span>{profileData.pod || "Growth pod"}</span>
-              </div>
-              <div className=" m-3 flex gap-1 items-center justify-center md:justify-start ">
-                <MdOutlineLocalPostOffice />
-                <span>{profileData.email}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className=" p-1 md:p-5 flex flex-col md:flex-row justify-between lg:flex-row xl:flex-col  ">
-        <div className=" flex gap-5 justify-center  items-center text-xl ">
-          <span className=" cursor-pointer ">
-            <BsSlack className=" transition-all duration-300 hover:scale-125 " />
-          </span>
-          <a
-            target="_blank"
-            href="https://linkedin.com"
-            className=" cursor-pointer "
-          >
-            <IoLogoLinkedin className=" transition-all duration-300 hover:scale-125 " />
-          </a>
-          <a
-            target="_blank"
-            href="https://twitter.com"
-            className=" cursor-pointer "
-          >
-            <FaTwitter className=" transition-all duration-300 hover:scale-125 " />
-          </a>
-          <a
-            target="_blank"
-            href="https://instagram.com"
-            className=" cursor-pointer "
-          >
-            <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />
-          </a>
-        </div>
-        <div className=" text-right ">
-          {" "}
-          <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
-            {" "}
-            {(isAdmin || !params) && (
-              <EditModel
-                manager={managerInfo.email}
-                profileData={profileData}
-                admin={true}
-                name="profle"
-                user_email={id}
-              />
-            )}
-          </button>{" "}
-        </div>
-      </div>
-    </section>
-  );
-};
 const Image = () => {
   return (
     <div className="">

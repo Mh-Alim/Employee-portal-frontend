@@ -1,44 +1,33 @@
+import { forgetPasswordApi } from "@/api/ForgetPasswordApi";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EmailForm = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const user_email = emailRef.current?.value;
-
-      if (!user_email) return alert("Fill the form");
-
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_email }), // Convert data to JSON string
-      };
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
-        options
-      );
-      const json = await res.json();
-      localStorage.setItem("eportal_token", json.data);
-      localStorage.setItem("eportal_user_email", user_email);
-      navigate("/user/profile");
-    } catch (err) {
-      alert("some error in login ");
-      console.log("err: ", err);
+    console.log("coming email: ", emailRef.current?.value);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = true;
+      buttonRef.current.classList.add("!bg-slate-400");
+    }
+    if (!emailRef.current?.value) return;
+    await forgetPasswordApi(emailRef.current?.value, navigate);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = false;
+      buttonRef.current.classList.remove("!bg-slate-400");
     }
   };
+
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center     ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center   bg-circule     ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">

@@ -1,48 +1,64 @@
+import { changePasswordApi } from "@/api/ForgetPasswordApi";
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NewPassword = () => {
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const buttonRef = useRef(null);
+  const newPassRef = useRef<HTMLInputElement | null>(null);
+  const confNewPassRef = useRef<HTMLInputElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
 
+
+
+  const location = useLocation();
+  const {otp,user_email} = location.state;
+
+  console.log("Otp and user_email: ",otp,user_email);
+
   useEffect(() => {
-    emailRef.current?.focus();
+    newPassRef.current?.focus();
   }, []);
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const user_email = emailRef.current?.value;
+    console.log("coming email: ", newPassRef.current?.value);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = true;
+      buttonRef.current.classList.add("!bg-slate-400");
+    }
 
-      if (!user_email) return alert("Fill the form");
+    const password = newPassRef.current?.value;
+    const confNewPassword = confNewPassRef.current?.value;
+    if(!password || !confNewPassRef) {
+      alert("fill the empty fields");
+      return;
 
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_email }), // Convert data to JSON string
-      };
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
-        options
-      );
-      const json = await res.json();
-      localStorage.setItem("eportal_token", json.data);
-      localStorage.setItem("eportal_user_email", user_email);
-      navigate("/user/profile");
-    } catch (err) {
-      alert("some error in login ");
-      console.log("err: ", err);
+    }
+
+    if(password !== confNewPassword) {
+      alert("password doesnt match");
+      return 
+    }
+
+    if(!otp || !user_email) {
+      navigate("/forget/email");
+      return;
+    }
+    await changePasswordApi(password,otp,user_email,navigate);
+
+    // await forgetPasswordApi(otpRef.current?.value, navigate);
+    // await otpApi(otp,user_email,password,navigate);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = false;
+      buttonRef.current.classList.remove("!bg-slate-400");
     }
   };
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center     ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center  bg-circule      ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
-          Enter New Password
+          Change Password
         </h1>
         <form
           onSubmit={submitHandler}
@@ -52,13 +68,20 @@ const NewPassword = () => {
           {/* <label htmlFor="email">Email</label> */}
           <input
             className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
-            id="email"
-            type="email"
-            placeholder="Email"
-            ref={emailRef}
+            type="password"
+            placeholder="New password"
+            ref={newPassRef}
           />
           <br />
           {/* <label htmlFor="password">Password</label> */}
+
+          <input
+            className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
+            type="password"
+            placeholder="Confirm new password"
+            ref={confNewPassRef}
+          />
+          <br />
 
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button

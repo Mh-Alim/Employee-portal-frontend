@@ -19,18 +19,24 @@ import { uploadAttachmentApi } from "@/api/UploadAttachment";
 
 const Attachment = ({route_email}:AttachmentType) => {
   const [attachemnt, setAttachment] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? [0] : null;
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+  const handleSubmit = () => {
     const user_email = route_email || getEmailFromLocalStorage() ;
     const token = getTokenFromLocalStorage();
-    if (!file || !user_email ||!token) {
-      console.log("file is not selected returning !!",user_email,token, file);
+    if (!selectedFile || !user_email ||!token) {
+      console.log("file is not selected returning !!",user_email,token, selectedFile);
       return;
     }
 
     const formData = new FormData();
-
+    
+    formData.set("file",selectedFile);
     const data = {
       file_name: attachemnt,
       user_email,
@@ -74,7 +80,7 @@ const Attachment = ({route_email}:AttachmentType) => {
             {attachemnt !== "" && (
               <div className=" col-span-4  ">
                 <Input
-                  onChange={fileChangeHandler}
+                  onChange={handleFileChange}
                   type="file"
                   accept="*"
                   className=" cursor-pointer "
@@ -85,7 +91,7 @@ const Attachment = ({route_email}:AttachmentType) => {
         </div>
 
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" onClick={handleSubmit}>Save changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

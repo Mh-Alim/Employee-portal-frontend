@@ -29,3 +29,8 @@ export type ProfileDataType = {
     name: string,
     email: string,
   }
+
+
+  export type AttachmentType = {
+    route_email : string|undefined,
+  }

@@ -16,7 +16,7 @@ import { FaTwitter, FaUserTie } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import { MdAttachment } from "react-icons/md";
 import { MdHomeRepairService } from "react-icons/md";
-import { RxResume } from "react-icons/rx";
+import { RxCrossCircled, RxResume } from "react-icons/rx";
 import { FaFileDownload, FaRegEdit } from "react-icons/fa";
 
 import { LuUser2 } from "react-icons/lu";
@@ -29,6 +29,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 // Types
 import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
+import Attachment from "./Attachment";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -102,7 +103,7 @@ const Profile = () => {
   ]);
 
   console.log("ManagerInfo: ", managerInfo);
-  const getManagerAndReportee = async (user_email:string) => {
+  const getManagerAndReportee = async (user_email: string) => {
     const res = await getManagerAndReporteeByEmail(user_email);
     console.log("res: ", res);
     setManagerInfo({
@@ -122,14 +123,17 @@ const Profile = () => {
     setReportees(reportees);
   };
 
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   useEffect(() => {
     const user_email = id || getEmailFromLocalStorage() || "";
     getManagerAndReportee(user_email);
-  }, [pathname,id]);
+  }, [pathname, id]);
 
   return (
-    <div id="profile" className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative ">
+    <div
+      id="profile"
+      className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative "
+    >
       {TopProfileSection(
         profileData,
         id || getEmailFromLocalStorage() || "",
@@ -196,9 +200,11 @@ const Profile = () => {
         </div>
         <div className=" flex flex-col flex-1 text-center sm:text-left ">
           <div className=" m-5 ">
-            <div>
-              <h1 className=" text-2xl tracking-wider mb-5 ">Attachments</h1>
-              <p></p>
+            <div className=" flex gap-5 items-center mb-5 ">
+              <h1 className=" text-2xl tracking-wider ">Attachments</h1>
+              <p>
+                <Attachment route_email={id} />
+              </p>
             </div>
             <div className=" flex flex-col flex-wrap ">
               <p

@@ -22,6 +22,9 @@ import TreeTry1 from "./pages/TreeTry1.jsx";
 import FeatureRequest from "./pages/FeatureRequest.tsx";
 
 import { Button } from "@/components/ui/button";
+import EmailForm from "./pages/ForgetPossword/EmailForm.tsx";
+import Otp from "./pages/ForgetPossword/Otp.tsx";
+import NewPassword from "./pages/ForgetPossword/NewPassword.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -56,11 +59,16 @@ const App = () => {
           />
           <Route path="/try1" element={<TreeTry1 />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/tree-view" element={<OrganizationTreeView />} />
+          <Route path="/forget/email" element={<EmailForm />} />
+          <Route path="/forget/otp" element={<Otp />} />
+          <Route path="/forget/new-password" element={<NewPassword />} />
+
+
+          {/* <Route path="/tree-view" element={<OrganizationTreeView />} /> */}
           <Route path="/user" element={<Sidebar />}>
             <Route path="search" element={<SearchEmployee />} />
             <Route path="add-employee" element={<AddEmployee />} />
-            <Route path="tree-view" element={<TreeTry1 />} />
+            <Route path="tree-view" element={<OrganizationTreeView />} />
             <Route path="feature-request" element={<FeatureRequest />} />
             <Route path="profile" element={<Profile />} />
             <Route path="logout" element={<Logout />} />

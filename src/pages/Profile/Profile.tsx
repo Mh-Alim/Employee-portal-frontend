@@ -256,6 +256,7 @@ const Profile = () => {
         </div>
       </section>
       {/* <EditProfileModel editClickHandler={editClickHandler} /> */}
+      <button onClick={() => navigate("/tree-view")} >TreeView</button>
     </div>
   );
 };
@@ -269,7 +270,7 @@ const TopProfileSection = (
   let params = false;
 
   return (
-    <section className=" bg-glassmorphism min-h-72 flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
+    <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
           <img

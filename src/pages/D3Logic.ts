@@ -3,8 +3,7 @@ import { useAppSelector } from "@/app/hooks";
 import { getEmailFromLocalStorage } from "@/utility";
 import React, { useEffect, useState } from "react";
 
-let usersId = [""];
-const D3Logic = (data: any, setData: any) => {
+const D3Logic = (data: any, setData: any,usersId: string[]) => {
 
 
   const mySelf = useAppSelector((state) => state.user);

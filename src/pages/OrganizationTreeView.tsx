@@ -140,12 +140,12 @@ export default function OrganizationTreeView() {
                   <SiNamecheap />
                 </span>{" "}
                 <span>
-                  {nodeDatum.name.length > 21
-                    ? `${nodeDatum.name.slice(0, 19)}...`
-                    : nodeDatum.name}
+                  {nodeDatum?.name?.length > 21
+                    ? `${nodeDatum?.name?.slice(0, 19)}...`
+                    : nodeDatum?.name}
                 </span>
               </p>
-              {nodeDatum.attributes && (
+              {nodeDatum?.attributes && (
                 <>
                   <p className="flex gap-4 items-center">
                     {" "}
@@ -166,7 +166,7 @@ export default function OrganizationTreeView() {
                       <MdEmail />
                     </span>{" "}
                     <span>
-                      {nodeDatum.attributes?.email.toString().length > 21
+                      {nodeDatum.attributes?.email?.toString().length > 21
                         ? `${nodeDatum.attributes?.email
                             .toString()
                             .slice(0, 19)}...`

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import Tree, { CustomNodeElementProps } from "react-d3-tree";
-import { useCenteredTree } from "../customHook/useCenteredTree";
+import { useCenteredTree } from "../../customHook/useCenteredTree";
 import D3Logic from "./D3Logic";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import { MdAttachment, MdEmail } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";
-import "./Tree.css";
 import { PiOfficeChairFill, PiTelegramLogoDuotone } from "react-icons/pi";
 import { SiNamecheap } from "react-icons/si";
 import { BsChevronExpand } from "react-icons/bs";
 import { IoAddCircleOutline, IoAddCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { parentHandler } from "./Dfs";
+import { useRouteToLogin } from "@/customHook/useRouteToLogin";
 
 const img1 =
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -19,83 +20,13 @@ const img1 =
 
 let usersId: any[] = [];
 export default function OrganizationTreeView() {
+  useRouteToLogin();
   const [data, setData] = useState<any>({});
 
   const [dimension, translate, containerRef] = useCenteredTree();
 
   const navigate = useNavigate();
   D3Logic(data, setData, usersId);
-  console.log("data for tree: ", data);
-
-  const dfsChild = (copyData: any, output: any, email: string) => {
-    if (copyData.attributes.email === email) {
-      console.log("copyData: ", copyData);
-      console.log("output: ", output);
-      let emails = [""];
-      let len = copyData.children.length;
-      for (let i = 0; i < len; i++) {
-        let child = copyData.children[i];
-        emails.push(child.attributes.email);
-      }
-      emails.shift();
-      console.log("emails: ", emails);
-
-      const opLen = output.reportee.length;
-      for (let i = 0; i < opLen; i++) {
-        let reportee = output.reportee[i];
-        if (!emails.includes(reportee.user_email)) {
-          copyData.children.push({
-            name: reportee.first_name,
-            attributes: {
-              department: reportee.designation,
-              email: reportee.user_email,
-            },
-            children: [],
-          });
-        }
-      }
-      return;
-    }
-
-    let len = copyData.children.length;
-    for (let i = 0; i < len; i++) {
-      dfsChild(copyData.children[i], output, email);
-    }
-    return;
-  };
-
-  const dfsParent = (copyData: any, output: any, email: string) => {
-    if (copyData.attributes.email === output.manager.user_email) {
-      return true;
-    }
-
-    let len = copyData.children.length;
-    for (let i = 0; i < len; i++) {
-      if (dfsParent(copyData.children[i], output, email)) return true;
-    }
-    return false;
-  };
-
-  const parentHandler = async (email: any) => {
-    console.log("parent handler calling ", email);
-
-    let output = await getManagerAndReporteeByEmail(email);
-    console.log("output in parenthandler: ", output);
-    let copyData = { ...data };
-
-    if (output.manager?.user_email && !dfsParent(data, output, email)) {
-      copyData = {
-        name: output.manager.first_name,
-        attributes: {
-          department: output.manager.designation,
-          email: output.manager.user_email,
-        },
-        children: [{ ...data }],
-      };
-    }
-    dfsChild(copyData, output, email);
-    setData(copyData);
-  };
 
   const renderRectSvgNode = ({
     nodeDatum,
@@ -120,11 +51,15 @@ export default function OrganizationTreeView() {
             <div>
               <p className=" absolute top-5 right-2  ">
                 <IoAddCircleOutline
-                  onClick={() => {
+                  onClick={async () => {
                     let email = nodeDatum?.attributes?.email;
                     if (usersId.includes(email)) return;
                     usersId.push(email);
-                    parentHandler(nodeDatum?.attributes?.email);
+                    const copyData = await parentHandler(
+                      nodeDatum?.attributes?.email,
+                      data
+                    );
+                    setData(copyData);
                   }}
                   className=" text-2xl  mb-6 "
                 />

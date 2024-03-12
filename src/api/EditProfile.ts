@@ -1,3 +1,4 @@
+import { ToastCallError, ToastCallSuccess } from "@/ReactToast";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
 type ProfileUrl = {
@@ -6,13 +7,11 @@ type ProfileUrl = {
 };
 
 type EditInfoDataType = {
-  firstName: string;
-  lastName: string;
-  contactNumber: string;
+  first_name: string;
+  last_name: string;
+  contact_number: string;
   designation: string;
-  empCode: string;
-  joinedAt: string;
-  profileUrls: ProfileUrl[];
+  profile_urls: ProfileUrl[];
   skills: string[];
   languages: string[];
   interests: string[];
@@ -22,7 +21,7 @@ export const EditInfoApi = async (data: EditInfoDataType) => {
   let user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
   if (!token || !user_email) {
-    alert("Login to access this resource");
+    ToastCallError("Login to access this resource");
     return;
   }
 
@@ -30,14 +29,15 @@ export const EditInfoApi = async (data: EditInfoDataType) => {
     ...data,
     user_email,
   };
-  console.log("Printing res ", JSON.stringify(data));
+
+  console.log("before update: ", modifiedData);
   const options = {
     method: "POST",
     headers: {
       token: token,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data), // Convert data to JSON string
+    body: JSON.stringify(modifiedData), // Convert data to JSON string
   };
 
   const res = await fetch(
@@ -45,10 +45,12 @@ export const EditInfoApi = async (data: EditInfoDataType) => {
     options
   );
 
+  console.log("after edit api", res);
+
   console.log("Add Employee: ", res.status);
   if (res.status === 200) {
-    alert("Successfully Create Employee");
+    ToastCallSuccess("Successfully Update User");
     return;
   }
-  alert("Some issue on the server side");
+  ToastCallError("Some issue on the server side");
 };

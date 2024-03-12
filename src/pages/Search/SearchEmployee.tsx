@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { getTokenFromLocalStorage } from "../utility";
-import { debounce } from "../api/Search";
+import { getTokenFromLocalStorage } from "../../utility";
+import { debounce } from "../../api/Search";
 import { Search, useNavigate } from "react-router-dom";
 
 const img1 =
@@ -93,13 +93,6 @@ const SearchEmployee = () => {
             name="Designation"
             count={2}
             idx={3}
-            border={border}
-            setBorder={setBorder}
-          />
-          <Category
-            name="Expertise"
-            count={2}
-            idx={4}
             border={border}
             setBorder={setBorder}
           />

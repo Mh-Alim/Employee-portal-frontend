@@ -186,19 +186,7 @@ const AddEmployee = () => {
           >
             Enter
           </button>
-          {/* {fileUrl && (
-        <div>
-          <p>File uploaded successfully!</p>
-          <p>File URL: {fileUrl}</p>
-          <img src={fileUrl} alt="Uploaded file" />
-        </div> */}
-          {/* )} */}
-
-          {/* <div className=" cursor-pointer mt-5 flex items-center justify-center "> */}
-
-          {/* </div> */}
         </form>
-        {/* </div> */}
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ export const loginApi = async (user_email: string, password: string) => {
   };
   const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, options);
   const json = await res.json();
-
   if (res.status === 200) {
     localStorage.setItem("eportal_token", json.data);
     localStorage.setItem("eportal_user_email", user_email);
@@ -20,6 +19,7 @@ export const loginApi = async (user_email: string, password: string) => {
 export const isLoggedIn = async () => {
   const user_email = getEmailFromLocalStorage();
   const token = getTokenFromLocalStorage();
+  console.log("islogin : ", user_email, token);
   if (!user_email || !token) return false;
 
   console.log("maiL ", user_email, token);

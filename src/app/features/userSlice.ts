@@ -40,6 +40,7 @@ export const userSlice = createSlice({
       state.emp_id = action.payload.emp_id;
       state.designation = action.payload.designation;
       state.joinedAt = action.payload.joinedAt;
+      
 
     },
 

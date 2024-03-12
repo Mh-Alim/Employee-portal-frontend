@@ -5,27 +5,30 @@ import {
   decrement,
   incrementByAmount,
 } from "./app/features/counter/counterSlice";
+import { Link, Route, Routes } from "react-router-dom";
+import { ToastContainerError, ToastContainerSuccess } from "./ReactToast.tsx";
 
 const Login = lazy(() => import("./pages/Login"));
 const AddEmployee = lazy(() => import("./pages/AddEmployee"));
-import SearchEmployee from "./pages/SearchEmployee";
-import OrganizationTreeView from "./pages/OrganizationTreeView";
-import About from "./pages/Introduction";
-import Navbar from "./components/Navbar";
+const SearchEmployee = lazy(() => import("./pages/Search/SearchEmployee.tsx"));
+const OrganizationTreeView = lazy(
+  () => import("./pages/Tree/OrganizationTreeView.tsx")
+);
+const About = lazy(() => import("./pages/Introduction"));
+const Navbar = lazy(() => import("./components/Navbar"));
 
-import { Link, Route, Routes } from "react-router-dom";
-import Introduction from "./pages/Introduction.tsx";
-import Sidebar from "./components/Sidebar.tsx";
-import Profile from "./pages/Profile/Profile.tsx";
-import Logout from "./pages/Logout.tsx";
-import TreeTry1 from "./pages/TreeTry1.jsx";
-import FeatureRequest from "./pages/FeatureRequest.tsx";
+const Introduction = lazy(() => import("./pages/Introduction.tsx"));
+const Sidebar = lazy(() => import("./components/Sidebar.tsx"));
+const Profile = lazy(() => import("./pages/Profile/Profile.tsx"));
+const Logout = lazy(() => import("./pages/Logout.tsx"));
+const FeatureRequest = lazy(() => import("./pages/FeatureRequest.tsx"));
 
-import { Button } from "@/components/ui/button";
-import EmailForm from "./pages/ForgetPossword/EmailForm.tsx";
-import Otp from "./pages/ForgetPossword/Otp.tsx";
-import NewPassword from "./pages/ForgetPossword/NewPassword.tsx";
-import Loader from "./pages/Loader.tsx";
+const EmailForm = lazy(() => import("./pages/ForgetPossword/EmailForm.tsx"));
+const Otp = lazy(() => import("./pages/ForgetPossword/Otp.tsx"));
+const NewPassword = lazy(
+  () => import("./pages/ForgetPossword/NewPassword.tsx")
+);
+const Loader = lazy(() => import("./pages/Loader.tsx"));
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +47,6 @@ const App = () => {
               </>
             }
           />
-          <Route path="/try1" element={<TreeTry1 />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forget/email" element={<EmailForm />} />
           <Route path="/forget/otp" element={<Otp />} />
@@ -63,6 +65,8 @@ const App = () => {
           </Route>
         </Routes>
       </Suspense>
+      {ToastContainerSuccess}
+      {ToastContainerError}
     </div>
   );
 };

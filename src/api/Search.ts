@@ -1,4 +1,4 @@
-import { SearchDataType } from "@/pages/SearchEmployee";
+import { SearchDataType } from "@/pages/Search/SearchEmployee";
 import { getTokenFromLocalStorage } from "../utility";
 
 const searchApi = async (queryParam: string, query: string) => {

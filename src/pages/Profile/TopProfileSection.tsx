@@ -15,7 +15,8 @@ const defaultImg =
 const TopProfileSection = (
   profileData: ProfileDataType,
   id: string,
-  managerInfo: ManagerType
+  managerInfo: ManagerType,
+  setRenderProfileFlag: any
 ) => {
   let isAdmin = false;
   let params = false;
@@ -50,10 +51,13 @@ const TopProfileSection = (
                 <CiLocationOn />
                 <span> Moneyview, Bellandur</span>
               </div>
-              <div className=" m-3 flex gap-1  items-center justify-center md:justify-start ">
+              <a
+                href="tel:+91-7489167363"
+                className=" m-3 flex gap-1  items-center justify-center md:justify-start "
+              >
                 <MdLocalPhone />
                 <span>{profileData.contact}</span>
-              </div>
+              </a>
             </div>
             <div>
               <div className="  m-3 flex gap-1 items-center justify-center md:justify-start ">
@@ -72,8 +76,9 @@ const TopProfileSection = (
       <div className=" p-1 md:p-5 flex flex-col md:flex-row justify-between lg:flex-row xl:flex-col  ">
         <div className=" flex gap-5 justify-center  items-center text-xl ">
           <a
-            target="_blank"
-            href={profileData.slackUrl !== null ? profileData.slackUrl : ""}
+            target="https://moneyview.slack.com/teams/U06L8R4LT9C"
+            // href={profileData.slackUrl !== null ? profileData.slackUrl : ""}
+            href="https://moneyview.slack.com/team/U06L8R4LT9C"
             className=" cursor-pointer "
           >
             <BsSlack className=" transition-all duration-300 hover:scale-125 " />
@@ -114,6 +119,7 @@ const TopProfileSection = (
                 admin={true}
                 name="profle"
                 user_email={id}
+                setRenderProfileFlag={setRenderProfileFlag}
               />
             )}
           </button>{" "}
@@ -122,4 +128,6 @@ const TopProfileSection = (
     </section>
   );
 };
+
+// tel:phoneno
 export default TopProfileSection;

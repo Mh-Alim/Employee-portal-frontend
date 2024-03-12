@@ -1,3 +1,4 @@
+import { ToastCallError } from "@/ReactToast";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
 const defaultImageUrl =
@@ -8,6 +9,7 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   let requested_user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
   if (!token || !user_email || !requested_user_email) {
+    ToastCallError("you are not logged in..");
     return;
   }
   const options = {
@@ -70,8 +72,6 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     profileImageUrl,
     documents,
   };
-
-  console.log("user data: ", userData);
 
   return userData;
 };

@@ -4,7 +4,12 @@ import { addUser } from "../../app/features/userSlice";
 import { useAppDispatch } from "../../app/hooks";
 
 import { profileDetailsApi } from "@/api/ProfileDetailsApi";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useRouteError,
+} from "react-router-dom";
 // Icons
 import { FaUserTie } from "react-icons/fa6";
 import { MdHomeRepairService } from "react-icons/md";
@@ -23,10 +28,14 @@ import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import Attachment from "./Attachment";
 import TopProfileSection from "./TopProfileSection";
 import ApiToCsvConverter from "@/components/ApiToCsvConverter";
+import { useRouteToLogin } from "@/customHook/useRouteToLogin";
+import { ToastCallError } from "@/ReactToast";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [renderProfileFlag, setRenderProfileFlag] = useState(true);
 
   const { id } = useParams();
   const [profileData, setProfileData] = useState<ProfileDataType>({
@@ -53,6 +62,8 @@ const Profile = () => {
     ],
   });
 
+  useRouteToLogin();
+
   const handleDownload = async (url: string) => {
     try {
       const fileResponse = await fetch(url);
@@ -76,7 +87,6 @@ const Profile = () => {
   const getProfileDetails = async (emailId: string) => {
     const userData = await profileDetailsApi(emailId);
     if (!userData) {
-      alert("some error while callingn for profileDetailsApi ");
       return;
     }
     setProfileData(userData);
@@ -85,7 +95,7 @@ const Profile = () => {
   useEffect(() => {
     if (id) getProfileDetails(id);
     else getProfileDetails("");
-  }, [id]);
+  }, [id, renderProfileFlag]);
 
   const [managerInfo, setManagerInfo] = useState<ManagerType>({
     name: "",
@@ -99,7 +109,6 @@ const Profile = () => {
   const getManagerAndReportee = async (user_email: string) => {
     const res = await getManagerAndReporteeByEmail(user_email);
 
-    console.log("res current is : ",res)
     setManagerInfo({
       name: res.manager.first_name,
       email: res.manager.user_email,
@@ -119,8 +128,8 @@ const Profile = () => {
 
   const { pathname } = useLocation();
   useEffect(() => {
-    const user_email = id || getEmailFromLocalStorage() || "";
-    getManagerAndReportee(user_email);
+    const user_email = id || getEmailFromLocalStorage();
+    if (user_email) getManagerAndReportee(user_email);
   }, [pathname, id]);
 
   const Icons = [<MdHomeRepairService />, <RxResume />, <FaFileDownload />];
@@ -132,7 +141,8 @@ const Profile = () => {
       {TopProfileSection(
         profileData,
         id || getEmailFromLocalStorage() || "",
-        managerInfo
+        managerInfo,
+        setRenderProfileFlag
       )}
 
       <section className=" p-5 flex flex-col lg:flex-row  ">
@@ -194,7 +204,7 @@ const Profile = () => {
             </div>
             <div className=" flex flex-col flex-wrap ">
               {profileData.documents.map((e, idx) => {
-                console.log("e: ",e)
+                console.log("e: ", e);
                 return e.name.length ? (
                   <Document
                     key={idx}
@@ -245,17 +255,7 @@ const Profile = () => {
   );
 };
 
-const Image = () => {
-  return (
-    <div className="">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1SdQtedd5Hf2MSihKD3frREpjMZrfVAufDw&usqp=CAU"
-        alt=""
-        className=" w-24 rounded-full "
-      />
-    </div>
-  );
-};
+
 
 const Document = ({
   name,

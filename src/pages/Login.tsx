@@ -1,3 +1,4 @@
+import { ToastCallError } from "@/ReactToast";
 import { isLoggedIn, loginApi } from "@/api/LoginApi";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +31,11 @@ const Login = () => {
       const user_email = emailRef.current?.value;
       const password = passRef.current?.value;
 
-      if (!user_email || !password) return alert("Fill the form");
+      if (!user_email || !password) {
+        ToastCallError("Empty fields");
+        if (buttonRef.current) buttonRef.current.disabled = false;
+        return;
+      }
 
       await loginApi(user_email, password);
 

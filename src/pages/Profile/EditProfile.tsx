@@ -20,6 +20,7 @@ import { EditInfoApi } from "@/api/EditProfile";
 import { ProfileDataType } from "./ProfileTypes";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import { getEmailFromLocalStorage } from "@/utility";
+import { ToastCallSuccess } from "@/ReactToast";
 
 type EditProfileModelType = {
   name: string;
@@ -27,6 +28,7 @@ type EditProfileModelType = {
   profileData: ProfileDataType;
   manager: string;
   user_email: string;
+  setRenderProfileFlag: any;
 };
 const EditModel = ({
   name,
@@ -34,6 +36,7 @@ const EditModel = ({
   profileData,
   manager,
   user_email,
+  setRenderProfileFlag,
 }: EditProfileModelType) => {
   const [skills, setSkills] = useState<string[]>(
     profileData.skills ? profileData.skills : []
@@ -54,8 +57,6 @@ const EditModel = ({
   const [designation, setDesignation] = useState<string>(
     profileData.designation
   );
-  const [empCode, setEmpCode] = useState<string>(profileData.emp_id);
-  const [joinedAt, setJoinedAt] = useState<string>(profileData.joinedAt);
   const [slackUrl, setSlackUrl] = useState<string>(profileData.slackUrl || "");
   const [instagramUrl, setInstagramUrl] = useState<string>(
     profileData.instaUrl || ""
@@ -67,9 +68,6 @@ const EditModel = ({
     profileData.linkedinUrl || ""
   );
 
-
-  
-
   useEffect(() => {
     setManagerEmail(manager);
   }, [manager]);
@@ -80,8 +78,6 @@ const EditModel = ({
     setLastName(profileData.lastName);
     setContactNumber(profileData.contact);
     setDesignation(profileData.designation);
-    setEmpCode(profileData.emp_id);
-    setJoinedAt(profileData.joinedAt);
     setSlackUrl(profileData.slackUrl || "");
     setInstagramUrl(profileData.instaUrl || "");
     setTwitterUrl(profileData.twitterUrl || "");
@@ -101,14 +97,12 @@ const EditModel = ({
   console.log("interets in edit", interests);
   const saveInfoClickHandler = async () => {
     const data = {
-      firstName,
-      lastName,
-      contactNumber,
+      first_name: firstName,
+      last_name: lastName,
+      contact_number: contactNumber,
       designation,
-      empCode,
-      joinedAt,
       manager_email: managerEmail,
-      profileUrls: [
+      profile_urls: [
         { name: "slackUrl", url: slackUrl },
         { name: "instagramUrl", url: instagramUrl },
         { name: "twitterUrl", url: twitterUrl },
@@ -120,8 +114,8 @@ const EditModel = ({
       user_email,
       requested_user_email: getEmailFromLocalStorage() || "",
     };
-    console.log("before edit info : ", data);
     await EditInfoApi(data);
+    setRenderProfileFlag((prev: boolean) => !prev);
   };
 
   return (
@@ -184,26 +178,6 @@ const EditModel = ({
             name="Manger"
             value={managerEmail}
             setState={setManagerEmail}
-          />
-        )}
-
-        {admin && (
-          <CustomInput
-            type="date"
-            placeholder="date"
-            name="JoinedAt"
-            value={joinedAt}
-            setState={setJoinedAt}
-          />
-        )}
-
-        {admin && (
-          <CustomInput
-            type="number"
-            placeholder="employee code"
-            name="Employee code"
-            value={empCode}
-            setState={setEmpCode}
           />
         )}
 

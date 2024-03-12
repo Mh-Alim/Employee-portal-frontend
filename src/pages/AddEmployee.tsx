@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { addEmployeeApi } from "../api/AddEmployee";
+import { MdCloudUpload } from "react-icons/md";
 
 const AddEmployee = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -71,14 +72,14 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className="h-[100vh] p-10 sm:p-5 flex justify-center items-center overflow-y-scroll   ">
+    <div className=" m-10 p-10 sm:p-5 flex justify-center items-center  bg-circule  ">
       {/*  */}
-      <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
+      <div className=" h-[90vh] overflow-y-scroll w-full   gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg bg-glassmorphism  relative z-50  ">
         <form
           onSubmit={submitHandler}
-          className=" h-[60vh] overflow-y-scroll  md:w-3/4 lg:w-3/5 xl:w-3/6 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-10 sm:p-6 md:p-10 rounded-lg "
+          className=" w-full md:w-4/4 lg:w-5/5 xl:w-3/6  flex flex-col   text-white min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg  "
         >
-          <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
+          <h1 className="  mb-5 text-white  text-center uppercase tracking-wide font-medium text-3xl ">
             Employee details
           </h1>
           <br />
@@ -138,7 +139,7 @@ const AddEmployee = () => {
           <br />
           {/* <label htmlFor="password">Password</label> */}
           <input
-            className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
+            className="mb-5 w-full p-5 outline-none border-2   border-slate-500 text-white rounded-lg bg-transparent"
             type="date"
             placeholder="MM/DD/YYYY"
             ref={dobRef}
@@ -153,12 +154,37 @@ const AddEmployee = () => {
             ref={managerEmailRef}
           />
 
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            onChange={handleFileChange}
-          />
           <br />
+          <div className="mb-5 w-full p-2 outline-none border-2    border-slate-500 rounded-lg bg-transparent">
+            <label
+              htmlFor="profile-pic"
+              className=" px-2 cursor-pointer flex gap-3 items-center "
+            >
+              <span>
+                {" "}
+                <MdCloudUpload className=" text-2xl " />
+              </span>{" "}
+              <span>Profile Picture</span>
+            </label>
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              onChange={handleFileChange}
+              name="profile-pic"
+              placeholder="choose profile pic"
+              id="profile-pic"
+              className=" hidden "
+            />
+          </div>
+
+          <br />
+
+          <button
+            type="submit"
+            className=" px-10  py-2 text-slate-500 bg-white-500  bg-white rounded-3xl "
+          >
+            Enter
+          </button>
           {/* {fileUrl && (
         <div>
           <p>File uploaded successfully!</p>
@@ -167,14 +193,9 @@ const AddEmployee = () => {
         </div> */}
           {/* )} */}
 
-          <div className=" cursor-pointer mt-5 flex items-center justify-center ">
-            <button
-              type="submit"
-              className=" px-10  py-2 text-slate-500 bg-white-500 bg-white rounded-3xl "
-            >
-              Enter
-            </button>
-          </div>
+          {/* <div className=" cursor-pointer mt-5 flex items-center justify-center "> */}
+
+          {/* </div> */}
         </form>
       </div>
     </div>

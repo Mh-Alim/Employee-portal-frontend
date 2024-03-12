@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import { IoMdCloudDownload } from "react-icons/io";
 import { FaFileCsv } from "react-icons/fa6";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
+import { getAllEmployeeApi } from "@/api/AllEmployeeDetails";
 
 const ApiToCsvConverter = () => {
   const [csvData, setCsvData] = useState("");
@@ -24,22 +25,10 @@ const ApiToCsvConverter = () => {
         alert("token or user email doesnt exist");
         return;
       }
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          token,
-        },
-        body: JSON.stringify({ user_email }), // Convert data to JSON string
-      };
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/get-all`,
-        options
-      );
-      const jsonData = await res.json();
-      console.log("csv data: ", jsonData.data);
-      const csvData = Papa.unparse(jsonData.data);
+      const data: any = await getAllEmployeeApi(token, user_email);
+      console.log("csv data: ", data);
+      const csvData = Papa.unparse(data);
 
       handleDownloadCsv(csvData);
     } catch (error) {

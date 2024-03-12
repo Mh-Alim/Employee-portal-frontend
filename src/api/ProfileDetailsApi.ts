@@ -32,31 +32,25 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   let linkedinUrl = "";
   let twitterUrl = "";
   let profileImageUrl = json.data.profileImageUrl || defaultImageUrl;
-  let offerLetter = {
-    name: "",
-    url: "",
-  };
+  let documents = [{ name: "", url: "" }];
 
   let len = json.documentUrls.length;
   for (let i = 0; i < len; i++) {
     console.log("json-document: ", json.documentUrls);
     if (json.documentUrls[i][0] === "slackUrl")
       slackUrl = json.documentUrls[i][1];
-    if (json.documentUrls[i][0] === "instagramUrl")
+    else if (json.documentUrls[i][0] === "instagramUrl")
       instaUrl = json.documentUrls[i][1];
-    if (json.documentUrls[i][0] === "twitterUrl")
+    else if (json.documentUrls[i][0] === "twitterUrl")
       twitterUrl = json.documentUrls[i][1];
-    if (json.documentUrls[i][0] === "linkedinUrl")
+    else if (json.documentUrls[i][0] === "linkedinUrl")
       linkedinUrl = json.documentUrls[i][1];
-
-    if (json.documentUrls[i][0] === "profileImageUrl")
-      profileImageUrl = json.documentUrls[i][1];
-
-    if (json.documentUrls[i][0] === "Offer-Letter")
-      offerLetter = {
+    else {
+      documents.push({
         name: json.documentUrls[i][0],
         url: json.documentUrls[i][1],
-      };
+      });
+    }
   }
   const userData = {
     firstName: details.firstName,
@@ -74,7 +68,7 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     linkedinUrl,
     twitterUrl,
     profileImageUrl,
-    offerLetter,
+    documents,
   };
 
   console.log("user data: ", userData);

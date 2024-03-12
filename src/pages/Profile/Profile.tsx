@@ -13,7 +13,12 @@ import { FaFileDownload } from "react-icons/fa";
 import { LuUser2 } from "react-icons/lu";
 
 // Types
-import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
+import {
+  ProfileDataType,
+  ManagerType,
+  ReporteesType,
+  AttachmentDocumentType,
+} from "./ProfileTypes";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import Attachment from "./Attachment";
 import TopProfileSection from "./TopProfileSection";
@@ -40,10 +45,12 @@ const Profile = () => {
     linkedinUrl: "",
     twitterUrl: "",
     profileImageUrl: "",
-    offerLetter: {
-      name: "",
-      url: "",
-    },
+    documents: [
+      {
+        name: "",
+        url: "",
+      },
+    ],
   });
 
   const handleDownload = async (url: string) => {
@@ -114,6 +121,7 @@ const Profile = () => {
     getManagerAndReportee(user_email);
   }, [pathname, id]);
 
+  const Icons = [<MdHomeRepairService />, <RxResume />, <FaFileDownload />];
   return (
     <div
       id="profile"
@@ -183,20 +191,18 @@ const Profile = () => {
               </p>
             </div>
             <div className=" flex flex-col flex-wrap ">
-              <p
-                className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
-                onClick={() => handleDownload(profileData.offerLetter.url)}
-              >
-                <MdHomeRepairService />
-                <span> {profileData.offerLetter.name}</span>
-              </p>
-              <p className=" cursor-pointer px-4 flex gap-2 items-center justify-center sm:justify-start  ">
-                <RxResume /> <span>Resume.pdf</span>{" "}
-              </p>
-              <p className="  cursor-pointer py-2 px-4 flex gap-2 items-center justify-center sm:justify-start  ">
-                <FaFileDownload />
-                <span>fs.pdf</span>
-              </p>
+              {profileData.documents.map((e, idx) => {
+                console.log("e: ",e)
+                return e.name.length ? (
+                  <Document
+                    key={idx}
+                    name={e.name}
+                    url={e.url}
+                    Icon={Icons[idx]}
+                    handleDownload={handleDownload}
+                  />
+                ) : null;
+              })}
             </div>
           </div>
           <div className=" m-5 ">
@@ -249,4 +255,20 @@ const Image = () => {
   );
 };
 
+const Document = ({
+  name,
+  url,
+  handleDownload,
+  Icon,
+}: AttachmentDocumentType) => {
+  return (
+    <p
+      className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
+      onClick={() => handleDownload(url)}
+    >
+      {Icon}
+      <span> {name}</span>
+    </p>
+  );
+};
 export default Profile;

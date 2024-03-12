@@ -96,7 +96,7 @@ const TopProfileSection = (
         </div>
         <div className=" flex gap-4 justify-end text-right mt-5  sm:mt-0 ">
           {" "}
-          {isAdmin && <ApiToCsvConverter />}
+          {<ApiToCsvConverter />}
           <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
             {" "}
             {(isAdmin || !params) && (

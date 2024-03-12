@@ -17,6 +17,7 @@ import { ProfileDataType, ManagerType, ReporteesType } from "./ProfileTypes";
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import Attachment from "./Attachment";
 import TopProfileSection from "./TopProfileSection";
+import ApiToCsvConverter from "@/components/ApiToCsvConverter";
 
 const Profile = () => {
   const dispatch = useAppDispatch();

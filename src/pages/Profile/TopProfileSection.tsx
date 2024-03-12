@@ -8,6 +8,7 @@ import { RiHomeOfficeLine } from "react-icons/ri";
 import EditModel from "./EditProfile";
 import { ManagerType, ProfileDataType } from "./ProfileTypes";
 import { TiUser } from "react-icons/ti";
+import ApiToCsvConverter from "@/components/ApiToCsvConverter";
 
 const TopProfileSection = (
   profileData: ProfileDataType,
@@ -89,8 +90,9 @@ const TopProfileSection = (
             <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />
           </a>
         </div>
-        <div className=" text-right ">
+        <div className=" flex gap-4 justify-end text-right mt-5  sm:mt-0 ">
           {" "}
+          {isAdmin && <ApiToCsvConverter />}
           <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
             {" "}
             {(isAdmin || !params) && (

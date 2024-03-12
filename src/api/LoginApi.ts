@@ -10,8 +10,11 @@ export const loginApi = async (user_email: string, password: string) => {
   };
   const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, options);
   const json = await res.json();
-  localStorage.setItem("eportal_token", json.data);
-  localStorage.setItem("eportal_user_email", user_email);
+
+  if (res.status === 200) {
+    localStorage.setItem("eportal_token", json.data);
+    localStorage.setItem("eportal_user_email", user_email);
+  }
 };
 
 export const isLoggedIn = async () => {
@@ -27,7 +30,7 @@ export const isLoggedIn = async () => {
       "Content-Type": "application/json",
       token,
     },
-    body: JSON.stringify({  user_email }), // Convert data to JSON string
+    body: JSON.stringify({ user_email }), // Convert data to JSON string
   };
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/isLoggedIn`,

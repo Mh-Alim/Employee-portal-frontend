@@ -33,7 +33,6 @@ export const otpApi = async (
   user_email: string,
   navigate: NavigateFunction
 ) => {
-  
   const options = {
     method: "POST",
     headers: {
@@ -46,7 +45,7 @@ export const otpApi = async (
     options
   );
 
-  console.log("Res.status for otpapi : ",res.status)
+  console.log("Res.status for otpapi : ", res.status);
   if (res.status === 200) {
     navigate("/forget/new-password", { state: { user_email, otp } });
     return;
@@ -62,21 +61,22 @@ export const changePasswordApi = async (
   navigate: NavigateFunction
 ) => {
   const options = {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ user_email, password }), // Convert data to JSON string
   };
 
-  console.log("change-password: ",otp,password,user_email)
+  console.log("change-password: ", otp, password, user_email);
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/reset-password?otp=${otp}`,
     options
   );
 
-  console.log("res from change password",res.status);
+  console.log("res from change password", res.status);
   if (res.status === 200) {
+    alert("Password changed successfully");
     navigate("/login");
     return;
   }

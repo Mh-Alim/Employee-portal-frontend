@@ -1,10 +1,11 @@
 import { forgetPasswordApi } from "@/api/ForgetPasswordApi";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EmailForm = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,18 +13,26 @@ const EmailForm = () => {
   }, []);
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const email = emailRef.current?.value;
+
+    if (!email) {
+      alert("fill email")
+      return;
+    }
+
+    setShowMessage(true);
 
     console.log("coming email: ", emailRef.current?.value);
     if (buttonRef.current) {
       buttonRef.current.disabled = true;
       buttonRef.current.classList.add("!bg-slate-400");
     }
-    if (!emailRef.current?.value) return;
-    await forgetPasswordApi(emailRef.current?.value, navigate);
+    await forgetPasswordApi(email, navigate);
     if (buttonRef.current) {
       buttonRef.current.disabled = false;
       buttonRef.current.classList.remove("!bg-slate-400");
     }
+    setShowMessage(false);
   };
 
   return (
@@ -59,6 +68,15 @@ const EmailForm = () => {
             </button>
           </div>
         </form>
+        {
+          <p
+            className={`text-slate-400 tracking-wider ${
+              !showMessage ? "hidden" : "block"
+            } `}
+          >
+            Check Mail for otp
+          </p>
+        }
       </div>
     </div>
   );

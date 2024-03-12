@@ -32,7 +32,7 @@ const Login = () => {
 
       if (!user_email || !password) return alert("Fill the form");
 
-      loginApi(user_email, password);
+      await loginApi(user_email, password);
 
       if (buttonRef.current) buttonRef.current.disabled = false;
       navigate("/user/profile");

@@ -43,7 +43,6 @@ export const getManagerAndReporteeByEmail = async(id:string) => {
       requested_user_email
     );
     if (!user_email || !requested_user_email || !token) {
-      alert("Login to access this resource");
       return;
     }
     const options = {

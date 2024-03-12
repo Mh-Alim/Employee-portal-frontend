@@ -23,7 +23,7 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   );
   const json = await res.json();
   const details = json.data;
-
+  console.log("details: ", json);
   const userData = {
     firstName: details.firstName,
     lastName: details.lastName,
@@ -32,7 +32,12 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     designation: details.designation,
     emp_id: details.empCode,
     joinedAt: details.dateCreated.substring(0, 10),
+    skills: json.skills,
+    languages: json.languages,
+    interests: json.interests,
   };
+
+  console.log("user data: ", userData);
 
   return userData;
 };

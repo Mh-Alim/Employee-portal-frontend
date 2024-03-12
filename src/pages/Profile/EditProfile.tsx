@@ -56,7 +56,6 @@ const EditModel = ({
   );
   const [empCode, setEmpCode] = useState<number>(profileData.emp_id);
   const [joinedAt, setJoinedAt] = useState<string>(profileData.joinedAt);
-  const [pod, setPod] = useState<string>(profileData.pod || "");
   const [slackUrl, setSlackUrl] = useState<string>(profileData.slackUrl || "");
   const [instagramUrl, setInstagramUrl] = useState<string>(
     profileData.instagramUrl || ""
@@ -79,7 +78,6 @@ const EditModel = ({
     setDesignation(profileData.designation);
     setEmpCode(profileData.emp_id);
     setJoinedAt(profileData.joinedAt);
-    setPod(profileData.pod || "");
     setSlackUrl(profileData.slackUrl || "");
     setInstagramUrl(profileData.instagramUrl || "");
     setTwitterUrl(profileData.twitterUrl || "");
@@ -89,13 +87,15 @@ const EditModel = ({
       setSkills(profileData.skills);
     profileData.languages &&
       profileData.languages.length > 0 &&
-      setSkills(profileData.languages);
+      setLanguages(profileData.languages);
     profileData.interests &&
       profileData.interests.length > 0 &&
-      setSkills(profileData.interests);
+      setInterests(profileData.interests);
   }, [profileData]);
 
-  const saveInfoClickHandler = () => {
+  console.log("Langu", languages);
+  console.log("interets in edit", interests);
+  const saveInfoClickHandler = async () => {
     const data = {
       firstName,
       lastName,
@@ -103,7 +103,6 @@ const EditModel = ({
       designation,
       empCode,
       joinedAt,
-      pod,
       managerEmail,
       profileUrls: [
         { name: "slackUrl", url: slackUrl },
@@ -117,7 +116,7 @@ const EditModel = ({
       user_email,
       requested_user_email: getEmailFromLocalStorage() || "",
     };
-    EditInfoApi(data);
+    await EditInfoApi(data);
   };
 
   return (
@@ -165,16 +164,6 @@ const EditModel = ({
 
         {admin && (
           <CustomInput
-            setState={setPod}
-            type="text"
-            placeholder=""
-            name="Pod"
-            value={pod}
-          />
-        )}
-
-        {admin && (
-          <CustomInput
             type="number"
             placeholder=""
             name="Contact Number"
@@ -207,7 +196,7 @@ const EditModel = ({
           <CustomInput
             type="number"
             placeholder="employee code"
-            name="emp_code"
+            name="Employee code"
             value={empCode}
             setState={setEmpCode}
           />
@@ -344,7 +333,7 @@ const Options = ({ name, state, setState, options }: EditOptionTypes) => {
             name=""
             id=""
           >
-            <option value="" selected>
+            <option value="" defaultChecked>
               Select
             </option>
             {options.map((e) => (

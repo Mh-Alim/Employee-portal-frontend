@@ -128,35 +128,27 @@ const Profile = () => {
               <span>Skills</span>
             </h1>
             <div className=" flex flex-wrap justify-center sm:justify-start  ">
-              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg  ">
-                Frontend Developement
-              </p>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Backend Developement
-              </span>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Node Js Developer
-              </span>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Mern Developer
-              </span>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Mean Developer
-              </span>
+              {profileData.skills?.map((skill) => (
+                <p
+                  key={skill}
+                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg  "
+                >
+                  {skill}
+                </p>
+              ))}
             </div>
           </div>
           <div className=" m-5 text-center sm:text-left ">
             <h1 className=" text-2xl tracking-wider mb-5 "> Languages </h1>
             <div className=" flex flex-wrap justify-center sm:justify-start ">
-              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                English
-              </p>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Hindi
-              </span>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Spanish
-              </span>
+              {profileData.languages?.map((language) => (
+                <p
+                  key={language}
+                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                >
+                  {language}
+                </p>
+              ))}
             </div>
           </div>
 
@@ -167,15 +159,14 @@ const Profile = () => {
               Sector of Interests{" "}
             </h1>
             <div className=" flex flex-wrap justify-center sm:justify-start ">
-              <p className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Cricket
-              </p>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Socker
-              </span>
-              <span className=" m-2  py-2 px-4 bg-purple-500 rounded-lg ">
-                Chess
-              </span>
+              {profileData.interests?.map((interest) => (
+                <p
+                  key={interest}
+                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                >
+                  {interest}
+                </p>
+              ))}
             </div>
           </div>
         </div>

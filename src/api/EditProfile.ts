@@ -7,32 +7,30 @@ type ProfileUrl = {
 
 type EditInfoDataType = {
   firstName: string;
-  lastName : string;
+  lastName: string;
   contactNumber: number;
   designation: string;
   empCode: number;
   joinedAt: string;
-  pod: string;
   profileUrls: ProfileUrl[];
   skills: string[];
   languages: string[];
   interests: string[];
 };
 
-export const EditInfoApi = async (
-  data:EditInfoDataType
-) => {
+export const EditInfoApi = async (data: EditInfoDataType) => {
   let user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
   if (!token || !user_email) {
     alert("Login to access this resource");
     return;
   }
- 
-  const modifiedData  ={
-    ...data,user_email
-  }
-  console.log("Printing res ",JSON.stringify(data));
+
+  const modifiedData = {
+    ...data,
+    user_email,
+  };
+  console.log("Printing res ", JSON.stringify(data));
   const options = {
     method: "POST",
     headers: {

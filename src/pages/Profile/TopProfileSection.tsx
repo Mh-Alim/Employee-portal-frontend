@@ -7,6 +7,7 @@ import { MdLocalPhone, MdOutlineLocalPostOffice } from "react-icons/md";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import EditModel from "./EditProfile";
 import { ManagerType, ProfileDataType } from "./ProfileTypes";
+import { TiUser } from "react-icons/ti";
 
 const TopProfileSection = (
   profileData: ProfileDataType,
@@ -49,8 +50,8 @@ const TopProfileSection = (
             </div>
             <div>
               <div className="  m-3 flex gap-1 items-center justify-center md:justify-start ">
-                <RiHomeOfficeLine />
-                <span>{profileData.pod || "Growth pod"}</span>
+                <TiUser />
+                <span>{profileData.emp_id}</span>
               </div>
               <div className=" m-3 flex gap-1 items-center justify-center md:justify-start ">
                 <MdOutlineLocalPostOffice />
@@ -85,7 +86,7 @@ const TopProfileSection = (
             href="https://instagram.com"
             className=" cursor-pointer "
           >
-            <AiFillInstagram  className=" transition-all duration-300 hover:scale-125 " />
+            <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />
           </a>
         </div>
         <div className=" text-right ">

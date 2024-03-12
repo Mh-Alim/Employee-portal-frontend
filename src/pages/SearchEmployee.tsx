@@ -22,6 +22,7 @@ const SearchEmployee = () => {
       if (border === 4) queryParams = "expertise";
 
       debounce(query, queryParams, setResults, 500);
+      console.log("Result is animesh ",results);
     } catch (err) {}
   };
 
@@ -72,13 +73,13 @@ const SearchEmployee = () => {
         {/* // show search Results */}
         <div className=" transition-all duration-1000 h-fit max-h-[40vh] my-3 overflow-y-auto ">
           {results.map(
-            (user: string[]) =>
-              user[0] && (
+            (user: any) =>
+              user && (
                 <User
-                  key={user[2]}
-                  name={`${user[0]} ${user[1]}`}
-                  email={user[2]}
-                  img={img1}
+                  key={user.id}
+                  name={`${user.firstName} ${user.lastName}`}
+                  email={user.userEmail}
+                  img={user.profileImageUrl}
                 />
               )
           )}

@@ -27,7 +27,7 @@ const FeatureRequest = () => {
     }
   };
   return (
-    <div className=" bg-[#0D1000] text-slate-400  dis-bg-red-950 h-[100vh] flex justify-center items-center relative z-20 bg-circule  ">
+    <div className=" bg-[#0D1000] text-slate-400  dis-bg-red-950 h-[100vh] flex justify-center items-center relative z-20 bg-circule-after bg-circule-before  ">
       <div className=" bg-glassmorphism flex flex-col w-fit h-fit p-9 justify-center items-center z-40  ">
         <form onSubmit={submitHandler} className=" w-60  sm:w-96    ">
           <select

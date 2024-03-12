@@ -72,19 +72,20 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className=" m-10 p-10 sm:p-5 flex justify-center items-center  bg-circule  ">
+    <div className=" m-10  sm:p-10  flex justify-center items-center relative bg-circule-after bg-circule-before no-scrollbar    ">
+      {/* <div className=" bg-circule m-10 p-10 sm:p-5 flex justify-center items-center "> */}
       {/*  */}
-      <div className=" h-[90vh] overflow-y-scroll w-full   gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg bg-glassmorphism  relative z-50  ">
+      <div className=" h-[90vh] overflow-y-scroll w-full   gap-7 p-2 sm:p-5  flex flex-col  justify-center items-center rounded-lg bg-glassmorphism  relative z-50  ">
         <form
           onSubmit={submitHandler}
-          className=" w-full md:w-4/4 lg:w-5/5 xl:w-3/6  flex flex-col   text-white min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg  "
+          className=" py-5 w-full md:w-4/4 lg:w-5/5 xl:w-3/6  flex flex-col   text-white min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg  "
         >
           <h1 className="  mb-5 text-white  text-center uppercase tracking-wide font-medium text-3xl ">
             Employee details
           </h1>
           <br />
           {/* <label htmlFor="email">Email</label> */}
-          <div className=" flex justify-between items-center gap-5 ">
+          <div className=" flex flex-col md:flex-row justify-between items-center gap-5 ">
             <input
               className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
               type="string"
@@ -181,7 +182,7 @@ const AddEmployee = () => {
 
           <button
             type="submit"
-            className=" px-10  py-2 text-slate-500 bg-white-500  bg-white rounded-3xl "
+            className=" px-10  py-2 mb-5 text-slate-500 bg-white-500  bg-white rounded-3xl "
           >
             Enter
           </button>
@@ -197,6 +198,7 @@ const AddEmployee = () => {
 
           {/* </div> */}
         </form>
+        {/* </div> */}
       </div>
     </div>
   );

@@ -22,14 +22,14 @@ const SearchEmployee = () => {
       if (border === 4) queryParams = "expertise";
 
       debounce(query, queryParams, setResults, 500);
-      console.log("Result is animesh ",results);
+      console.log("Result is animesh ", results);
     } catch (err) {}
   };
 
   console.log("results: ", results);
   return (
-    <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center   ">
-      <main className="  w-10/12 sm:w-9/12 lg:w-10/12 bg-glassmorphism text-white rounded-lg   p-1 ">
+    <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center bg-circule    ">
+      <main className="  w-10/12 sm:w-9/12 lg:w-10/12 bg-glassmorphism text-white rounded-lg   p-1  ">
         {/* search */}
         <form className=" flex items-center s-bg-white p-1 rounded-tl-md rounded-tr-md border-b-slate-500 border-b-2  ">
           <CiSearch className=" ml-2 text-2xl " />

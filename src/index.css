@@ -74,7 +74,7 @@ background: rgba( 255, 255, 255, 0 );
   }
 
 
-  .bg-circule::before{
+  .bg-circule-before::before{
     content: '';
     position: absolute;
     z-index: 1;
@@ -85,7 +85,7 @@ background: rgba( 255, 255, 255, 0 );
     background: linear-gradient(#f00,#f0f);
     clip-path: circle(30% at right 70%);
 }
-.bg-circule::after{
+.bg-circule-after::after{
     content: '';
     position: absolute;
     z-index: 1;

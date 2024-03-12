@@ -1,5 +1,7 @@
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
+const defaultImageUrl =
+  "https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg";
 export const profileDetailsApi = async (emailInRoute: string) => {
   let user_email =
     emailInRoute.length === 0 ? getEmailFromLocalStorage() : emailInRoute;
@@ -24,6 +26,38 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   const json = await res.json();
   const details = json.data;
   console.log("details: ", json);
+
+  let slackUrl = "";
+  let instaUrl = "";
+  let linkedinUrl = "";
+  let twitterUrl = "";
+  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl;
+  let offerLetter = {
+    name: "",
+    url: "",
+  };
+
+  let len = json.documentUrls.length;
+  for (let i = 0; i < len; i++) {
+    console.log("json-document: ", json.documentUrls);
+    if (json.documentUrls[i][0] === "slackUrl")
+      slackUrl = json.documentUrls[i][1];
+    if (json.documentUrls[i][0] === "instagramUrl")
+      instaUrl = json.documentUrls[i][1];
+    if (json.documentUrls[i][0] === "twitterUrl")
+      twitterUrl = json.documentUrls[i][1];
+    if (json.documentUrls[i][0] === "linkedinUrl")
+      linkedinUrl = json.documentUrls[i][1];
+
+    if (json.documentUrls[i][0] === "profileImageUrl")
+      profileImageUrl = json.documentUrls[i][1];
+
+    if (json.documentUrls[i][0] === "Offer-Letter")
+      offerLetter = {
+        name: json.documentUrls[i][0],
+        url: json.documentUrls[i][1],
+      };
+  }
   const userData = {
     firstName: details.firstName,
     lastName: details.lastName,
@@ -35,6 +69,12 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     skills: json.skills,
     languages: json.languages,
     interests: json.interests,
+    slackUrl,
+    instaUrl,
+    linkedinUrl,
+    twitterUrl,
+    profileImageUrl,
+    offerLetter,
   };
 
   console.log("user data: ", userData);

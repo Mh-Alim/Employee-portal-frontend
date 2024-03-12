@@ -28,23 +28,26 @@ const Profile = () => {
     firstName: "",
     lastName: "",
     email: "",
-    contact: 0,
-    emp_id: 0,
+    contact: "",
     designation: "",
+    emp_id: "",
     joinedAt: "",
+    skills: [""],
+    languages: [""],
+    interests: [""],
+    slackUrl: "",
+    instaUrl: "",
+    linkedinUrl: "",
+    twitterUrl: "",
+    profileImageUrl: "",
+    offerLetter: {
+      name: "",
+      url: "",
+    },
   });
 
-  const handleDownload = async () => {
+  const handleDownload = async (url: string) => {
     try {
-      const options = {
-        method: "GET",
-      };
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/downloadCheck`,
-        options
-      );
-      const { url } = await res.json();
-
       const fileResponse = await fetch(url);
       const blob = await fileResponse.blob();
 
@@ -182,10 +185,10 @@ const Profile = () => {
             <div className=" flex flex-col flex-wrap ">
               <p
                 className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
-                onClick={handleDownload}
+                onClick={() => handleDownload(profileData.offerLetter.url)}
               >
                 <MdHomeRepairService />
-                <span>OfferLetter.pdf </span>
+                <span> {profileData.offerLetter.name}</span>
               </p>
               <p className=" cursor-pointer px-4 flex gap-2 items-center justify-center sm:justify-start  ">
                 <RxResume /> <span>Resume.pdf</span>{" "}

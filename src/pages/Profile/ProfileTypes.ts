@@ -4,18 +4,19 @@ export type ProfileDataType = {
     firstName: string;
     lastName: string;
     email: string;
-    contact: number;
-    emp_id: number;
+    contact: string;
     designation: string;
+    emp_id: string;
     joinedAt: string;
-    pod?: string;
-    slackUrl?: string;
-    twitterUrl?:string;
-    instagramUrl?:string;
-    linkedinUrl?:string;
-    skills?: string[];
-    languages?:string[];
-    interests?:string[];
+    skills: string[];
+    languages: string[];
+    interests: string[];
+    slackUrl: string;
+    instaUrl: string;
+    linkedinUrl: string;
+    twitterUrl: string;
+    profileImageUrl: string;
+    offerLetter: {name: string, url: string};
 
   };
 

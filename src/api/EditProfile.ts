@@ -8,9 +8,9 @@ type ProfileUrl = {
 type EditInfoDataType = {
   firstName: string;
   lastName: string;
-  contactNumber: number;
+  contactNumber: string;
   designation: string;
-  empCode: number;
+  empCode: string;
   joinedAt: string;
   profileUrls: ProfileUrl[];
   skills: string[];

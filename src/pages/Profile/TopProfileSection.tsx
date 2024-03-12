@@ -23,7 +23,7 @@ const TopProfileSection = (
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
           <img
-            src="https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg"
+            src={profileData.profileImageUrl}
             alt="hello"
             className=" rounded-lg w-64 h-64 object-cover  "
           />
@@ -65,26 +65,30 @@ const TopProfileSection = (
 
       <div className=" p-1 md:p-5 flex flex-col md:flex-row justify-between lg:flex-row xl:flex-col  ">
         <div className=" flex gap-5 justify-center  items-center text-xl ">
-          <span className=" cursor-pointer ">
-            <BsSlack className=" transition-all duration-300 hover:scale-125 " />
-          </span>
           <a
             target="_blank"
-            href="https://linkedin.com"
+            href={profileData.slackUrl}
+            className=" cursor-pointer "
+          >
+            <BsSlack className=" transition-all duration-300 hover:scale-125 " />
+          </a>
+          <a
+            target="_blank"
+            href={profileData.linkedinUrl}
             className=" cursor-pointer "
           >
             <IoLogoLinkedin className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
-            href="https://twitter.com"
+            href={profileData.twitterUrl}
             className=" cursor-pointer "
           >
             <FaTwitter className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
-            href="https://instagram.com"
+            href={profileData.instaUrl}
             className=" cursor-pointer "
           >
             <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />

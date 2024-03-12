@@ -48,17 +48,17 @@ const EditModel = ({
   const [firstName, setFirstName] = useState<string>(profileData.firstName);
   const [lastName, setLastName] = useState<string>(profileData.lastName);
   const [managerEmail, setManagerEmail] = useState<string>(manager);
-  const [contactNumber, setContactNumber] = useState<number>(
+  const [contactNumber, setContactNumber] = useState<string>(
     profileData.contact
   );
   const [designation, setDesignation] = useState<string>(
     profileData.designation
   );
-  const [empCode, setEmpCode] = useState<number>(profileData.emp_id);
+  const [empCode, setEmpCode] = useState<string>(profileData.emp_id);
   const [joinedAt, setJoinedAt] = useState<string>(profileData.joinedAt);
   const [slackUrl, setSlackUrl] = useState<string>(profileData.slackUrl || "");
   const [instagramUrl, setInstagramUrl] = useState<string>(
-    profileData.instagramUrl || ""
+    profileData.instaUrl || ""
   );
   const [twitterUrl, setTwitterUrl] = useState<string>(
     profileData.twitterUrl || ""
@@ -79,7 +79,7 @@ const EditModel = ({
     setEmpCode(profileData.emp_id);
     setJoinedAt(profileData.joinedAt);
     setSlackUrl(profileData.slackUrl || "");
-    setInstagramUrl(profileData.instagramUrl || "");
+    setInstagramUrl(profileData.instaUrl || "");
     setTwitterUrl(profileData.twitterUrl || "");
     setLinkedinUrl(profileData.linkedinUrl || "");
     profileData.skills &&

@@ -104,7 +104,7 @@ const EditModel = ({
       designation,
       empCode,
       joinedAt,
-      managerEmail,
+      manager_email: managerEmail,
       profileUrls: [
         { name: "slackUrl", url: slackUrl },
         { name: "instagramUrl", url: instagramUrl },

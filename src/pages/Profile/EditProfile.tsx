@@ -67,6 +67,9 @@ const EditModel = ({
     profileData.linkedinUrl || ""
   );
 
+
+  
+
   useEffect(() => {
     setManagerEmail(manager);
   }, [manager]);

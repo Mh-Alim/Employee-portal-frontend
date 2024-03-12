@@ -12,6 +12,7 @@ const Login = () => {
     const res = await isLoggedIn();
     if (res) {
       navigate("/user/profile");
+      return;
     }
   };
   useEffect(() => {

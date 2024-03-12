@@ -98,6 +98,8 @@ const Profile = () => {
 
   const getManagerAndReportee = async (user_email: string) => {
     const res = await getManagerAndReporteeByEmail(user_email);
+
+    console.log("res current is : ",res)
     setManagerInfo({
       name: res.manager.first_name,
       email: res.manager.user_email,

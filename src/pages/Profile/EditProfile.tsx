@@ -70,10 +70,11 @@ const EditModel = ({
   useEffect(() => {
     setManagerEmail(manager);
   }, [manager]);
+
+  console.log("current manager is : ", managerEmail);
   useEffect(() => {
     setFirstName(profileData.firstName);
     setLastName(profileData.lastName);
-    setManagerEmail(profileData.email);
     setContactNumber(profileData.contact);
     setDesignation(profileData.designation);
     setEmpCode(profileData.emp_id);
@@ -116,6 +117,7 @@ const EditModel = ({
       user_email,
       requested_user_email: getEmailFromLocalStorage() || "",
     };
+    console.log("before edit info : ", data);
     await EditInfoApi(data);
   };
 

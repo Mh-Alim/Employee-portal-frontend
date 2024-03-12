@@ -73,7 +73,14 @@ const SearchEmployee = () => {
         <div className=" transition-all duration-1000 h-fit max-h-[40vh] my-3 overflow-y-auto ">
           {results.map(
             (user: string[]) =>
-              user[0] && <User key={user[1]} name={user[0]} email={user[1]} img={img1} />
+              user[0] && (
+                <User
+                  key={user[2]}
+                  name={`${user[0]} ${user[1]}`}
+                  email={user[2]}
+                  img={img1}
+                />
+              )
           )}
         </div>
       </main>
@@ -89,7 +96,12 @@ type UserType = {
 const User = ({ name, email, img }: UserType) => {
   const navigate = useNavigate();
   return (
-    <div onClick={(e) => {navigate(`/user/search/${email}`)}} className=" cursor-pointer  p-3 flex gap-3 items-center my-3 ">
+    <div
+      onClick={(e) => {
+        navigate(`/user/search/${email}`);
+      }}
+      className=" cursor-pointer  p-3 flex gap-3 items-center my-3 "
+    >
       <img className=" w-14 h-14 rounded-full object-cover " src={img} alt="" />
       <div>
         <p className="  ">{name}</p>

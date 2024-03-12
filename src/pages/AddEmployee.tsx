@@ -1,4 +1,4 @@
-import React, { useRef ,useState} from "react";
+import React, { useRef, useState } from "react";
 import { addEmployeeApi } from "../api/AddEmployee";
 
 const AddEmployee = () => {
@@ -15,12 +15,13 @@ const AddEmployee = () => {
   const dobRef = useRef<HTMLInputElement | null>(null);
   const managerEmailRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
     }
   };
-
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ const AddEmployee = () => {
 
     const formData = new FormData();
     if (selectedFile) {
-       formData.set("file", selectedFile);
+      formData.set("file", selectedFile);
     }
 
     const data = {
@@ -66,21 +67,20 @@ const AddEmployee = () => {
       dob,
     };
 
-    addEmployeeApi(data,formData);
-    
+    addEmployeeApi(data, formData);
   };
 
   return (
     <div className="h-[100vh] p-10 sm:p-5 flex justify-center items-center overflow-y-scroll   ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
-        <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
-          Employee details
-        </h1>
         <form
           onSubmit={submitHandler}
-          className=" w-full md:w-3/4 lg:w-3/5 xl:w-3/6 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
+          className=" h-[60vh] overflow-y-scroll  md:w-3/4 lg:w-3/5 xl:w-3/6 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-10 sm:p-6 md:p-10 rounded-lg "
         >
+          <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
+            Employee details
+          </h1>
           <br />
           {/* <label htmlFor="email">Email</label> */}
           <div className=" flex justify-between items-center gap-5 ">
@@ -115,7 +115,7 @@ const AddEmployee = () => {
           <br />
           <input
             className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
-            type="string"
+            type="text"
             placeholder="Designation"
             ref={designationRef}
           />
@@ -165,7 +165,7 @@ const AddEmployee = () => {
           <p>File URL: {fileUrl}</p>
           <img src={fileUrl} alt="Uploaded file" />
         </div> */}
-      {/* )} */}
+          {/* )} */}
 
           <div className=" cursor-pointer mt-5 flex items-center justify-center ">
             <button

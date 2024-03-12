@@ -10,9 +10,9 @@ const Login = () => {
 
   const isLoggedInRes = async () => {
     const res = await isLoggedIn();
-    // if(res) {
-    //   navigate("/user/profile");
-    // }
+    if (res) {
+      navigate("/user/profile");
+    }
   };
   useEffect(() => {
     isLoggedInRes();

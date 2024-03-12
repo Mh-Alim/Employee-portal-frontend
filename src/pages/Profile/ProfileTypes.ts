@@ -12,11 +12,11 @@ export type ProfileDataType = {
   skills: string[];
   languages: string[];
   interests: string[];
-  slackUrl: string;
-  instaUrl: string;
-  linkedinUrl: string;
-  twitterUrl: string;
-  profileImageUrl: string;
+  slackUrl: string | null;
+  instaUrl: string | null;
+  linkedinUrl: string | null;
+  twitterUrl: string | null;
+  profileImageUrl: string | null;
   documents: Array<{ name: string; url: string }>;
 };
 
@@ -38,5 +38,5 @@ export type AttachmentDocumentType = {
   name: string;
   url: string;
   handleDownload: (url: string) => void;
-  Icon: ReactElement<any,any>;
+  Icon: ReactElement<any, any>;
 };

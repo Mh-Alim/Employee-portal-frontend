@@ -75,7 +75,7 @@ const Attachment = ({route_email}:AttachmentType) => {
               </option>
               <option value="offer-letter">Offer Letter</option>
               <option value="resume">Resume</option>
-              <option value="cover-letter">cover letter</option>
+              <option value="cover-letter">Cover Letter</option>
             </select>
             {attachemnt !== "" && (
               <div className=" col-span-4  ">

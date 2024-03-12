@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import EmailForm from "./pages/ForgetPossword/EmailForm.tsx";
 import Otp from "./pages/ForgetPossword/Otp.tsx";
 import NewPassword from "./pages/ForgetPossword/NewPassword.tsx";
+import Loader from "./pages/Loader.tsx";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -32,21 +33,7 @@ const App = () => {
 
   return (
     <div className=" ">
-      {/* App
-      <div>
-      <button onClick={() => {dispatch(increment())}} >+</button>
-      {val}
-      <button onClick={() => dispatch(decrement())} >-</button>
-      </div> */}
-
-      {/* <Login />
-      <SearchEmployee />
-      <AddEmployee /> */}
-      {/* <SearchEmployee /> */}
-      {/* <OrganizationTreeView /> */}
-      {/* <Button variant="destructive">Button</Button> */}
-      
-      <Suspense fallback={<h1>Loading....</h1>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route
             path="/"
@@ -62,7 +49,6 @@ const App = () => {
           <Route path="/forget/email" element={<EmailForm />} />
           <Route path="/forget/otp" element={<Otp />} />
           <Route path="/forget/new-password" element={<NewPassword />} />
-
 
           {/* <Route path="/tree-view" element={<OrganizationTreeView />} /> */}
           <Route path="/user" element={<Sidebar />}>

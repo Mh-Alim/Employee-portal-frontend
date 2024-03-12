@@ -2,13 +2,47 @@ import React, { useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { getTokenFromLocalStorage } from "../utility";
 import { debounce } from "../api/Search";
-import { useNavigate } from "react-router-dom";
+import { Search, useNavigate } from "react-router-dom";
 
 const img1 =
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+export type SearchDataType = {
+  contactNumber: string | null;
+  dateCreated: string | null;
+  dateModified: string | null;
+  designation: string | null;
+  dob: string | null;
+  empCode: string | null;
+  firstName: string | null;
+  frequency: string | null;
+  id: string | null;
+  lastName: string | null;
+  managerEmail: string | null;
+  pod: string | null;
+  profileImageUrl: string | null;
+  userEmail: string | null;
+};
 const SearchEmployee = () => {
   const [border, setBorder] = useState(1);
-  const [results, setResults] = useState([["", "", ""]]);
+  const [results, setResults] = useState<SearchDataType[]>([
+    {
+      contactNumber: null,
+      dateCreated: null,
+      dateModified: null,
+      designation: null,
+      dob: null,
+      empCode: null,
+      firstName: null,
+      frequency: null,
+      id: null,
+      lastName: null,
+      managerEmail: null,
+      pod: null,
+      profileImageUrl: null,
+      userEmail: null,
+    },
+  ]);
   const changeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let query = e.target.value;
 
@@ -73,13 +107,13 @@ const SearchEmployee = () => {
         {/* // show search Results */}
         <div className=" transition-all duration-1000 h-fit max-h-[40vh] my-3 overflow-y-auto ">
           {results.map(
-            (user: any) =>
-              user && (
+            (user: SearchDataType) =>
+              user.id && (
                 <User
                   key={user.id}
                   name={`${user.firstName} ${user.lastName}`}
-                  email={user.userEmail}
-                  img={user.profileImageUrl}
+                  email={user.userEmail || ""}
+                  img={user.profileImageUrl || ""}
                 />
               )
           )}

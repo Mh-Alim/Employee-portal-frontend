@@ -27,11 +27,11 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   const details = json.data;
   console.log("details: ", json);
 
-  let slackUrl = "";
-  let instaUrl = "";
-  let linkedinUrl = "";
-  let twitterUrl = "";
-  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl;
+  let slackUrl = null;
+  let instaUrl = null;
+  let linkedinUrl = null;
+  let twitterUrl = null;
+  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl || null;
   let documents = [{ name: "", url: "" }];
 
   let len = json.documentUrls.length;
@@ -53,16 +53,16 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     }
   }
   const userData = {
-    firstName: details.firstName,
-    lastName: details.lastName,
-    email: details.userEmail,
-    contact: details.contactNumber,
-    designation: details.designation,
-    emp_id: details.empCode,
-    joinedAt: details.dateCreated.substring(0, 10),
-    skills: json.skills,
-    languages: json.languages,
-    interests: json.interests,
+    firstName: details?.firstName,
+    lastName: details?.lastName,
+    email: details?.userEmail,
+    contact: details?.contactNumber,
+    designation: details?.designation,
+    emp_id: details?.empCode,
+    joinedAt: details?.dateCreated?.substring(0, 10),
+    skills: json?.skills,
+    languages: json?.languages,
+    interests: json?.interests,
     slackUrl,
     instaUrl,
     linkedinUrl,

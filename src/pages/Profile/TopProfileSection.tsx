@@ -10,6 +10,8 @@ import { ManagerType, ProfileDataType } from "./ProfileTypes";
 import { TiUser } from "react-icons/ti";
 import ApiToCsvConverter from "@/components/ApiToCsvConverter";
 
+const defaultImg =
+  "https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg";
 const TopProfileSection = (
   profileData: ProfileDataType,
   id: string,
@@ -23,7 +25,11 @@ const TopProfileSection = (
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
           <img
-            src={profileData.profileImageUrl}
+            src={
+              profileData.profileImageUrl !== null
+                ? profileData.profileImageUrl
+                : defaultImg
+            }
             alt="hello"
             className=" rounded-lg w-64 h-64 object-cover  "
           />
@@ -67,28 +73,30 @@ const TopProfileSection = (
         <div className=" flex gap-5 justify-center  items-center text-xl ">
           <a
             target="_blank"
-            href={profileData.slackUrl}
+            href={profileData.slackUrl !== null ? profileData.slackUrl : ""}
             className=" cursor-pointer "
           >
             <BsSlack className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
-            href={profileData.linkedinUrl}
+            href={
+              profileData.linkedinUrl !== null ? profileData.linkedinUrl : ""
+            }
             className=" cursor-pointer "
           >
             <IoLogoLinkedin className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
-            href={profileData.twitterUrl}
+            href={profileData.twitterUrl !== null ? profileData.twitterUrl : ""}
             className=" cursor-pointer "
           >
             <FaTwitter className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
-            href={profileData.instaUrl}
+            href={profileData.instaUrl !== null ? profileData.instaUrl : ""}
             className=" cursor-pointer "
           >
             <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />

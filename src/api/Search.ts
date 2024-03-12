@@ -1,3 +1,4 @@
+import { SearchDataType } from "@/pages/SearchEmployee";
 import { getTokenFromLocalStorage } from "../utility";
 
 const searchApi = async (queryParam: string, query: string) => {
@@ -28,13 +29,13 @@ let timeoutId: any;
 export const debounce = (
   query: string,
   queryParam: string,
-  setResults: (a: string[][]) => void,
+  setResults: (a: SearchDataType[]) => void,
   delay: number
 ) => {
   clearTimeout(timeoutId);
-  let a: string[][] = [];
+
   timeoutId = setTimeout(async () => {
-    a = await searchApi(queryParam, query);
+    let a: SearchDataType[] = await searchApi(queryParam, query);
     setResults(a);
     console.log("a is search : ", a);
   }, delay);

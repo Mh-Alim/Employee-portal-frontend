@@ -66,19 +66,22 @@ const Profile = () => {
 
   const handleDownload = async (url: string) => {
     try {
-      const fileResponse = await fetch(url);
-      const blob = await fileResponse.blob();
+      console.log("Downloading url is ", url);
+        const fileResponse = await fetch(url);
+        const blob = await fileResponse.blob();
 
-      const blobUrl = URL.createObjectURL(blob);
+        const blobUrl = URL.createObjectURL(blob);
 
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = blobUrl;
-      a.download = "filename.jpg";
-      document.body.appendChild(a);
-      a.click();
-      URL.revokeObjectURL(blobUrl);
-      document.body.removeChild(a);
+        const filename = url.substring(url.lastIndexOf('/') + 1); // Extract filename from URL
+
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading file:", error);
     }

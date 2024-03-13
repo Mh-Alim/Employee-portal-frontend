@@ -50,6 +50,7 @@ const EditModel = ({
     profileData.languages ? profileData.languages : []
   );
 
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [firstName, setFirstName] = useState<string>(profileData.firstName);
   const [lastName, setLastName] = useState<string>(profileData.lastName);
   const [managerEmail, setManagerEmail] = useState<string>(manager);
@@ -100,6 +101,10 @@ const EditModel = ({
   console.log("Langu", languages);
   console.log("interets in edit", interests);
   const saveInfoClickHandler = async () => {
+    if (buttonRef.current) {
+      buttonRef.current.disabled = true;
+      buttonRef.current.innerText = "wait..";
+    }
     const data = {
       first_name: firstName,
       last_name: lastName,
@@ -120,6 +125,11 @@ const EditModel = ({
     };
     await EditInfoApi(data);
     setRenderProfileFlag((prev: boolean) => !prev);
+
+    if (buttonRef.current) {
+      buttonRef.current.disabled = false;
+      buttonRef.current.innerText = "Save changes";
+    }
   };
 
   return (
@@ -249,7 +259,7 @@ const EditModel = ({
         />
 
         <DialogFooter>
-          <Button onClick={saveInfoClickHandler} type="submit">
+          <Button ref={buttonRef} onClick={saveInfoClickHandler} type="submit">
             Save changes
           </Button>
         </DialogFooter>

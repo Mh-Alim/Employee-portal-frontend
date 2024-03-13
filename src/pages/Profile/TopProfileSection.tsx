@@ -105,10 +105,13 @@ const TopProfileSection = (
       <div className=" p-1 md:p-5 flex flex-col md:flex-row justify-between lg:flex-row xl:flex-col  ">
         <div className=" flex gap-5 justify-center  items-center text-xl ">
           <a
-            target="https://moneyview.slack.com/teams/U06L8R4LT9C"
-            // href={profileData.slackUrl !== null ? profileData.slackUrl : ""}
-            href="https://moneyview.slack.com/team/U06L8R4LT9C"
-            className=" cursor-pointer "
+            target="_blank"
+            href={profileData.slackUrl !== null ? profileData.slackUrl : ""}
+            className={` ${
+              profileData.slackUrl
+                ? "cursor-pointer"
+                : "cursor-none pointer-events-none"
+            }  `}
           >
             <BsSlack className=" transition-all duration-300 hover:scale-125 " />
           </a>
@@ -117,21 +120,33 @@ const TopProfileSection = (
             href={
               profileData.linkedinUrl !== null ? profileData.linkedinUrl : ""
             }
-            className=" cursor-pointer "
+            className={` ${
+              profileData.linkedinUrl
+                ? "cursor-pointer"
+                : "cursor-none pointer-events-none"
+            }  `}
           >
             <IoLogoLinkedin className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
             href={profileData.twitterUrl !== null ? profileData.twitterUrl : ""}
-            className=" cursor-pointer "
+            className={` ${
+              profileData.twitterUrl
+                ? "cursor-pointer"
+                : "cursor-none pointer-events-none"
+            }  `}
           >
             <FaTwitter className=" transition-all duration-300 hover:scale-125 " />
           </a>
           <a
             target="_blank"
             href={profileData.instaUrl !== null ? profileData.instaUrl : ""}
-            className=" cursor-pointer "
+            className={` ${
+              profileData.instaUrl
+                ? "cursor-pointer"
+                : "cursor-none pointer-events-none"
+            }  `}
           >
             <AiFillInstagram className=" transition-all duration-300 hover:scale-125 " />
           </a>

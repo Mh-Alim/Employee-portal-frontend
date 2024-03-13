@@ -1,6 +1,7 @@
 import { feedbackApi } from "@/api/Feedback";
 import { isLoggedIn } from "@/api/LoginApi";
 import { useRouteToLogin } from "@/customHook/useRouteToLogin";
+import { useStateLoad } from "@/customHook/useStateLoad";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 import React, { useRef, useState } from "react";
 
@@ -9,6 +10,9 @@ const FeatureRequest = () => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
 
   useRouteToLogin();
+
+  // to load the state while refreshing
+  useStateLoad();
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,8 +34,6 @@ const FeatureRequest = () => {
       textRef.current.value = "";
     }
   };
-
-
 
   return (
     <div className=" bg-[#0D1000] text-slate-400  dis-bg-red-950 h-[100vh] bg-glassmorphism z-10 flex justify-center items-center relative z-20 bg-circule-after bg-circule-before  ">

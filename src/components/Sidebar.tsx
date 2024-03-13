@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaFeather, FaPeopleGroup } from "react-icons/fa6";
@@ -14,43 +14,57 @@ import { Outlet } from "react-router-dom";
 import { RiOrganizationChart } from "react-icons/ri";
 import { CgAdd, CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 const dashboardLiData = [
   {
     text: "Profile",
     url: "/user/profile",
     Icon: <CgProfile />,
+    visibility: true,
   },
   {
     text: "Tree View",
     url: "/user/tree-view",
     Icon: <RiOrganizationChart />,
+    visibility: true,
   },
   {
     text: "Search",
     url: "/user/search",
     Icon: <FaSearch />,
+    visibility: true,
   },
   {
     text: "Add Employe",
     url: "/user/add-employee",
     Icon: <CgAdd />,
+    visibility: false,
   },
   {
     text: "Feature Request",
     url: "/user/feature-request",
     Icon: <FaFeather />,
+    visibility: true,
   },
   {
     text: "Logout",
     url: "/user/logout",
     Icon: <FiLogOut />,
+    visibility: true,
   },
 ];
 
 const Sidebar = () => {
   const location = useLocation();
   const [show, setShow] = useState(false);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const admin = useAppSelector((state) => state.user.isAdmin);
+  console.log("sidebar: isadmin ", isAdmin);
+  useEffect(() => {
+    setIsAdmin(admin);
+  }, [admin]);
   return (
     <div className=" flex  relative h-[90vh]  ">
       <p
@@ -85,6 +99,8 @@ const Sidebar = () => {
                 url={item.url}
                 Icon={item.Icon}
                 setShow={setShow}
+                visibility={item.visibility}
+                isAdmin={isAdmin}
               />
             ))}
           </ul>
@@ -101,16 +117,20 @@ type LiPropType = {
   text: string;
   Icon: React.ReactNode;
   url: string;
+  visibility: boolean;
+  isAdmin: boolean;
   setShow: (val: boolean) => void;
 };
 
-const Li = ({ text, Icon, url, setShow }: LiPropType) => {
+const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
   const location = useLocation();
   return (
     <li
       className={` ${
         location.pathname.includes(url) ? `bg-[#6e00a0]` : `bg-[#6e40c9]`
-      }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 `}
+      }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 ${
+        visibility || isAdmin ? "block" : "hidden"
+      } `}
       onClick={() => setShow(false)}
     >
       <Link className=" flex items-center " to={url}>

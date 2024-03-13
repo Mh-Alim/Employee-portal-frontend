@@ -16,7 +16,7 @@ const EmailForm = () => {
     const email = emailRef.current?.value;
 
     if (!email) {
-      alert("fill email")
+      alert("fill email");
       return;
     }
 
@@ -36,7 +36,7 @@ const EmailForm = () => {
   };
 
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center   bg-circule     ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center   bg-circule-after bg-circule-before     ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
@@ -44,7 +44,7 @@ const EmailForm = () => {
         </h1>
         <form
           onSubmit={submitHandler}
-          className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
+          className=" sm:w-96 max-w-96 bg-glassmorphism flex relative z-10 flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
         >
           <br />
           {/* <label htmlFor="email">Email</label> */}

@@ -1,10 +1,14 @@
 import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import { useAppSelector } from "@/app/hooks";
+import { useStateLoad } from "@/customHook/useStateLoad";
 import { getEmailFromLocalStorage } from "@/utility";
 import React, { useEffect, useState } from "react";
 
 const D3Logic = (data: any, setData: any, usersId: string[]) => {
   const mySelf = useAppSelector((state) => state.user);
+
+  // to load the state while refreshing
+  useStateLoad();
 
   const getNeighboursDetails = async () => {
     let user_email = getEmailFromLocalStorage() || "";
@@ -49,6 +53,8 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
     getNeighboursDetails();
     usersId.push(mySelf?.email);
   }, [mySelf]);
+
+  // this is for state loading
 };
 
 export default D3Logic;

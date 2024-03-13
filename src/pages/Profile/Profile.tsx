@@ -30,10 +30,12 @@ import TopProfileSection from "./TopProfileSection";
 import ApiToCsvConverter from "@/components/ApiToCsvConverter";
 import { useRouteToLogin } from "@/customHook/useRouteToLogin";
 import { ToastCallError } from "@/ReactToast";
+import { useStateLoad } from "@/customHook/useStateLoad";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const [renderProfileFlag, setRenderProfileFlag] = useState(true);
 
@@ -60,10 +62,12 @@ const Profile = () => {
         url: "",
       },
     ],
-    isAdmin : false
+    isAdmin: false,
   });
 
   useRouteToLogin();
+
+  useStateLoad(pathname);
 
   const handleDownload = async (url: string) => {
     try {
@@ -99,7 +103,7 @@ const Profile = () => {
   useEffect(() => {
     if (id) getProfileDetails(id);
     else getProfileDetails("");
-  }, [id, renderProfileFlag]);
+  }, [id, renderProfileFlag, pathname]);
 
   const [managerInfo, setManagerInfo] = useState<ManagerType>({
     name: "",
@@ -130,7 +134,6 @@ const Profile = () => {
     setReportees(reportees);
   };
 
-  const { pathname } = useLocation();
   useEffect(() => {
     const user_email = id || getEmailFromLocalStorage();
     if (user_email) getManagerAndReportee(user_email);
@@ -258,11 +261,7 @@ const Profile = () => {
   );
 };
 
-const Document = ({
-  name,
-  url,
-  handleDownload,
-}: AttachmentDocumentType) => {
+const Document = ({ name, url, handleDownload }: AttachmentDocumentType) => {
   return (
     <p
       className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"

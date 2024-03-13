@@ -8,12 +8,10 @@ const NewPassword = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
 
-
-
   const location = useLocation();
-  const {otp,user_email} = location.state;
+  const { otp, user_email } = location.state;
 
-  console.log("Otp and user_email: ",otp,user_email);
+  console.log("Otp and user_email: ", otp, user_email);
 
   useEffect(() => {
     newPassRef.current?.focus();
@@ -29,22 +27,21 @@ const NewPassword = () => {
 
     const password = newPassRef.current?.value;
     const confNewPassword = confNewPassRef.current?.value;
-    if(!password || !confNewPassRef) {
+    if (!password || !confNewPassRef) {
       alert("fill the empty fields");
       return;
-
     }
 
-    if(password !== confNewPassword) {
+    if (password !== confNewPassword) {
       alert("password doesnt match");
-      return 
+      return;
     }
 
-    if(!otp || !user_email) {
+    if (!otp || !user_email) {
       navigate("/forget/email");
       return;
     }
-    await changePasswordApi(password,otp,user_email,navigate);
+    await changePasswordApi(password, otp, user_email, navigate);
 
     // await forgetPasswordApi(otpRef.current?.value, navigate);
     // await otpApi(otp,user_email,password,navigate);
@@ -54,7 +51,7 @@ const NewPassword = () => {
     }
   };
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center  bg-circule      ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center  bg-circule-after bg-circule-before     ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
         <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
@@ -62,7 +59,7 @@ const NewPassword = () => {
         </h1>
         <form
           onSubmit={submitHandler}
-          className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
+          className=" sm:w-96 max-w-96 bg-glassmorphism relative z-10 flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
         >
           <br />
           {/* <label htmlFor="email">Email</label> */}

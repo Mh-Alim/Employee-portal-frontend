@@ -47,7 +47,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center bg-circule     ">
+    <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center  bg-circule-after bg-circule-before     ">
       {/*  */}
 
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
@@ -56,7 +56,7 @@ const Login = () => {
         </h1>
         <form
           onSubmit={submitHandler}
-          className=" sm:w-96 max-w-96 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
+          className=" sm:w-96 max-w-96 relative z-20 bg-glassmorphism flex flex-col  shadow-slate-400 text-white  shadow-lg min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg "
         >
           <br />
           <input

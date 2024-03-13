@@ -66,13 +66,13 @@ export default function OrganizationTreeView() {
                     );
                     setData(copyData);
                   }}
-                  className=" text-2xl  mb-6 "
+                  className=" text-2xl  mb-6 transition-all duration-200  hover:text-[#64ffda] "
                 />
                 <PiTelegramLogoDuotone
                   onClick={() => {
                     navigate(`/user/search/${nodeDatum.attributes?.email}`);
                   }}
-                  className=" text-xl   "
+                  className=" text-xl transition-all duration-200  hover:text-[#64ffda]   "
                 />
               </p>
               <p className=" flex gap-4 items-center ">

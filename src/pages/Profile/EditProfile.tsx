@@ -44,6 +44,8 @@ const EditModel = ({
   const [languages, setLanguages] = useState<string[]>(
     profileData.languages ? profileData.languages : []
   );
+
+  const [isAdmin, setIsAdmin] = useState(profileData.isAdmin);
   const [interests, setInterests] = useState<string[]>(
     profileData.languages ? profileData.languages : []
   );
@@ -91,6 +93,8 @@ const EditModel = ({
     profileData.interests &&
       profileData.interests.length > 0 &&
       setInterests(profileData.interests);
+
+    setIsAdmin(profileData.isAdmin);
   }, [profileData]);
 
   console.log("Langu", languages);

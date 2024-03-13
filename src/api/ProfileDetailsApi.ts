@@ -31,7 +31,7 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   let instaUrl = "";
   let linkedinUrl = "";
   let twitterUrl = "";
-  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl;
+  let profileImageUrl = [json.data.profileImageUrl || defaultImageUrl];
   let documents = [{ name: "", url: "" }];
 
   let len = json.documentUrls.length;
@@ -45,6 +45,8 @@ export const profileDetailsApi = async (emailInRoute: string) => {
       twitterUrl = json.documentUrls[i][1];
     else if (json.documentUrls[i][0] === "linkedinUrl")
       linkedinUrl = json.documentUrls[i][1];
+    else if (json.documentUrls[i][0] === "profileImageUrl")
+      profileImageUrl.push(json.documentUrls[i][1]);
     else {
       documents.push({
         name: json.documentUrls[i][0],
@@ -69,6 +71,7 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     twitterUrl,
     profileImageUrl,
     documents,
+    isAdmin: json.isAdmin,
   };
 
   console.log("user data: ", userData);

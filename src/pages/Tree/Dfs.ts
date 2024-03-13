@@ -22,6 +22,7 @@ const dfsChild = (copyData: any, output: any, email: string) => {
           attributes: {
             department: reportee.designation,
             email: reportee.user_email,
+            img_url: reportee.profile_image_url,
           },
           children: [],
         });

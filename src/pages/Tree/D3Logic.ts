@@ -18,6 +18,7 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
       attributes: {
         department: output.manager?.designation,
         email: output.manager?.user_email,
+        img_url: output?.manager?.profile_image_url,
       },
       children: [
         {
@@ -25,12 +26,14 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
           attributes: {
             department: output.node?.designation,
             email: output.node?.user_email,
+            img_url: output?.node?.profile_image_url,
           },
           children: output.reportee.map((child: any) => ({
             name: child?.first_name,
             attributes: {
               department: child?.designation,
               email: child?.user_email,
+              img_url: output?.node?.profile_image_url,
             },
             children: [],
           })),

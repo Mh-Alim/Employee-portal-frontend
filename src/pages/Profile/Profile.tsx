@@ -53,13 +53,14 @@ const Profile = () => {
     instaUrl: "",
     linkedinUrl: "",
     twitterUrl: "",
-    profileImageUrl: "",
+    profileImageUrl: null,
     documents: [
       {
         name: "",
         url: "",
       },
     ],
+    isAdmin : false
   });
 
   useRouteToLogin();
@@ -67,21 +68,21 @@ const Profile = () => {
   const handleDownload = async (url: string) => {
     try {
       console.log("Downloading url is ", url);
-        const fileResponse = await fetch(url);
-        const blob = await fileResponse.blob();
+      const fileResponse = await fetch(url);
+      const blob = await fileResponse.blob();
 
-        const blobUrl = URL.createObjectURL(blob);
+      const blobUrl = URL.createObjectURL(blob);
 
-        const filename = url.substring(url.lastIndexOf('/') + 1); // Extract filename from URL
+      const filename = url.substring(url.lastIndexOf("/") + 1); // Extract filename from URL
 
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = blobUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(blobUrl);
-        document.body.removeChild(a);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(blobUrl);
+      document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading file:", error);
     }
@@ -135,7 +136,6 @@ const Profile = () => {
     if (user_email) getManagerAndReportee(user_email);
   }, [pathname, id]);
 
-  const Icons = [<MdHomeRepairService />, <RxResume />, <FaFileDownload />];
   return (
     <div
       id="profile"
@@ -145,7 +145,8 @@ const Profile = () => {
         profileData,
         id || getEmailFromLocalStorage() || "",
         managerInfo,
-        setRenderProfileFlag
+        setRenderProfileFlag,
+        pathname
       )}
 
       <section className=" p-5 flex flex-col lg:flex-row  ">
@@ -213,7 +214,6 @@ const Profile = () => {
                     key={idx}
                     name={e.name}
                     url={e.url}
-                    Icon={Icons[idx]}
                     handleDownload={handleDownload}
                   />
                 ) : null;
@@ -258,20 +258,17 @@ const Profile = () => {
   );
 };
 
-
-
 const Document = ({
   name,
   url,
   handleDownload,
-  Icon,
 }: AttachmentDocumentType) => {
   return (
     <p
       className=" cursor-pointer  py-2 px-4 flex gap-2 items-center justify-center sm:justify-start"
       onClick={() => handleDownload(url)}
     >
-      {Icon}
+      <FaFileDownload />
       <span> {name}</span>
     </p>
   );

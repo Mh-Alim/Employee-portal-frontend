@@ -44,7 +44,7 @@ export default function OrganizationTreeView() {
             <div className=" relative w-16 h-16 group  ">
               <img
                 className="   relative z-0 rounded-full w-full h-full object-cover "
-                src={img1}
+                src={nodeDatum?.attributes?.img_url.toString() || ""}
               />
             </div>
 

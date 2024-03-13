@@ -16,8 +16,9 @@ export type ProfileDataType = {
   instaUrl: string | null;
   linkedinUrl: string | null;
   twitterUrl: string | null;
-  profileImageUrl: string | null;
+  profileImageUrl: string[] | null;
   documents: Array<{ name: string; url: string }>;
+  isAdmin : boolean;
 };
 
 export type ManagerType = {
@@ -38,5 +39,4 @@ export type AttachmentDocumentType = {
   name: string;
   url: string;
   handleDownload: (url: string) => void;
-  Icon: ReactElement<any, any>;
 };

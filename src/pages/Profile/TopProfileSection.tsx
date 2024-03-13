@@ -9,6 +9,9 @@ import EditModel from "./EditProfile";
 import { ManagerType, ProfileDataType } from "./ProfileTypes";
 import { TiUser } from "react-icons/ti";
 import ApiToCsvConverter from "@/components/ApiToCsvConverter";
+import { useEffect, useState } from "react";
+import { getEmailFromLocalStorage } from "@/utility";
+import { useAppSelector } from "@/app/hooks";
 
 const defaultImg =
   "https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg";
@@ -16,19 +19,34 @@ const TopProfileSection = (
   profileData: ProfileDataType,
   id: string,
   managerInfo: ManagerType,
-  setRenderProfileFlag: any
+  setRenderProfileFlag: any,
+  pathname: any
 ) => {
-  let isAdmin = false;
+  // let isAdmin = false;
   let params = false;
 
+  const { email, isAdmin } = useAppSelector((state) => state.user);
+  const [admin, setAdmin] = useState(false);
+
+  const [selfEmail, setSelfEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log("mySeflEmaiil from top profile section :", selfEmail);
+    setAdmin(isAdmin);
+    setSelfEmail(email);
+  }, [email, pathname, isAdmin]);
+
+  console.log("inside top profile data: ", profileData);
   return (
     <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
           <img
             src={
-              profileData.profileImageUrl !== null
-                ? profileData.profileImageUrl
+              profileData.profileImageUrl
+                ? profileData.profileImageUrl[1]
+                  ? profileData.profileImageUrl[1]
+                  : profileData.profileImageUrl[0]
                 : defaultImg
             }
             alt="hello"
@@ -109,20 +127,20 @@ const TopProfileSection = (
         </div>
         <div className=" flex gap-4 justify-end text-right mt-5  sm:mt-0 ">
           {" "}
-          {<ApiToCsvConverter />}
-          <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
-            {" "}
-            {(isAdmin || !params) && (
+          {admin && <ApiToCsvConverter />}
+          {((selfEmail && selfEmail === profileData.email) || admin) && (
+            <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
+              {" "}
               <EditModel
                 manager={managerInfo.email}
                 profileData={profileData}
-                admin={true}
+                admin={admin}
                 name="profle"
                 user_email={id}
                 setRenderProfileFlag={setRenderProfileFlag}
               />
-            )}
-          </button>{" "}
+            </button>
+          )}
         </div>
       </div>
     </section>

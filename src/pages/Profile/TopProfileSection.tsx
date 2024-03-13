@@ -37,18 +37,26 @@ const TopProfileSection = (
   }, [email, pathname, isAdmin]);
 
   console.log("inside top profile data: ", profileData);
+
+  const src = profileData.profileImageUrl
+    ? profileData.profileImageUrl[1]
+      ? profileData.profileImageUrl[1]
+      : profileData.profileImageUrl[0]
+    : defaultImg;
+
+  // const src = profileData.profileImageUrl
+  //   ? profileData.profileImageUrl[0]
+  //     ? profileData.profileImageUrl[0]
+  //     : profileData.profileImageUrl[1]
+  //   : defaultImg;
+
+  console.log("src is: ", src);
   return (
     <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
         <div className=" object-cover flex justify-center items-center mt-5    ">
           <img
-            src={
-              profileData.profileImageUrl
-                ? profileData.profileImageUrl[1]
-                  ? profileData.profileImageUrl[1]
-                  : profileData.profileImageUrl[0]
-                : defaultImg
-            }
+            src={src}
             alt="hello"
             className=" rounded-lg w-64 h-64 object-cover  "
           />

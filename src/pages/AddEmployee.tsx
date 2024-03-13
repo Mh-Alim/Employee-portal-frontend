@@ -56,7 +56,7 @@ const AddEmployee = () => {
 
     if (enterRef.current) {
       enterRef.current.disabled = true;
-      enterRef.current.value = "Wait...";
+      enterRef.current.innerText = "Wait...";
     }
 
     const formData = new FormData();
@@ -80,7 +80,7 @@ const AddEmployee = () => {
 
     if (enterRef.current) {
       enterRef.current.disabled = false;
-      enterRef.current.value = "Enter";
+      enterRef.current.innerText = "Enter";
     }
   };
 

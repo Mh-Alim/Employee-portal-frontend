@@ -14,7 +14,7 @@ import { getEmailFromLocalStorage } from "@/utility";
 import { useAppSelector } from "@/app/hooks";
 
 const defaultImg =
-  "https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg";
+  "https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/v1455022237/iehclnpgv6qezeblmbij.png";
 const TopProfileSection = (
   profileData: ProfileDataType,
   id: string,
@@ -132,7 +132,7 @@ const TopProfileSection = (
             <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
               {" "}
               <EditModel
-                manager={managerInfo.email}
+                manager={managerInfo.email || ""}
                 profileData={profileData}
                 admin={admin}
                 name="profle"

@@ -22,8 +22,8 @@ export type ProfileDataType = {
 };
 
 export type ManagerType = {
-  name: string;
-  email: string;
+  name: string | null;
+  email: string  | null;
 };
 
 export type ReporteesType = {

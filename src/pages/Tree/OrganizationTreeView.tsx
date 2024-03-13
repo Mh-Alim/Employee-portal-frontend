@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tree, { CustomNodeElementProps } from "react-d3-tree";
 import { useCenteredTree } from "../../customHook/useCenteredTree";
 import D3Logic from "./D3Logic";
@@ -27,6 +27,11 @@ export default function OrganizationTreeView() {
 
   const navigate = useNavigate();
   D3Logic(data, setData, usersId);
+
+  useEffect(() => {
+    usersId = [];
+    // console.log("use effect is running : inside org tree");
+  }, []);
 
   const renderRectSvgNode = ({
     nodeDatum,

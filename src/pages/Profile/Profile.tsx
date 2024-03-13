@@ -98,7 +98,7 @@ const Profile = () => {
   ) => {
     let isSearched = false;
     if (locState && locState.isSearched) isSearched = true;
-    
+
     const userData = await profileDetailsApi(emailId, isSearched);
     if (!userData) {
       return;
@@ -123,9 +123,10 @@ const Profile = () => {
   const getManagerAndReportee = async (user_email: string) => {
     const res = await getManagerAndReporteeByEmail(user_email);
 
+    console.log("res of getManager and Reportee: ", res);
     setManagerInfo({
-      name: res.manager.first_name,
-      email: res.manager.user_email,
+      name: res.manager?.first_name,
+      email: res.manager?.user_email,
     });
 
     let reportees = res.reportee.map(
@@ -142,8 +143,11 @@ const Profile = () => {
 
   useEffect(() => {
     const user_email = id || getEmailFromLocalStorage();
+    console.log("user email is: ", user_email);
     if (user_email) getManagerAndReportee(user_email);
   }, [pathname, id]);
+
+  console.log("Manager info: ", managerInfo);
 
   return (
     <div

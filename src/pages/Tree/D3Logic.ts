@@ -37,7 +37,7 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
             attributes: {
               department: child?.designation,
               email: child?.user_email,
-              img_url: output?.node?.profile_image_url,
+              img_url: child.profile_image_url,
             },
             children: [],
           })),
@@ -50,9 +50,10 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
 
   useEffect(() => {
     usersId = [];
+    console.log("user id cleanijng in d3: ", usersId);
     getNeighboursDetails();
     usersId.push(mySelf?.email);
-  }, [mySelf]);
+  }, []);
 
   // this is for state loading
 };

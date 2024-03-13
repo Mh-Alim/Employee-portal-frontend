@@ -159,7 +159,8 @@ const Profile = () => {
         id || getEmailFromLocalStorage() || "",
         managerInfo,
         setRenderProfileFlag,
-        pathname
+        pathname,
+        id
       )}
 
       <section className=" p-5 flex flex-col lg:flex-row  ">

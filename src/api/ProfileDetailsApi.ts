@@ -2,7 +2,10 @@ import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
 const defaultImageUrl =
   "https://cdn4.sharechat.com/img_840073_286c7ec2_1674182835661_sc.jpg?tenant=sc&referrer=pwa-sharechat-service&f=661_sc.jpg";
-export const profileDetailsApi = async (emailInRoute: string) => {
+export const profileDetailsApi = async (
+  emailInRoute: string,
+  isSearched?: boolean
+) => {
   let user_email =
     emailInRoute.length === 0 ? getEmailFromLocalStorage() : emailInRoute;
   let requested_user_email = getEmailFromLocalStorage();
@@ -10,13 +13,21 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   if (!token || !user_email || !requested_user_email) {
     return;
   }
+
+  const searched = isSearched ? true : false;
+
+  console.log("searched done or not: ", {
+    user_email,
+    requested_user_email,
+    searched,
+  });
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       token: token,
     },
-    body: JSON.stringify({ user_email, requested_user_email }), // Convert data to JSON string
+    body: JSON.stringify({ user_email, requested_user_email, searched }), // Convert data to JSON string
   };
 
   const res = await fetch(

@@ -35,7 +35,7 @@ import { useStateLoad } from "@/customHook/useStateLoad";
 const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
 
   const [renderProfileFlag, setRenderProfileFlag] = useState(true);
 
@@ -92,8 +92,14 @@ const Profile = () => {
     }
   };
 
-  const getProfileDetails = async (emailId: string) => {
-    const userData = await profileDetailsApi(emailId);
+  const getProfileDetails = async (
+    emailId: string,
+    locState?: undefined | { isSearched: boolean }
+  ) => {
+    let isSearched = false;
+    if (locState && locState.isSearched) isSearched = true;
+    
+    const userData = await profileDetailsApi(emailId, isSearched);
     if (!userData) {
       return;
     }
@@ -101,7 +107,7 @@ const Profile = () => {
     if (emailId.length === 0) dispatch(addUser(userData));
   };
   useEffect(() => {
-    if (id) getProfileDetails(id);
+    if (id) getProfileDetails(id, state);
     else getProfileDetails("");
   }, [id, renderProfileFlag, pathname]);
 

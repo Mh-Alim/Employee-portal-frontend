@@ -130,7 +130,7 @@ const User = ({ name, email, img }: UserType) => {
   return (
     <div
       onClick={(e) => {
-        navigate(`/user/search/${email}`);
+        navigate(`/user/search/${email}`,{state: {isSearched: true}});
       }}
       className=" cursor-pointer  p-3 flex gap-3 items-center my-3 "
     >

@@ -7,6 +7,7 @@ import {
 } from "./app/features/counter/counterSlice";
 import { Link, Route, Routes } from "react-router-dom";
 import { ToastContainerError, ToastContainerSuccess } from "./ReactToast.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 const Login = lazy(() => import("./pages/Login"));
 const AddEmployee = lazy(() => import("./pages/AddEmployee"));
@@ -63,6 +64,7 @@ const App = () => {
             <Route path="feature-request" element={<FeatureRequest />} />
             <Route path="search/:id" element={<Profile />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       {ToastContainerSuccess}

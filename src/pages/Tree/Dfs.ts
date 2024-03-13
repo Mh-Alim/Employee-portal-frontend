@@ -63,6 +63,7 @@ export const parentHandler = async (email: any, data: any) => {
       attributes: {
         department: output.manager.designation,
         email: output.manager.user_email,
+        img_url: output.manager.profile_image_url,
       },
       children: [{ ...data }],
     };

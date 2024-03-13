@@ -15,7 +15,7 @@ const About = () => {
         <div className=" z-20 relative ">
           <p className=" -left-4 rounded-b-xl w-1 h-full absolute md:-left-10 top-0 timeline bg-[linear-gradient(#0D1117,#08924F)] "></p>
           <h1 className=" relative text-5xl  text-white z-10 font-work_sans font-extrabold  md:text-9xl ">
-            Welcome to Employees Portal
+            Welcome to Moneyview
           </h1>
           <p className=" text-xl  pb-10 relative z-10 sm:text-3xl text-slate-400 mt-4 ">
             Built this using React, Typescript and Redux{" "}

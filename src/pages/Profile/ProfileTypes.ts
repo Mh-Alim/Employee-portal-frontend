@@ -33,6 +33,8 @@ export type ReporteesType = {
 
 export type AttachmentType = {
   route_email: string | undefined;
+  setRenderProfileFlag: any
+  
 };
 
 export type AttachmentDocumentType = {

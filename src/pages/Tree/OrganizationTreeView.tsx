@@ -49,7 +49,7 @@ export default function OrganizationTreeView() {
             <div className=" relative w-16 h-16 group  ">
               <img
                 className="   relative z-0 rounded-full w-full h-full object-cover "
-                src={nodeDatum?.attributes?.img_url.toString() || ""}
+                src={`${nodeDatum?.attributes?.img_url}` || ""}
               />
             </div>
 
@@ -93,7 +93,7 @@ export default function OrganizationTreeView() {
                       <PiOfficeChairFill />
                     </span>
                     <span>
-                      {nodeDatum.attributes?.department.toString().length > 21
+                      {`${nodeDatum.attributes?.department}`.length > 21
                         ? `${nodeDatum.attributes?.department
                             .toString()
                             .slice(0, 19)}...`

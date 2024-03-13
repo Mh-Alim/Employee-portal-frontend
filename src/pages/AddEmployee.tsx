@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { addEmployeeApi } from "../api/AddEmployee";
 import { MdCloudUpload } from "react-icons/md";
+import { ToastCallError } from "@/ReactToast";
 
 const AddEmployee = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -16,6 +17,8 @@ const AddEmployee = () => {
   const dobRef = useRef<HTMLInputElement | null>(null);
   const managerEmailRef = useRef<HTMLInputElement | null>(null);
 
+  const enterRef = useRef<HTMLButtonElement | null>(null);
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -24,7 +27,7 @@ const AddEmployee = () => {
     }
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const first_name = fnameRef.current?.value;
     const last_name = lnameRef.current?.value;
@@ -47,8 +50,13 @@ const AddEmployee = () => {
       !dob ||
       !manager_email
     ) {
-      alert("fill the empty fields");
+      ToastCallError("fill the empty fields");
       return;
+    }
+
+    if (enterRef.current) {
+      enterRef.current.disabled = true;
+      enterRef.current.value = "Wait...";
     }
 
     const formData = new FormData();
@@ -68,7 +76,12 @@ const AddEmployee = () => {
       dob,
     };
 
-    addEmployeeApi(data, formData);
+    await addEmployeeApi(data, formData);
+
+    if (enterRef.current) {
+      enterRef.current.disabled = false;
+      enterRef.current.value = "Enter";
+    }
   };
 
   return (
@@ -88,13 +101,13 @@ const AddEmployee = () => {
           <div className=" flex flex-col md:flex-row justify-between items-center gap-5 ">
             <input
               className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
-              type="string"
+              type="text"
               placeholder="First Name"
               ref={fnameRef}
             />
             <input
               className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
-              type="string"
+              type="text"
               placeholder="Last Name"
               ref={lnameRef}
             />
@@ -124,7 +137,7 @@ const AddEmployee = () => {
           <br />
           <input
             className="mb-5 w-full p-2 outline-none border-2  remove-arrow  border-slate-500 rounded-lg bg-transparent"
-            type="number"
+            type="text"
             placeholder="Employee Code"
             ref={empCodeRef}
           />
@@ -152,6 +165,13 @@ const AddEmployee = () => {
             className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
             type="email"
             placeholder="Manager Email"
+            ref={managerEmailRef}
+          />
+
+          <input
+            className="mb-5 w-full p-2 outline-none border-2   border-slate-500 rounded-lg bg-transparent"
+            type="text"
+            placeholder="Pod"
             ref={managerEmailRef}
           />
 
@@ -183,6 +203,7 @@ const AddEmployee = () => {
           <button
             type="submit"
             className=" px-10  py-2 mb-5 text-slate-500 bg-white-500  bg-white rounded-3xl "
+            ref={enterRef}
           >
             Enter
           </button>

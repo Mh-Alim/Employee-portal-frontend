@@ -1,5 +1,5 @@
+import { ToastCallError, ToastCallSuccess } from "@/ReactToast";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "../utility";
-
 
 type EmployeeType = {
   first_name: string;
@@ -14,7 +14,10 @@ type EmployeeType = {
   request_user_email?: string;
 };
 
-export const addEmployeeApi = async (data: EmployeeType, formData: FormData) => {
+export const addEmployeeApi = async (
+  data: EmployeeType,
+  formData: FormData
+) => {
   let user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
   if (!token || !user_email) {
@@ -22,12 +25,12 @@ export const addEmployeeApi = async (data: EmployeeType, formData: FormData) => 
     return;
   }
   data.request_user_email = user_email;
-  formData.set("data",JSON.stringify(data));
-  console.log("typeof: ", data.dob, typeof (data.dob));
+  formData.set("data", JSON.stringify(data));
+  console.log("typeof: ", data.dob, typeof data.dob);
   console.log("Form data formed is ", formData);
   console.log("data is ", data);
   for (var pair of formData.entries()) {
-    console.log(pair[0] + ' - ' + pair[1]);
+    console.log(pair[0] + " - " + pair[1]);
   }
   const options = {
     method: "POST",
@@ -39,18 +42,15 @@ export const addEmployeeApi = async (data: EmployeeType, formData: FormData) => 
 
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/register`,
-    options,
+    options
   );
-
-
 
   console.log("Add Employee: ", res.status);
   if (res.status === 200) {
-    alert("Successfully Create Employee");
+    ToastCallSuccess("Successfully Create Employee");
     return;
   }
-  alert("Some issue on the server side");
-
+  ToastCallError("Some issue on the server side");
 };
 
 // export const uploadFile = async (file: File) => {

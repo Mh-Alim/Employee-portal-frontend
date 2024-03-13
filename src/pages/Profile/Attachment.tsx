@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,36 +16,49 @@ import { CiCirclePlus } from "react-icons/ci";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 import { AttachmentType } from "./ProfileTypes";
 import { uploadAttachmentApi } from "@/api/UploadAttachment";
+import { ToastCallError } from "@/ReactToast";
 
-const Attachment = ({route_email}:AttachmentType) => {
+const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
   const [attachemnt, setAttachment] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
     }
   };
-  const handleSubmit = () => {
-    const user_email = route_email || getEmailFromLocalStorage() ;
+  const handleSubmit = async () => {
+    const user_email = route_email || getEmailFromLocalStorage();
     const token = getTokenFromLocalStorage();
-    if (!selectedFile || !user_email ||!token) {
-      console.log("file is not selected returning !!",user_email,token, selectedFile);
+    if (!selectedFile || !user_email || !token) {
+      ToastCallError("File not selected");
       return;
     }
 
+    if (buttonRef.current) {
+      buttonRef.current.disabled = true;
+      buttonRef.current.innerText = "wait..";
+      console.log(buttonRef.current);
+    }
     const formData = new FormData();
-    
-    formData.set("file",selectedFile);
+
+    formData.set("file", selectedFile);
     const data = {
       file_name: attachemnt,
       user_email,
       requested_user_email: getEmailFromLocalStorage(),
-    }
-    formData.set('data',JSON.stringify(data));
-    uploadAttachmentApi(formData,token);
+    };
+    formData.set("data", JSON.stringify(data));
+    await uploadAttachmentApi(formData, token);
 
-    
+    setRenderProfileFlag((prev: boolean) => !prev);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = false;
+      buttonRef.current.innerText = "Save Changes";
+    }
   };
   return (
     <Dialog>
@@ -91,7 +104,9 @@ const Attachment = ({route_email}:AttachmentType) => {
         </div>
 
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>Save changes</Button>
+          <Button ref={buttonRef} type="submit" onClick={handleSubmit}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

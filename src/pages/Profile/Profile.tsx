@@ -216,7 +216,7 @@ const Profile = () => {
             <div className=" flex gap-5 items-center mb-5 ">
               <h1 className=" text-2xl tracking-wider ">Attachments</h1>
               <p>
-                <Attachment route_email={id} />
+                <Attachment setRenderProfileFlag = {setRenderProfileFlag} route_email={id} />
               </p>
             </div>
             <div className=" flex flex-col flex-wrap ">
@@ -266,7 +266,6 @@ const Profile = () => {
         </div>
       </section>
       {/* <EditProfileModel editClickHandler={editClickHandler} /> */}
-      <button onClick={() => navigate("/tree-view")}>TreeView</button>
     </div>
   );
 };

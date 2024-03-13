@@ -82,10 +82,13 @@ const TopProfileSection = (
                 <TiUser />
                 <span>{profileData.emp_id}</span>
               </div>
-              <div className=" m-3 flex gap-1 items-center justify-center md:justify-start ">
+              <a
+                href={`mailto:${profileData.email}`}
+                className=" m-3 flex gap-1 items-center justify-center md:justify-start "
+              >
                 <MdOutlineLocalPostOffice />
                 <span>{profileData.email}</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>

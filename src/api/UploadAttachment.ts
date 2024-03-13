@@ -1,3 +1,5 @@
+import { ToastCallError, ToastCallSuccess } from "@/ReactToast";
+
 export const uploadAttachmentApi = async (formData: FormData, token: string) => {
   const options = {
     method: "POST",
@@ -14,8 +16,8 @@ export const uploadAttachmentApi = async (formData: FormData, token: string) => 
 
   console.log("Add Employee: ", res.status);
   if (res.status === 200) {
-    alert("Successfully Uploaded Attachment");
+    ToastCallSuccess("Successfully Uploaded Attachment");
     return;
   }
-  alert("Some issue on the server side");
+  ToastCallError("Some issue on the server side");
 };

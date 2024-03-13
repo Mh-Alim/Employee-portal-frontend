@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaFeather, FaPeopleGroup } from "react-icons/fa6";
 import { FaBagShopping } from "react-icons/fa6";
@@ -124,6 +124,14 @@ type LiPropType = {
 
 const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
   const location = useLocation();
+
+  const navigate = useNavigate();
+  const logoutFun = () => {
+    localStorage.setItem("eportal_token", "");
+    localStorage.setItem("eportal_user_email", "");
+    navigate("/");
+  };
+
   return (
     <li
       className={` ${
@@ -131,7 +139,9 @@ const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
       }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 ${
         visibility || isAdmin ? "block" : "hidden"
       } `}
-      onClick={() => setShow(false)}
+      onClick={() => {
+        url === "/user/logout" ? logoutFun() : setShow(false);
+      }}
     >
       <Link className=" flex items-center " to={url}>
         {Icon}

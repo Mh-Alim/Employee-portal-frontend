@@ -18,16 +18,16 @@ type EditInfoDataType = {
 };
 
 export const EditInfoApi = async (data: EditInfoDataType) => {
-  let user_email = getEmailFromLocalStorage();
+  let requested_user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
-  if (!token || !user_email) {
+  if (!token || !requested_user_email) {
     ToastCallError("Login to access this resource");
     return;
   }
 
   const modifiedData = {
     ...data,
-    user_email,
+    requested_user_email,
   };
 
   console.log("before update: ", modifiedData);
@@ -49,7 +49,7 @@ export const EditInfoApi = async (data: EditInfoDataType) => {
 
   console.log("Add Employee: ", res.status);
   if (res.status === 200) {
-    ToastCallSuccess("Successfully Update User");
+    ToastCallSuccess("Successfully Updated User");
     return;
   }
   ToastCallError("Some issue on the server side");

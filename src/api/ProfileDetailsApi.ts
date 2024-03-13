@@ -1,4 +1,3 @@
-import { ToastCallError } from "@/ReactToast";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 
 const defaultImageUrl =
@@ -9,7 +8,6 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   let requested_user_email = getEmailFromLocalStorage();
   let token = getTokenFromLocalStorage();
   if (!token || !user_email || !requested_user_email) {
-    ToastCallError("you are not logged in..");
     return;
   }
   const options = {
@@ -29,11 +27,11 @@ export const profileDetailsApi = async (emailInRoute: string) => {
   const details = json.data;
   console.log("details: ", json);
 
-  let slackUrl = null;
-  let instaUrl = null;
-  let linkedinUrl = null;
-  let twitterUrl = null;
-  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl || null;
+  let slackUrl = "";
+  let instaUrl = "";
+  let linkedinUrl = "";
+  let twitterUrl = "";
+  let profileImageUrl = json.data.profileImageUrl || defaultImageUrl;
   let documents = [{ name: "", url: "" }];
 
   let len = json.documentUrls.length;
@@ -55,16 +53,16 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     }
   }
   const userData = {
-    firstName: details?.firstName,
-    lastName: details?.lastName,
-    email: details?.userEmail,
-    contact: details?.contactNumber,
-    designation: details?.designation,
-    emp_id: details?.empCode,
-    joinedAt: details?.dateCreated?.substring(0, 10),
-    skills: json?.skills,
-    languages: json?.languages,
-    interests: json?.interests,
+    firstName: details.firstName,
+    lastName: details.lastName,
+    email: details.userEmail,
+    contact: details.contactNumber,
+    designation: details.designation,
+    emp_id: details.empCode,
+    joinedAt: details.dateCreated.substring(0, 10),
+    skills: json.skills,
+    languages: json.languages,
+    interests: json.interests,
     slackUrl,
     instaUrl,
     linkedinUrl,
@@ -72,6 +70,8 @@ export const profileDetailsApi = async (emailInRoute: string) => {
     profileImageUrl,
     documents,
   };
+
+  console.log("user data: ", userData);
 
   return userData;
 };

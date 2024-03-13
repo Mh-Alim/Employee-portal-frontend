@@ -17,33 +17,55 @@ const D3Logic = (data: any, setData: any, usersId: string[]) => {
     if (!output || !user_email) return;
     console.log("output: ", output);
 
-    const firstLevelData = {
-      name: output.manager?.first_name,
-      attributes: {
-        department: output.manager?.designation,
-        email: output.manager?.user_email,
-        img_url: output?.manager?.profile_image_url,
-      },
-      children: [
-        {
-          name: output.node?.first_name,
-          attributes: {
-            department: output.node?.designation,
-            email: output.node?.user_email,
-            img_url: output?.node?.profile_image_url,
-          },
-          children: output.reportee.map((child: any) => ({
-            name: child?.first_name,
-            attributes: {
-              department: child?.designation,
-              email: child?.user_email,
-              img_url: child.profile_image_url,
-            },
-            children: [],
-          })),
+    let firstLevelData: any;
+    if (output.manager) {
+      firstLevelData = {
+        name: output.manager?.first_name,
+        attributes: {
+          department: output.manager?.designation,
+          email: output.manager?.user_email,
+          img_url: output?.manager?.profile_image_url,
         },
-      ],
-    };
+        children: [
+          {
+            name: output.node?.first_name,
+            attributes: {
+              department: output.node?.designation,
+              email: output.node?.user_email,
+              img_url: output?.node?.profile_image_url,
+            },
+            children: output.reportee.map((child: any) => ({
+              name: child?.first_name,
+              attributes: {
+                department: child?.designation,
+                email: child?.user_email,
+                img_url: child.profile_image_url,
+              },
+              children: [],
+            })),
+          },
+        ],
+      };
+    } else {
+      firstLevelData = {
+        name: output.node?.first_name,
+        attributes: {
+          department: output.node?.designation,
+          email: output.node?.user_email,
+          img_url: output?.node?.profile_image_url,
+        },
+        children: output.reportee.map((child: any) => ({
+          name: child?.first_name,
+          attributes: {
+            department: child?.designation,
+            email: child?.user_email,
+            img_url: child.profile_image_url,
+          },
+          children: [],
+        })),
+      };
+    }
+
     setData(firstLevelData);
     return data;
   };

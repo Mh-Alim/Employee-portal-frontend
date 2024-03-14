@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { Link, Route, Routes } from "react-router-dom";
 import { ToastContainerError, ToastContainerSuccess } from "./ReactToast.tsx";
@@ -29,9 +29,13 @@ const Loader = lazy(() => import("./pages/Loader.tsx"));
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const { isDark } = useAppSelector((state) => state.toggle);
 
+  useEffect(() => {
+    document.body.style.background = isDark === true ? "#0D1117" : "#F3EEE9";
+  }, [isDark]);
   return (
-    <div className="">
+    <div className={` ${isDark ? "bg-dark" : "bg-light"}  `}>
       <DarkMode />
       <Suspense fallback={<Loader />}>
         <Routes>

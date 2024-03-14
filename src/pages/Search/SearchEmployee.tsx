@@ -4,6 +4,7 @@ import { getTokenFromLocalStorage } from "../../utility";
 import { debounce } from "../../api/Search";
 import { Search, useNavigate } from "react-router-dom";
 import { useStateLoad } from "@/customHook/useStateLoad";
+import { useAppSelector } from "@/app/hooks";
 
 const img1 =
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -92,15 +93,26 @@ const SearchEmployee = () => {
     // Set the state with the array of query parameters
   }, []);
 
+  const { isDark } = useAppSelector((state) => state.toggle);
   console.log("results: ", results);
   return (
-    <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center bg-circule    ">
+    <div
+      className={` ${
+        isDark ? "bg-dark" : "bg-light"
+      }   h-[100vh] w-full flex justify-center items-center bg-circule    `}
+    >
       <main className="  w-10/12 sm:w-9/12 lg:w-10/12 bg-glassmorphism text-white rounded-lg   p-1  ">
         {/* search */}
         <form className=" flex items-center s-bg-white p-1 rounded-tl-md rounded-tr-md border-b-slate-500 border-b-2  ">
-          <CiSearch className=" ml-2 text-2xl " />
+          <CiSearch
+            className={`ml-2 text-2xl font-bold  ${
+              isDark ? "text-white" : "text-black"
+            }  `}
+          />
           <input
-            className=" pl-4 pr-2 py-2 w-full outline-none  s-bg-white bg-transparent "
+            className={` pl-4 pr-2 py-2 w-full outline-none  s-bg-white bg-transparent  ${
+              isDark ? "text-slate-50" : " text-slate-950"
+            } `}
             type="text"
             value={inputValue}
             onChange={(e) => {
@@ -181,6 +193,8 @@ type UserType = {
 };
 const User = ({ name, email, img }: UserType) => {
   const navigate = useNavigate();
+
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <div
       onClick={(e) => {
@@ -190,7 +204,7 @@ const User = ({ name, email, img }: UserType) => {
     >
       <img className=" w-14 h-14 rounded-full object-cover " src={img} alt="" />
       <div>
-        <p className="  ">{name}</p>
+        <p className={`${isDark ? "text-white" : "text-slate-950"}`}>{name}</p>
         <p className=" text-sm text-slate-500 "> {email} </p>
       </div>
     </div>
@@ -205,13 +219,18 @@ type CategoriesType = {
   setBorder: (a: number) => void;
 };
 const Category = ({ name, count, idx, border, setBorder }: CategoriesType) => {
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <span
       onClick={() => {
         setBorder(idx);
       }}
       className={` m-2  cursor-pointer transition-all  duration-500 flex justify-center items-center text-center w-fit py-1 px-2   ${
-        border === idx ? ` bg-white rounded-lg text-black ` : `border-slate-600`
+        border === idx
+          ? ` ${
+              isDark ? " bg-light text-black" : " bg-purple-600 text-white"
+            }  rounded-lg  `
+          : `border-slate-600 ${isDark ? "text-white" : "text-black"}  `
       }   `}
     >
       {name}

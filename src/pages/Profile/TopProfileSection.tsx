@@ -91,6 +91,8 @@ const TopProfileSection = (
       year: "numeric",
     }).format(new Date(inputDate));
   };
+
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
@@ -137,7 +139,11 @@ const TopProfileSection = (
             <h1 className=" text-5xl tracking-wider font-work_sans font-bold ">
               {profileData.firstName} {profileData.lastName}
             </h1>
-            <p className=" italic mt-3 text-emerald-50 tracking-wider ">
+            <p
+              className={` italic mt-3 ${
+                isDark ? "text-emerald-50 " : "text-slate-500"
+              } tracking-wider `}
+            >
               {profileData.designation}
             </p>
           </div>

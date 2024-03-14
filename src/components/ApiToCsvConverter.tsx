@@ -50,7 +50,11 @@ const ApiToCsvConverter = ({
         onClick={fetchDataFromApi}
         className=" bg-[#6e40c9] p-3  rounded-full "
       >
-        {getAllReportees ? <FaUserTie /> : <FaUsers />}
+        {getAllReportees ? (
+          <FaUserTie className=" text-white " />
+        ) : (
+          <FaUsers className=" text-white " />
+        )}
       </button>
     </div>
   );

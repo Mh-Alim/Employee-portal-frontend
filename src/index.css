@@ -1,17 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-    background-color:#0D1117;
 
-}
 
 ::placeholder {
-  color: rgba(255, 255, 255, 0.799) !important; 
+  color: rgba(90, 86, 86, 0.799) !important; 
 }
 @layer utilities {
  
+  .bg-dark {
+    background-color:#0D1117;
+    
 
+  }
+  .bg-light {
+    background-color: #F3EEE9;
+  }
     .timeline::before{
         content: '';
         position: absolute;

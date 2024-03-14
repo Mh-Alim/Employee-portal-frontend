@@ -18,6 +18,7 @@ import { AttachmentType } from "./ProfileTypes";
 import { uploadAttachmentApi } from "@/api/UploadAttachment";
 import { ToastCallError } from "@/ReactToast";
 import { FaRegEdit } from "react-icons/fa";
+import { useAppSelector } from "@/app/hooks";
 
 const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
   const [attachemnt, setAttachment] = useState("");
@@ -65,12 +66,18 @@ const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
     }
     setAttachment("");
   };
+
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <Dialog>
       <DialogTrigger asChild>
         <FaRegEdit />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-56 bg-black text-white">
+      <DialogContent
+        className={`sm:max-w-[425px] max-h-56 ${
+          isDark && " bg-dark border-slate-700 text-slate-100 "
+        }  `}
+      >
         <DialogHeader>
           <DialogTitle>Edit Attachments</DialogTitle>
         </DialogHeader>

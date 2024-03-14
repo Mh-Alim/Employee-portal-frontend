@@ -12,6 +12,7 @@ import { IoAddCircleOutline, IoAddCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { parentHandler } from "./Dfs";
 import { useRouteToLogin } from "@/customHook/useRouteToLogin";
+import { useAppSelector } from "@/app/hooks";
 
 const img1 =
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -24,6 +25,7 @@ export default function OrganizationTreeView() {
   const [data, setData] = useState<any>({});
 
   const [dimension, translate, containerRef] = useCenteredTree();
+  const { isDark } = useAppSelector((state) => state.toggle);
 
   const navigate = useNavigate();
   D3Logic(data, setData, usersId);
@@ -38,13 +40,16 @@ export default function OrganizationTreeView() {
     toggleNode,
   }: CustomNodeElementProps) => {
     console.log("nodeDatumn: ", nodeDatum);
+
     return (
       <g width="1000px">
         {/* <circle r="10" fill="blue" onClick={toggleNode} /> */}
         <foreignObject x="-200" y="-10" width="400px" height="300px">
           <div
             onClick={toggleNode}
-            className=" flex relative gap-10 text-slate-50 tracking-wide  z-50 bg-tree-glassmorphism p-5 rounded-xl transition-all duration-500 overflow-y-scroll  "
+            className={` flex relative gap-10 ${
+              isDark ? "text-slate-50" : "text-slate-950"
+            }  tracking-wide  z-50 bg-tree-glassmorphism p-5 rounded-xl transition-all duration-500 overflow-y-scroll  `}
           >
             <div className=" relative w-16 h-16 group  ">
               <img
@@ -127,6 +132,7 @@ export default function OrganizationTreeView() {
       <Tree
         data={data}
         translate={translate}
+        // enableLegacyTransitions={true}
         // dimensions={dimension}
         renderCustomNodeElement={renderRectSvgNode}
         orientation="vertical"

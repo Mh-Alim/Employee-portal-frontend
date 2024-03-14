@@ -161,7 +161,9 @@ const Profile = () => {
   return (
     <div
       id="profile"
-      className="p-8 md:p-3 text-emerald-50 h-[100vh] overflow-y-scroll relative "
+      className={`p-8 md:p-3 ${
+        isDark ? "text-emerald-50" : "text-slate-950"
+      }  h-[100vh] overflow-y-scroll relative `}
     >
       {TopProfileSection(
         profileData,
@@ -180,9 +182,7 @@ const Profile = () => {
               {profileData.skills?.map((skill) => (
                 <p
                   key={skill}
-                  className={` m-2  py-2 px-4 cursor-pointer ${
-                    isDark ? "bg-purple-500" : "bg-blue-600"
-                  }  rounded-lg  `}
+                  className={` m-2 text-white py-2 px-4 cursor-pointer bg-purple-500 rounded-lg  `}
                   onClick={() => {
                     navigate(`/user/search?skill=${skill}`);
                   }}
@@ -198,7 +198,7 @@ const Profile = () => {
               {profileData.languages?.map((language) => (
                 <p
                   key={language}
-                  className=" m-2 cursor-pointer  py-2 px-4 bg-purple-500 rounded-lg "
+                  className=" m-2 text-white cursor-pointer  py-2 px-4 bg-purple-500 rounded-lg "
                   onClick={() => {
                     navigate(`/user/search?language=${language}`);
                   }}
@@ -219,7 +219,7 @@ const Profile = () => {
               {profileData.interests?.map((interest) => (
                 <p
                   key={interest}
-                  className=" cursor-pointer  m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                  className=" cursor-pointer text-white  m-2  py-2 px-4 bg-purple-500 rounded-lg "
                   onClick={() => {
                     navigate(`/user/search?interest=${interest}`);
                   }}

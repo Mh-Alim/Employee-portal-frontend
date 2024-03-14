@@ -3,6 +3,7 @@ import { addEmployeeApi } from "../api/AddEmployee";
 import { MdCloudUpload } from "react-icons/md";
 import { ToastCallError, ToastCallSuccess } from "@/ReactToast";
 import { FaUsers } from "react-icons/fa6";
+import { useAppSelector } from "@/app/hooks";
 
 const AddEmployee = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -140,6 +141,8 @@ const AddEmployee = () => {
       ToastCallError("Upload Failed");
     }
   };
+
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <div className=" m-10  sm:p-10  flex justify-center items-center relative bg-circule-after bg-circule-before no-scrollbar    ">
       {/* <div className=" bg-circule m-10 p-10 sm:p-5 flex justify-center items-center "> */}
@@ -167,7 +170,11 @@ const AddEmployee = () => {
           onSubmit={submitHandler}
           className=" py-5 w-full md:w-4/4 lg:w-5/5 xl:w-3/6  flex flex-col  text-white min-h-[30vh] p-4 sm:p-6 md:p-10 rounded-lg  "
         >
-          <h1 className="  mb-5 text-white  text-center uppercase tracking-wide font-medium text-3xl ">
+          <h1
+            className={`  mb-5 ${
+              isDark ? "text-white" : "text-slate-950"
+            }   text-center uppercase tracking-wide font-medium text-3xl `}
+          >
             Employee details
           </h1>
           <br />
@@ -227,7 +234,7 @@ const AddEmployee = () => {
           <br />
           {/* <label htmlFor="password">Password</label> */}
           <input
-            className="mb-5 w-full p-5 outline-none border-2   border-slate-500 text-white rounded-lg bg-transparent"
+            className="mb-5 w-full p-5 outline-none border-2   border-slate-500 text-slate-500 rounded-lg bg-transparent"
             type="date"
             placeholder="MM/DD/YYYY"
             ref={dobRef}
@@ -253,7 +260,9 @@ const AddEmployee = () => {
           <div className="mb-5 w-full p-2 outline-none border-2    border-slate-500 rounded-lg bg-transparent">
             <label
               htmlFor="profile-pic"
-              className=" px-2 cursor-pointer flex gap-3 items-center "
+              className={`px-2 cursor-pointer flex gap-3 items-center ${
+                isDark ? "text-slate-500" : "text-slate-500"
+              }  `}
             >
               <span>
                 {" "}
@@ -276,7 +285,9 @@ const AddEmployee = () => {
 
           <button
             type="submit"
-            className=" px-10  py-2 mb-5 text-black bg-white-500  bg-white rounded-3xl "
+            className={` px-10  py-2 mb-5 text-black ${
+              isDark ? "bg-white" : "text-slate-950"
+            }  bg-white rounded-3xl `}
             ref={enterRef}
           >
             Enter

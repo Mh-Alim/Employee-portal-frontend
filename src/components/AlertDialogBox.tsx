@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/app/hooks";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 export default function AlertDialogBox() {
+  const { isDark } = useAppSelector((state) => state.toggle);
   const navigate = useNavigate();
   const logoutFun = () => {
     localStorage.setItem("eportal_token", "");
@@ -24,7 +26,9 @@ export default function AlertDialogBox() {
       <AlertDialogTrigger asChild>
         <div>Logout</div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent
+        className={` ${isDark && " bg-dark border-slate-700 text-slate-100 "} `}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -33,7 +37,7 @@ export default function AlertDialogBox() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel className=" text-black ">Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               logoutFun();

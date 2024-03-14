@@ -2,22 +2,34 @@ import React from "react";
 import { TbBracketsAngle } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/app/hooks";
 
 const About = () => {
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <div className="min-h-full  ">
       <div className=" w-full pl-10 md:pl-16  pt-52  lg:p-52 relative  ">
         <img
-          className=" w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left  absolute right-0 top-14 z-0 "
+          className={` w-full sm:w-2/4 h-[40vh] sm:h-[90vh] object-cover object-left ${
+            !isDark && "invert"
+          }  absolute right-0 top-14 z-0 `}
           src="https://github.githubassets.com/assets/hero-desktop-a38b0fd77b6c.webp"
           alt=""
         />
         <div className=" z-20 relative ">
           <p className=" -left-4 rounded-b-xl w-1 h-full absolute md:-left-10 top-0 timeline bg-[linear-gradient(#0D1117,#08924F)] "></p>
-          <h1 className=" relative text-5xl  text-white z-10 font-work_sans font-extrabold  md:text-9xl ">
+          <h1
+            className={` relative text-5xl  ${
+              isDark ? "text-white" : "text-black"
+            }  z-10 font-work_sans font-extrabold  md:text-9xl `}
+          >
             Welcome to Moneyview
           </h1>
-          <p className=" text-xl  pb-10 relative z-10 sm:text-3xl text-slate-400 mt-4 ">
+          <p
+            className={` text-xl  pb-16 relative z-10 sm:text-3xl ${
+              isDark ? "text-slate-400" : "text-slate-500"
+            }  mt-4 `}
+          >
             Built this using React, Typescript and Redux{" "}
           </p>
         </div>
@@ -40,14 +52,18 @@ const About = () => {
           <p className=" rounded-b-xl w-1 h-full absolute -left-4 md:-left-10  top-10 bg-[linear-gradient(#0D1117,#8471d5)] "></p>
           <Link
             to={"/login"}
-            className=" ml-2 cursor-pointer  button-shadow  text-white py-4 px-8 rounded-xl bg-[#08924F] w-fit "
+            className=" pt-5 ml-2 cursor-pointer  button-shadow  text-white py-4 px-8 rounded-xl bg-[#08924F] w-fit "
           >
             Sign in for Employee Portal
           </Link>
         </div>
         {/* third */}
         <div className=" mt-10 relative min-h-64 w-full sm:w-3/5  ">
-          <p className=" bg-[#0D1117]  text-white text-4xl  absolute -left-6 md:-left-12 top-6 z-10   ">
+          <p
+            className={` bg-[#0D1117]  ${
+              isDark ? "text-white" : "text-black"
+            }  text-4xl  absolute -left-6 md:-left-12 top-6 z-10   `}
+          >
             <svg
               aria-hidden="true"
               height="24"
@@ -63,7 +79,11 @@ const About = () => {
           </p>
 
           <p className=" rounded-b-xl w-1 h-full absolute -left-4 md:-left-10 top-14 bg-[linear-gradient(#0D1117,#8471d5)] "></p>
-          <div className="   text-white py-4 px-8 rounded-xl  w-full ">
+          <div
+            className={`${
+              isDark ? "text-white" : "text-black"
+            } py-4 px-8 rounded-xl  w-full `}
+          >
             <p className=" text-2xl sm:text-4xl font-work_sans font-semibold tracking-wider ">
               Features
             </p>
@@ -83,9 +103,14 @@ const About = () => {
 };
 
 const TreeCard = () => {
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <div className=" mt-10 relative min-h-64 w-full  ">
-      <p className=" bg-[#0D1117]  text-white text-4xl  absolute -left-6 md:-left-12 top-6 z-10   ">
+      <p
+        className={` bg-[#0D1117]  ${
+          isDark ? "text-white" : "text-black"
+        } text-4xl  absolute -left-6 md:-left-12 top-6 z-10   `}
+      >
         <svg
           aria-hidden="true"
           height="24"
@@ -101,7 +126,11 @@ const TreeCard = () => {
       </p>
 
       <p className=" rounded-b-xl w-1 h-full absolute -left-4 md:-left-10 top-14 bg-[linear-gradient(#0D1117,#8471d5)] "></p>
-      <div className=" font-work_sans  text-white py-4 px-8 rounded-xl  w-full">
+      <div
+        className={` font-work_sans  ${
+          isDark ? "text-white" : "text-black"
+        } py-4 px-8 rounded-xl  w-full`}
+      >
         <p className=" text-4xl font-semibold tracking-wider ">
           <span className=" text-[#08924F]  ">Organization</span> Tree View
         </p>
@@ -109,7 +138,7 @@ const TreeCard = () => {
           <div className="   rounded-lg p-5 h-1/2  sm:w-1/2 sm:h-full sm:flex sm:flex-col sm:justify-between  ">
             <p className=" text-md text-slate-400 text-xl ">
               {" "}
-              <span className=" text-white ">Organizational Tree View is </span>
+              <span className={` ${isDark ? "text-white" : "text-black"}`}>Organizational Tree View is </span>
               basically we are showing the organization in the form of tree
             </p>
             <p className=" text-xl cursor-pointer  group  w-fit py-2 mt-5 ">

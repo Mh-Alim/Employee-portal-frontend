@@ -22,6 +22,7 @@ import { getManagerAndReporteeByEmail } from "@/api/GetManagerAndChildApi";
 import { getEmailFromLocalStorage } from "@/utility";
 import { ToastCallSuccess } from "@/ReactToast";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import { useAppSelector } from "@/app/hooks";
 
 type EditProfileModelType = {
   name: string;
@@ -133,12 +134,17 @@ const EditModel = ({
     }
   };
 
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <FaRegEdit />
+        <FaRegEdit className=" text-white " />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-black text-white">
+      <DialogContent
+        className={`sm:max-w-[425px] ${
+          isDark && " bg-dark border-slate-700 text-slate-100 "
+        } `}
+      >
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -309,11 +315,15 @@ type EditOptionTypes = {
 };
 
 const Options = ({ name, state, setState, options }: EditOptionTypes) => {
+  const { isDark } = useAppSelector((state) => state.toggle);
   return (
     <div className="grid">
       <div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-white text-right">
+          <Label
+            htmlFor="name"
+            className={`${isDark ? "text-white" : "text-slate-950"} text-right`}
+          >
             {name}
           </Label>
           <select
@@ -323,7 +333,9 @@ const Options = ({ name, state, setState, options }: EditOptionTypes) => {
                 return [...prev, e.target.value];
               });
             }}
-            className="w-full p-1 col-span-3 outline-none border-2 border-white rounded-lg bg-black text-white"
+            className={`w-full p-1 col-span-3 outline-none border-2 border-white rounded-lg bg-transparent ${
+              !isDark && "outline-double outline-1 outline-slate-200"
+            }  text-white`}
             name=""
             id=""
           >
@@ -342,10 +354,16 @@ const Options = ({ name, state, setState, options }: EditOptionTypes) => {
             e.length === 0 ? undefined : (
               <p
                 key={e}
-                className="w-fit py-1 px-3 mx-1 my-1 bg-white text-black rounded-xl flex justify-center items-center"
+                className={`w-fit py-1 px-3 mx-1 my-1 ${
+                  isDark ? "bg-white text-black " : "bg-purple-600 text-white"
+                } k rounded-xl flex justify-center items-center`}
               >
                 <span className="mr-3">{e}</span>
-                <span className="flex justify-center items-center text-black text-xl rounded-full">
+                <span
+                  className={`flex justify-center items-center ${
+                    isDark ? "text-slate-950" : "text-white"
+                  } text-xl rounded-full`}
+                >
                   <RxCrossCircled
                     className="cursor-pointer"
                     onClick={() => {

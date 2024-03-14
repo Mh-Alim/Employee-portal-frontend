@@ -15,7 +15,7 @@ const DarkMode = () => {
         </span>
       ) : (
         <span onClick={() => dispatch(toggle())} className=" cursor-pointer ">
-          <MdDarkMode />
+          <MdDarkMode className=" text-black " />
         </span>
       )}
     </div>

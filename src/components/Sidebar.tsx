@@ -53,6 +53,7 @@ const dashboardLiData = [
 const Sidebar = () => {
   const location = useLocation();
   const [show, setShow] = useState(false);
+  const { isDark } = useAppSelector((state) => state.toggle);
 
   const [isAdmin, setIsAdmin] = useState(false);
   const admin = useAppSelector((state) => state.user.isAdmin);
@@ -73,10 +74,18 @@ const Sidebar = () => {
       <div
         className={` -translate-x-80 md:-translate-x-0 transition-all duration-500 ${
           show ? "translate-x-0" : ""
-        } w-72 p-5 h-[100vh] text-white absolute md:relative z-[101] top-0 left-0  dis-bg-slate-800 overflow-y-scroll bg-[#0D1117]  `}
+        } w-72 p-5 h-[100vh] text-white absolute md:relative z-[101] top-0 left-0  dis-bg-slate-800 overflow-y-scroll ${
+          isDark ? "bg-dark   " : "bg-light "
+        } bg-glassmorphism  `}
       >
         <h1 className=" flex justify-between items-center  mb-5 font-medium text-2xl  ">
-          <p className=" uppercase tracking-widest font-work_sans ">Eportal</p>
+          <p
+            className={` uppercase tracking-widest font-work_sans ${
+              isDark ? "text-white" : "text-black"
+            }  `}
+          >
+            Eportal
+          </p>
 
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1SdQtedd5Hf2MSihKD3frREpjMZrfVAufDw&usqp=CAU"
@@ -104,8 +113,8 @@ const Sidebar = () => {
           >
             <p className=" flex items-center ">
               <FiLogOut />
-              <span className="ml-2">
-                <AlertDialogBox />
+              <span className="ml-2 cursor-pointer">
+                <AlertDialogBox  />
               </span>
             </p>
           </div>

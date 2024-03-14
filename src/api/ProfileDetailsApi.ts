@@ -14,12 +14,12 @@ export const profileDetailsApi = async (
     return;
   }
 
-  const searched = isSearched ? true : false;
+  const is_searched = isSearched ? true : false;
 
   console.log("searched done or not: ", {
     user_email,
     requested_user_email,
-    is_searched: searched,
+    is_searched
   });
   const options = {
     method: "POST",
@@ -27,7 +27,7 @@ export const profileDetailsApi = async (
       "Content-Type": "application/json",
       token: token,
     },
-    body: JSON.stringify({ user_email, requested_user_email, searched }), // Convert data to JSON string
+    body: JSON.stringify({ user_email, requested_user_email, is_searched }), // Convert data to JSON string
   };
 
   const res = await fetch(

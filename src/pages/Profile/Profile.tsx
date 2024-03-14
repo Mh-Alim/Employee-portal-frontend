@@ -177,9 +177,12 @@ const Profile = () => {
               {profileData.skills?.map((skill) => (
                 <p
                   key={skill}
-                  className={` m-2  py-2 px-4 ${
+                  className={` m-2  py-2 px-4 cursor-pointer ${
                     isDark ? "bg-purple-500" : "bg-blue-600"
                   }  rounded-lg  `}
+                  onClick={() => {
+                    navigate(`/user/search?skill=${skill}`);
+                  }}
                 >
                   {skill}
                 </p>
@@ -192,7 +195,10 @@ const Profile = () => {
               {profileData.languages?.map((language) => (
                 <p
                   key={language}
-                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                  className=" m-2 cursor-pointer  py-2 px-4 bg-purple-500 rounded-lg "
+                  onClick={() => {
+                    navigate(`/user/search?language=${language}`);
+                  }}
                 >
                   {language}
                 </p>
@@ -210,7 +216,10 @@ const Profile = () => {
               {profileData.interests?.map((interest) => (
                 <p
                   key={interest}
-                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                  className=" cursor-pointer  m-2  py-2 px-4 bg-purple-500 rounded-lg "
+                  onClick={() => {
+                    navigate(`/user/search?interest=${interest}`);
+                  }}
                 >
                   {interest}
                 </p>

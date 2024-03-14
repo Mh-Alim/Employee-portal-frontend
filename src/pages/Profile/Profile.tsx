@@ -143,41 +143,7 @@ const Profile = () => {
     setReportees(reportees);
   };
 
-  const handleFileUpload = async (event : any) => {
-    const file = event.target.files[0];
-    // console.log("This is file ",file);
-    const formData = new FormData();
-    formData.append('file', file);
-     var fileData : any;
-    const reader = new FileReader();
-    
-    reader.onload = function (e) {
-      fileData = e.target?.result;
-      console.log("Uploaded file data 1: ", fileData);
-      const calling=async ()=>{
-        try {
-          console.log("Uploaded file data 2: ", fileData);
-          console.log("This is form data ",formData);
-          const options = {
-            method: "POST",
-            'Content-Type': 'multipart/form-data',
-            body: fileData, // Convert data to JSON string
-          };
-        
-          const res = await fetch(
-            'https://animeshmultifile.azurewebsites.net/api/HttpTrigger?code=aYMuhXE869kNTMJLbzLzeDBSwNDDOHz1cmXsVsV1VCZZAzFuqzvBxQ==',
-            options
-          );
-        
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      calling();
-    };
-    reader.readAsText(file);
-    
-  };
+  
           // };
 
 
@@ -325,9 +291,9 @@ const Profile = () => {
               ))}
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-4">
+          {/* <div className="d-flex justify-content-end mb-4">
                   <input type="file" accept=".json" className="btn btn-primary" onChange={handleFileUpload} />
-                </div>
+                </div> */}
         </div>
       </section>
       {/* <EditProfileModel editClickHandler={editClickHandler} /> */}

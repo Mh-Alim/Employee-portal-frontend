@@ -19,6 +19,7 @@ export type ProfileDataType = {
   profileImageUrl: string[] | null;
   documents: Array<{ name: string; url: string }>;
   isAdmin : boolean;
+  pod: string | null;
 };
 
 export type ManagerType = {

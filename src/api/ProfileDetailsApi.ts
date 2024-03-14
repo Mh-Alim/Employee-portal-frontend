@@ -83,6 +83,7 @@ export const profileDetailsApi = async (
     profileImageUrl,
     documents,
     isAdmin: json.isAdmin,
+    pod: details.pod
   };
 
   console.log("user data: ", userData);

@@ -99,23 +99,26 @@ const TopProfileSection = (
               }
             }}
           />
-          <div className=" absolute -bottom-0  right-0 bg-purple-700 p-2 rounded-full ">
-            <label htmlFor="upload">
-              <IoCloudUploadSharp className=" cursor-pointer text-2xl text-white " />
-            </label>
-            <input
-              onChange={(event) => {
-                if (event.target.files && event.target.files.length > 0) {
-                  const file = event.target.files[0];
-                  handleSubmit(file);
-                }
-              }}
-              className=" hidden "
-              id="upload"
-              type="file"
-              accept=".jpg, .jpeg, .png"
-            />
-          </div>
+          {(isAdmin || email === profileData.email) && (
+            <div className=" absolute -bottom-0  right-0 bg-purple-700 p-2 rounded-full ">
+              <label htmlFor="upload">
+                <IoCloudUploadSharp className=" cursor-pointer text-2xl text-white " />
+              </label>
+              )
+              <input
+                onChange={(event) => {
+                  if (event.target.files && event.target.files.length > 0) {
+                    const file = event.target.files[0];
+                    handleSubmit(file);
+                  }
+                }}
+                className=" hidden "
+                id="upload"
+                type="file"
+                accept=".jpg, .jpeg, .png"
+              />
+            </div>
+          )}
         </div>
         <div className=" flex gap-5 pt-5 flex-col  justify-between text-center lg:text-left  ">
           <div className=" pl-4 ">
@@ -144,7 +147,7 @@ const TopProfileSection = (
             <div>
               <div className="  m-3 flex gap-1 items-center justify-center md:justify-start ">
                 <TiUser />
-                <span>{profileData.emp_id}</span>
+                <span>{profileData.pod}</span>
               </div>
               <a
                 href={`mailto:${profileData.email}`}

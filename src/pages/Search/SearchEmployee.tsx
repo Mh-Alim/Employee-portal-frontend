@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { getTokenFromLocalStorage } from "../../utility";
 import { debounce } from "../../api/Search";
@@ -47,9 +47,7 @@ const SearchEmployee = () => {
 
   // to load the state while refreshing
   useStateLoad();
-  const changeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let query = e.target.value;
-
+  const changeHandler = async (query: string) => {
     if (!query) return;
 
     try {
@@ -66,6 +64,34 @@ const SearchEmployee = () => {
     } catch (err) {}
   };
 
+  type QueryParamsTyep = {
+    key: string;
+    value: string;
+  };
+
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    changeHandler(inputValue);
+  }, [inputValue, border]);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const params: QueryParamsTyep[] = [];
+    console.log("url params : ", urlParams);
+    // Iterate over each parameter and store its key and value in an array
+    urlParams.forEach((value, key) => {
+      params.push({ key, value });
+    });
+    if (params.length === 0) return;
+    console.log("params is: ", params);
+    setInputValue(params[0].value);
+    if (params[0].key == "skill") setBorder(4);
+    if (params[0].key == "interest") setBorder(5);
+    if (params[0].key == "language") setBorder(6);
+
+    // Set the state with the array of query parameters
+  }, []);
+
   console.log("results: ", results);
   return (
     <div className=" bg-[#0D1117]   h-[100vh] w-full flex justify-center items-center bg-circule    ">
@@ -76,7 +102,10 @@ const SearchEmployee = () => {
           <input
             className=" pl-4 pr-2 py-2 w-full outline-none  s-bg-white bg-transparent "
             type="text"
-            onChange={changeHandler}
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
           />
         </form>
         {/* heading */}

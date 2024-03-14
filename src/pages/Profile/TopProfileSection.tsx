@@ -99,9 +99,9 @@ const TopProfileSection = (
               }
             }}
           />
-          <div className=" absolute -bottom-0  right-0 ">
+          <div className=" absolute -bottom-0  right-0 bg-purple-700 p-2 rounded-full ">
             <label htmlFor="upload">
-              <IoCloudUploadSharp className=" cursor-pointer text-4xl text-slate-700 " />
+              <IoCloudUploadSharp className=" cursor-pointer text-2xl text-white " />
             </label>
             <input
               onChange={(event) => {

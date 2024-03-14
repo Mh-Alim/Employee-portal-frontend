@@ -42,7 +42,7 @@ const dashboardLiData = [
     visibility: false,
   },
   {
-    text: "Feature Request",
+    text: "Feedback",
     url: "/user/feature-request",
     Icon: <FaFeather />,
     visibility: true,

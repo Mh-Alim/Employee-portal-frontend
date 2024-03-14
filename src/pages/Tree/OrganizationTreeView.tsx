@@ -44,7 +44,7 @@ export default function OrganizationTreeView() {
         <foreignObject x="-200" y="-10" width="400px" height="300px">
           <div
             onClick={toggleNode}
-            className=" flex relative gap-10 text-slate-500 tracking-wide  z-50 bg-tree-glassmorphism p-5 rounded-xl transition-all duration-500 overflow-y-scroll  "
+            className=" flex relative gap-10 text-slate-50 tracking-wide  z-50 bg-tree-glassmorphism p-5 rounded-xl transition-all duration-500 overflow-y-scroll  "
           >
             <div className=" relative w-16 h-16 group  ">
               <img

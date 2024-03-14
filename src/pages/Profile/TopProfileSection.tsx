@@ -1,7 +1,7 @@
 import { AiFillInstagram } from "react-icons/ai";
 import { BsSlack } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
-import { FaTwitter } from "react-icons/fa6";
+import { FaTwitter, FaUserTie } from "react-icons/fa6";
 import { IoCloudUploadSharp, IoLogoLinkedin } from "react-icons/io5";
 import {
   MdDateRange,
@@ -84,7 +84,7 @@ const TopProfileSection = (
   };
   console.log("src is: ", src);
 
-  const formatDate = (inputDate:any) => {
+  const formatDate = (inputDate: any) => {
     return new Intl.DateTimeFormat("en-GB", {
       day: "numeric",
       month: "long",
@@ -225,7 +225,10 @@ const TopProfileSection = (
         </div>
         <div className=" flex gap-4 justify-end text-right mt-5  sm:mt-0 ">
           {" "}
-          {admin && <ApiToCsvConverter />}
+          {(admin || email === profileData.email) && (
+            <ApiToCsvConverter getAllReportees={true} />
+          )}
+          {admin && <ApiToCsvConverter getAllReportees={false} />}
           {((selfEmail && selfEmail === profileData.email) || admin) && (
             <button className="  w-fit p-3 rounded-full bg-[#6e40c9] tracking-wider font-bold   ">
               {" "}

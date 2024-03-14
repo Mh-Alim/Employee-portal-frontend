@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
 import { IoMdCloudDownload } from "react-icons/io";
-import { FaFileCsv } from "react-icons/fa6";
+import { FaFileCsv, FaUserTie, FaUsers } from "react-icons/fa6";
 import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 import { getAllEmployeeApi } from "@/api/AllEmployeeDetails";
 
-const ApiToCsvConverter = () => {
+const ApiToCsvConverter = ({
+  getAllReportees,
+}: {
+  getAllReportees: boolean;
+}) => {
   const [csvData, setCsvData] = useState("");
 
   const handleDownloadCsv = (csvData: string) => {
@@ -26,7 +30,11 @@ const ApiToCsvConverter = () => {
         return;
       }
 
-      const data: any = await getAllEmployeeApi(token, user_email);
+      const data: any = await getAllEmployeeApi(
+        token,
+        user_email,
+        getAllReportees
+      );
       console.log("csv data: ", data);
       const csvData = Papa.unparse(data);
 
@@ -42,7 +50,7 @@ const ApiToCsvConverter = () => {
         onClick={fetchDataFromApi}
         className=" bg-[#6e40c9] p-3  rounded-full "
       >
-        <FaFileCsv />
+        {getAllReportees ? <FaUserTie /> : <FaUsers />}
       </button>
     </div>
   );

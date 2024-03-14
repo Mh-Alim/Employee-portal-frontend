@@ -15,6 +15,7 @@ import { RiOrganizationChart } from "react-icons/ri";
 import { CgAdd, CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import AlertDialogBox from "./AlertDialogBox";
 
 const dashboardLiData = [
   {
@@ -45,12 +46,6 @@ const dashboardLiData = [
     text: "Feedback",
     url: "/user/feature-request",
     Icon: <FaFeather />,
-    visibility: true,
-  },
-  {
-    text: "Logout",
-    url: "/user/logout",
-    Icon: <FiLogOut />,
     visibility: true,
   },
 ];
@@ -104,6 +99,16 @@ const Sidebar = () => {
               />
             ))}
           </ul>
+          <div
+            className={`bg-[#6e40c9] mb-3 group text-white transition-all  rounded-lg  p-3 mt-10`}
+          >
+            <p className=" flex items-center ">
+              <FiLogOut />
+              <span className="ml-2">
+                <AlertDialogBox />
+              </span>
+            </p>
+          </div>
         </div>
       </div>
       <div className="  w-1/2 flex-1 ">
@@ -114,7 +119,7 @@ const Sidebar = () => {
 };
 
 type LiPropType = {
-  text: string;
+  text: any;
   Icon: React.ReactNode;
   url: string;
   visibility: boolean;
@@ -126,11 +131,6 @@ const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
   const location = useLocation();
 
   const navigate = useNavigate();
-  const logoutFun = () => {
-    localStorage.setItem("eportal_token", "");
-    localStorage.setItem("eportal_user_email", "");
-    navigate("/");
-  };
 
   return (
     <li
@@ -139,13 +139,10 @@ const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
       }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 ${
         visibility || isAdmin ? "block" : "hidden"
       } `}
-      onClick={() => {
-        url === "/user/logout" ? logoutFun() : setShow(false);
-      }}
     >
       <Link className=" flex items-center " to={url}>
         {Icon}
-        <p className="ml-2">{text}</p>
+        <span className="ml-2">{text}</span>
       </Link>
     </li>
   );

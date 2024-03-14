@@ -65,7 +65,8 @@ const Profile = () => {
       },
     ],
     isAdmin: false,
-    pod: null
+    pod: null,
+    dob: null
   });
 
   useRouteToLogin();

@@ -3,7 +3,11 @@ import { BsSlack } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import { FaTwitter } from "react-icons/fa6";
 import { IoCloudUploadSharp, IoLogoLinkedin } from "react-icons/io5";
-import { MdLocalPhone, MdOutlineLocalPostOffice } from "react-icons/md";
+import {
+  MdDateRange,
+  MdLocalPhone,
+  MdOutlineLocalPostOffice,
+} from "react-icons/md";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import EditModel from "./EditProfile";
 import { ManagerType, ProfileDataType } from "./ProfileTypes";
@@ -79,6 +83,14 @@ const TopProfileSection = (
     setRenderProfileFlag((prev: boolean) => !prev);
   };
   console.log("src is: ", src);
+
+  const formatDate = (inputDate:any) => {
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(new Date(inputDate));
+  };
   return (
     <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
@@ -104,7 +116,7 @@ const TopProfileSection = (
               <label htmlFor="upload">
                 <IoCloudUploadSharp className=" cursor-pointer text-2xl text-white " />
               </label>
-              )
+
               <input
                 onChange={(event) => {
                   if (event.target.files && event.target.files.length > 0) {
@@ -132,10 +144,13 @@ const TopProfileSection = (
 
           <div className=" flex flex-col md:flex-row md:justify-center   ">
             <div>
-              <div className=" m-3 flex gap-1  items-center justify-center md:justify-start ">
-                <CiLocationOn />
-                <span> Moneyview, Bellandur</span>
-              </div>
+              <a
+                href={`mailto:${profileData.email}`}
+                className=" m-3 flex gap-1 items-center justify-center md:justify-start "
+              >
+                <MdOutlineLocalPostOffice />
+                <span>{profileData.email}</span>
+              </a>
               <a
                 href="tel:+91-7489167363"
                 className=" m-3 flex gap-1  items-center justify-center md:justify-start "
@@ -149,13 +164,11 @@ const TopProfileSection = (
                 <TiUser />
                 <span>{profileData.pod}</span>
               </div>
-              <a
-                href={`mailto:${profileData.email}`}
-                className=" m-3 flex gap-1 items-center justify-center md:justify-start "
-              >
-                <MdOutlineLocalPostOffice />
-                <span>{profileData.email}</span>
-              </a>
+
+              <div className=" m-3 flex gap-1  items-center justify-center md:justify-start ">
+                <MdDateRange />
+                <span> {`${formatDate(profileData?.dob)}`}</span>
+              </div>
             </div>
           </div>
         </div>

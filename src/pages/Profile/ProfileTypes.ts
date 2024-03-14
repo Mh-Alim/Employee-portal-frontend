@@ -20,6 +20,7 @@ export type ProfileDataType = {
   documents: Array<{ name: string; url: string }>;
   isAdmin : boolean;
   pod: string | null;
+  dob: string | null;
 };
 
 export type ManagerType = {

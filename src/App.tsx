@@ -1,13 +1,9 @@
 import React, { Suspense, lazy, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import {
-  increment,
-  decrement,
-  incrementByAmount,
-} from "./app/features/counter/counterSlice";
 import { Link, Route, Routes } from "react-router-dom";
 import { ToastContainerError, ToastContainerSuccess } from "./ReactToast.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import DarkMode from "./pages/DarkMode.tsx";
 
 const Login = lazy(() => import("./pages/Login"));
 const AddEmployee = lazy(() => import("./pages/AddEmployee"));
@@ -33,10 +29,10 @@ const Loader = lazy(() => import("./pages/Loader.tsx"));
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const val = useAppSelector((state) => state.count.value);
 
   return (
-    <div className=" ">
+    <div className="">
+      <DarkMode />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route

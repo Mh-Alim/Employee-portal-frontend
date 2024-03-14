@@ -151,6 +151,8 @@ const Profile = () => {
 
   console.log("Manager info: ", managerInfo);
 
+  const { isDark } = useAppSelector((state) => state.toggle);
+
   return (
     <div
       id="profile"
@@ -175,7 +177,9 @@ const Profile = () => {
               {profileData.skills?.map((skill) => (
                 <p
                   key={skill}
-                  className=" m-2  py-2 px-4 bg-purple-500 rounded-lg  "
+                  className={` m-2  py-2 px-4 ${
+                    isDark ? "bg-purple-500" : "bg-blue-600"
+                  }  rounded-lg  `}
                 >
                   {skill}
                 </p>

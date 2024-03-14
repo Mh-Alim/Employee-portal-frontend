@@ -64,7 +64,7 @@ const Sidebar = () => {
     <div className=" flex  relative h-[90vh]  ">
       <p
         onClick={() => setShow((prev) => !prev)}
-        className=" z-30 cursor-pointer md:hidden absolute right-3 top-3 "
+        className=" z-[102] cursor-pointer md:hidden absolute right-3 top-3 "
       >
         <p className=" w-7 h-1 rounded-lg bg-white mb-1 "></p>
         <p className=" w-7 h-1 rounded-lg bg-white mb-1 "></p>
@@ -73,7 +73,7 @@ const Sidebar = () => {
       <div
         className={` -translate-x-80 md:-translate-x-0 transition-all duration-500 ${
           show ? "translate-x-0" : ""
-        } w-72 p-5 h-[100vh] text-white absolute md:relative z-50 top-0 left-0  dis-bg-slate-800 overflow-y-scroll `}
+        } w-72 p-5 h-[100vh] text-white absolute md:relative z-[101] top-0 left-0  dis-bg-slate-800 overflow-y-scroll bg-[#0D1117]  `}
       >
         <h1 className=" flex justify-between items-center  mb-5 font-medium text-2xl  ">
           <p className=" uppercase tracking-widest font-work_sans ">Eportal</p>

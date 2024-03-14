@@ -31,6 +31,7 @@ import ApiToCsvConverter from "@/components/ApiToCsvConverter";
 import { useRouteToLogin } from "@/customHook/useRouteToLogin";
 import { ToastCallError } from "@/ReactToast";
 import { useStateLoad } from "@/customHook/useStateLoad";
+import Loader from "../Loader";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -66,7 +67,7 @@ const Profile = () => {
     ],
     isAdmin: false,
     pod: null,
-    dob: null
+    dob: null,
   });
 
   useRouteToLogin();
@@ -145,9 +146,7 @@ const Profile = () => {
     setReportees(reportees);
   };
 
-  
-          // };
-
+  // };
 
   useEffect(() => {
     const user_email = id || getEmailFromLocalStorage();
@@ -175,10 +174,8 @@ const Profile = () => {
 
       <section className=" p-5 flex flex-col lg:flex-row  ">
         <div className=" flex-1 flex flex-col  ">
-          <div className=" m-5 ">
-            <h1 className=" text-2xl tracking-wider flex gap-4 items-center mb-5 text-center sm:text-left ">
-              <span>Skills</span>
-            </h1>
+          <div className=" m-5 text-center sm:text-left ">
+            <h1 className=" text-2xl tracking-wider   mb-5  ">Skills</h1>
             <div className=" flex flex-wrap justify-center sm:justify-start  ">
               {profileData.skills?.map((skill) => (
                 <p
@@ -236,7 +233,7 @@ const Profile = () => {
         <div className=" flex flex-col flex-1 text-center sm:text-left ">
           {(profileData.email === email || isAdmin) && (
             <div className=" m-5 ">
-              <div className=" flex gap-5 items-center mb-5 ">
+              <div className=" flex gap-5 items-center mb-5 text-center justify-center sm:justify-start  ">
                 <h1 className=" text-2xl tracking-wider ">Attachments</h1>
                 {isAdmin && (
                   <p>

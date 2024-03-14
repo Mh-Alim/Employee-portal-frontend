@@ -9,12 +9,12 @@ const searchApi = async (queryParam: string, query: string) => {
     return;
   }
   const options = {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       token: token,
     },
-    body: JSON.stringify({ query }), // Convert data to JSON string
+    // body: JSON.stringify({ query }), // Convert data to JSON string
   };
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/search?${queryParam}=${query}`,

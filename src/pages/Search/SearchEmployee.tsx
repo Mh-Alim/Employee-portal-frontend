@@ -57,7 +57,9 @@ const SearchEmployee = () => {
       if (border === 1) queryParams = "name";
       if (border === 2) queryParams = "user_email";
       if (border === 3) queryParams = "designation";
-      if (border === 4) queryParams = "expertise";
+      if (border === 4) queryParams = "skill";
+      if (border === 5) queryParams = "interest";
+      if (border === 6) queryParams = "language";
 
       debounce(query, queryParams, setResults, 500);
       console.log("Result is animesh ", results);
@@ -100,20 +102,43 @@ const SearchEmployee = () => {
             border={border}
             setBorder={setBorder}
           />
+
+          <Category
+            name="Skill"
+            count={2}
+            idx={4}
+            border={border}
+            setBorder={setBorder}
+          />
+          <Category
+            name="Interest"
+            count={2}
+            idx={5}
+            border={border}
+            setBorder={setBorder}
+          />
+          <Category
+            name="Language"
+            count={2}
+            idx={6}
+            border={border}
+            setBorder={setBorder}
+          />
         </div>
         {/* // show search Results */}
         <div className=" transition-all duration-1000 h-fit max-h-[40vh] my-3 overflow-y-auto ">
-          {results.map(
-            (user: SearchDataType) =>
-              user.id && (
-                <User
-                  key={user.id}
-                  name={`${user.firstName} ${user.lastName}`}
-                  email={user.userEmail || ""}
-                  img={user.profileImageUrl || ""}
-                />
-              )
-          )}
+          {results &&
+            results.map(
+              (user: SearchDataType) =>
+                user.id && (
+                  <User
+                    key={user.id}
+                    name={`${user.firstName} ${user.lastName}`}
+                    email={user.userEmail || ""}
+                    img={user.profileImageUrl || ""}
+                  />
+                )
+            )}
         </div>
       </main>
     </div>
@@ -130,7 +155,7 @@ const User = ({ name, email, img }: UserType) => {
   return (
     <div
       onClick={(e) => {
-        navigate(`/user/search/${email}`,{state: {isSearched: true}});
+        navigate(`/user/search/${email}`, { state: { isSearched: true } });
       }}
       className=" cursor-pointer  p-3 flex gap-3 items-center my-3 "
     >

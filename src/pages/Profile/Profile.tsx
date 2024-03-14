@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getEmailFromLocalStorage } from "../../utility";
 import { addUser } from "../../app/features/userSlice";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import { profileDetailsApi } from "@/api/ProfileDetailsApi";
 import {
@@ -38,6 +38,8 @@ const Profile = () => {
   const { pathname, state } = useLocation();
 
   const [renderProfileFlag, setRenderProfileFlag] = useState(true);
+
+  const { email, isAdmin } = useAppSelector((state) => state.user);
 
   const { id } = useParams();
   const [profileData, setProfileData] = useState<ProfileDataType>({
@@ -213,27 +215,35 @@ const Profile = () => {
           </div>
         </div>
         <div className=" flex flex-col flex-1 text-center sm:text-left ">
-          <div className=" m-5 ">
-            <div className=" flex gap-5 items-center mb-5 ">
-              <h1 className=" text-2xl tracking-wider ">Attachments</h1>
-              <p>
-                <Attachment setRenderProfileFlag = {setRenderProfileFlag} route_email={id} />
-              </p>
+          {(profileData.email === email || isAdmin) && (
+            <div className=" m-5 ">
+              <div className=" flex gap-5 items-center mb-5 ">
+                <h1 className=" text-2xl tracking-wider ">Attachments</h1>
+                {isAdmin && (
+                  <p>
+                    <Attachment
+                      setRenderProfileFlag={setRenderProfileFlag}
+                      route_email={id}
+                    />
+                  </p>
+                )}
+              </div>
+              <div className=" flex flex-col flex-wrap ">
+                {profileData.documents.map((e, idx) => {
+                  console.log("e: ", e);
+                  return e.name.length ? (
+                    <Document
+                      key={idx}
+                      name={e.name}
+                      url={e.url}
+                      handleDownload={handleDownload}
+                    />
+                  ) : null;
+                })}
+              </div>
             </div>
-            <div className=" flex flex-col flex-wrap ">
-              {profileData.documents.map((e, idx) => {
-                console.log("e: ", e);
-                return e.name.length ? (
-                  <Document
-                    key={idx}
-                    name={e.name}
-                    url={e.url}
-                    handleDownload={handleDownload}
-                  />
-                ) : null;
-              })}
-            </div>
-          </div>
+          )}
+
           <div className=" m-5 ">
             <h1 className=" text-2xl tracking-wider mb-5 ">Manager</h1>
             <div className=" flex flex-col flex-wrap ">

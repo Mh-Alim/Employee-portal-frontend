@@ -63,6 +63,7 @@ const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
       buttonRef.current.innerText = "Saved";
       buttonRef.current.ariaExpanded = "false";
     }
+    setAttachment("");
   };
   return (
     <Dialog>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { addEmployeeApi } from "../api/AddEmployee";
 import { MdCloudUpload } from "react-icons/md";
-import { ToastCallError } from "@/ReactToast";
+import { ToastCallError, ToastCallSuccess } from "@/ReactToast";
 import { FaUsers } from "react-icons/fa6";
 
 const AddEmployee = () => {
@@ -19,6 +19,7 @@ const AddEmployee = () => {
   const managerEmailRef = useRef<HTMLInputElement | null>(null);
 
   const enterRef = useRef<HTMLButtonElement | null>(null);
+  const bulk_emp_ref = useRef<HTMLButtonElement | null>(null);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -85,49 +86,82 @@ const AddEmployee = () => {
     }
   };
   const handleFileUpload = async (event: any) => {
-    const file = event.target.files[0];
-    // console.log("This is file ",file);
-    const formData = new FormData();
-    formData.append("file", file);
-    var fileData: any;
-    const reader = new FileReader();
+    try {
+      const file = event.target.files[0];
+      // console.log("This is file ",file);
+      if (!file) {
+        ToastCallError("File is not selected");
+        return;
+      }
 
-    reader.onload = function (e) {
-      fileData = e.target?.result;
-      console.log("Uploaded file data 1: ", fileData);
-      const calling = async () => {
-        try {
-          console.log("Uploaded file data 2: ", fileData);
-          console.log("This is form data ", formData);
-          const options = {
-            method: "POST",
-            "Content-Type": "multipart/form-data",
-            body: fileData, // Convert data to JSON string
-          };
+      if (bulk_emp_ref.current) {
+        bulk_emp_ref.current.disabled = true;
+        bulk_emp_ref.current.innerText = "Uploading..";
+      }
+      const formData = new FormData();
+      formData.append("file", file);
+      var fileData: any;
+      const reader = new FileReader();
 
-          const res = await fetch(
-            "https://animeshmultifile.azurewebsites.net/api/HttpTrigger?code=aYMuhXE869kNTMJLbzLzeDBSwNDDOHz1cmXsVsV1VCZZAzFuqzvBxQ==",
-            options
-          );
-        } catch (error) {
-          console.error(error);
-        }
+      reader.onload = function (e) {
+        fileData = e.target?.result;
+        console.log("Uploaded file data 1: ", fileData);
+        const calling = async () => {
+          try {
+            console.log("Uploaded file data 2: ", fileData);
+            console.log("This is form data ", formData);
+            const options = {
+              method: "POST",
+              "Content-Type": "multipart/form-data",
+              body: fileData, // Convert data to JSON string
+            };
+
+            const res = await fetch(
+              "https://animeshmultifile.azurewebsites.net/api/HttpTrigger?code=aYMuhXE869kNTMJLbzLzeDBSwNDDOHz1cmXsVsV1VCZZAzFuqzvBxQ==",
+              options
+            );
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        calling();
       };
-      calling();
-    };
-    reader.readAsText(file);
+      reader.readAsText(file);
+      if (bulk_emp_ref.current) {
+        bulk_emp_ref.current.disabled = false;
+        bulk_emp_ref.current.innerText = "Add Bulk Employee";
+      }
+      ToastCallSuccess("Employees uploaded successfully");
+    } catch (err) {
+      if (bulk_emp_ref.current) {
+        bulk_emp_ref.current.disabled = false;
+        bulk_emp_ref.current.innerText = "Add Bulk Employee";
+      }
+      ToastCallError("Upload Failed");
+    }
   };
   return (
     <div className=" m-10  sm:p-10  flex justify-center items-center relative bg-circule-after bg-circule-before no-scrollbar    ">
       {/* <div className=" bg-circule m-10 p-10 sm:p-5 flex justify-center items-center "> */}
       {/*  */}
-      <label htmlFor="bulk-upload">
-        <FaUsers
-          onChange={handleFileUpload}
-          className=" cursor-pointer fixed top-5 right-5 z-50 text-white text-3xl "
-        />
+      <label
+        className=" flex gap-3 items-center cursor-pointer fixed top-5 right-8 z-[100] w-fit px-4 py-2 bg-purple-600 rounded-lg  "
+        htmlFor="bulk-upload"
+      >
+        <span>
+          <FaUsers className="  text-white text-2xl " />
+        </span>
+        <button ref={bulk_emp_ref} className=" text-white ">
+          Add Bulk Employee
+        </button>
       </label>
-      <input type="file" accept=".json" id="bulk-upload" />
+      <input
+        type="file"
+        accept=".json"
+        onChange={handleFileUpload}
+        className=" hidden "
+        id="bulk-upload"
+      />
       <div className=" h-[90vh] overflow-y-scroll w-full   gap-7 p-2 sm:p-5  flex flex-col  justify-center items-center rounded-lg bg-glassmorphism  relative z-50  ">
         <form
           onSubmit={submitHandler}

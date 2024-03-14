@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CiCirclePlus } from "react-icons/ci";
@@ -30,7 +32,15 @@ const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
       setSelectedFile(event.target.files[0]);
     }
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    if (buttonRef.current) {
+      buttonRef.current.disabled = true;
+      buttonRef.current.innerText = "wait..";
+    }
     const user_email = route_email || getEmailFromLocalStorage();
     const token = getTokenFromLocalStorage();
     if (!selectedFile || !user_email || !token) {
@@ -57,59 +67,56 @@ const Attachment = ({ route_email, setRenderProfileFlag }: AttachmentType) => {
     setRenderProfileFlag((prev: boolean) => !prev);
     if (buttonRef.current) {
       buttonRef.current.disabled = false;
-      buttonRef.current.innerText = "Save Changes";
+      buttonRef.current.innerText = "Saved";
     }
+    
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <CiCirclePlus className=" cursor-pointer text-3xl font-extrabold " />
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit Attachment</DialogTitle>
-          <DialogDescription>
-            Make changes to your Attachment here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Attachments
-            </Label>
-            <select
-              className=" w-full p-1 col-span-3  outline-none border-2   border-slate-100 rounded-lg bg-transparent"
-              name=""
-              id=""
-              onChange={(e) => setAttachment(e.target.value)}
-            >
-              <option value="" selected>
-                Select
-              </option>
-              <option value="offer-letter">Offer Letter</option>
-              <option value="resume">Resume</option>
-              <option value="cover-letter">Cover Letter</option>
-            </select>
-            {attachemnt !== "" && (
-              <div className=" col-span-4  ">
-                <Input
-                  onChange={handleFileChange}
-                  type="file"
-                  accept="*"
-                  className=" cursor-pointer "
-                />
+    <AlertDialog>
+      <AlertDialogTrigger>Open</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Upload Attachment</AlertDialogTitle>
+          <AlertDialogDescription>
+            <div className="grid gap-4 py-0">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Attachments
+                </Label>
+                <select
+                  className=" w-full p-1 col-span-3  outline-none border-2   border-slate-100 rounded-lg bg-transparent"
+                  name=""
+                  id=""
+                  onChange={(e) => setAttachment(e.target.value)}
+                >
+                  <option value="" selected>
+                    Select
+                  </option>
+                  <option value="offer-letter">Offer Letter</option>
+                  <option value="resume">Resume</option>
+                  <option value="cover-letter">Cover Letter</option>
+                </select>
+                {attachemnt !== "" && (
+                  <div className=" col-span-4  ">
+                    <Input
+                      onChange={handleFileChange}
+                      type="file"
+                      accept=".pdf"
+                      className=" cursor-pointer "
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-
-        <DialogFooter>
-          <Button ref={buttonRef} type="submit" onClick={handleSubmit}>
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction ref={buttonRef} onClick={handleSubmit}>
+            Save
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

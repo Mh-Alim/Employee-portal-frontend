@@ -19,7 +19,7 @@ export const profileDetailsApi = async (
   console.log("searched done or not: ", {
     user_email,
     requested_user_email,
-    searched,
+    is_searched: searched,
   });
   const options = {
     method: "POST",

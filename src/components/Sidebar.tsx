@@ -114,7 +114,11 @@ const Sidebar = () => {
             <p className=" flex items-center ">
               <FiLogOut />
               <span className="ml-2 cursor-pointer">
-                <AlertDialogBox  />
+                <AlertDialogBox
+                  text="Logout"
+                  description="You will log out from your account"
+                  isDel={false}
+                />
               </span>
             </p>
           </div>
@@ -148,6 +152,7 @@ const Li = ({ text, Icon, url, setShow, visibility, isAdmin }: LiPropType) => {
       }  mb-3 group text-white transition-all  rounded-lg  p-3 mt-10 ${
         visibility || isAdmin ? "block" : "hidden"
       } `}
+      onClick={() => setShow(false)}
     >
       <Link className=" flex items-center " to={url}>
         {Icon}

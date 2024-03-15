@@ -5,6 +5,7 @@ import { FaTwitter, FaUserTie } from "react-icons/fa6";
 import { IoCloudUploadSharp, IoLogoLinkedin } from "react-icons/io5";
 import {
   MdDateRange,
+  MdDelete,
   MdLocalPhone,
   MdOutlineLocalPostOffice,
 } from "react-icons/md";
@@ -18,6 +19,7 @@ import { getEmailFromLocalStorage, getTokenFromLocalStorage } from "@/utility";
 import { useAppSelector } from "@/app/hooks";
 import { ToastCallError } from "@/ReactToast";
 import { uploadAttachmentApi } from "@/api/UploadAttachment";
+import AlertDialogBox from "@/components/AlertDialogBox";
 
 const defaultImg =
   "https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/v1455022237/iehclnpgv6qezeblmbij.png";
@@ -93,6 +95,8 @@ const TopProfileSection = (
   };
 
   const { isDark } = useAppSelector((state) => state.toggle);
+
+  const handleDeleteEmployee = () => {};
   return (
     <section className=" bg-glassmorphism min-h-7  flex flex-col gap-1  2xl:gap-20 justify-between md:flex-col xl:flex-row   ">
       <div className=" flex flex-col gap-5 lg:flex-row p-5 ">
@@ -247,6 +251,19 @@ const TopProfileSection = (
                 setRenderProfileFlag={setRenderProfileFlag}
               />
             </button>
+          )}
+          {admin && (
+            <AlertDialogBox
+              text={
+                <button className=" ml-5 w-10 h-10 rounded-full bg-red-500 flex justify-center items-center  ">
+                  <MdDelete className=" text-white text-xl " />
+                </button>
+              }
+              description="This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers."
+              isDel={true}
+              id={id}
+            />
           )}
         </div>
       </div>

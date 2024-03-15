@@ -30,7 +30,7 @@ const About = () => {
               isDark ? "text-slate-400" : "text-slate-500"
             }  mt-4 `}
           >
-            Built this using React, Typescript and Redux{" "}
+            Made by Team Moneyless
           </p>
         </div>
         {/* // second */}
@@ -78,20 +78,58 @@ const About = () => {
             </svg>
           </p>
 
-          <p className=" rounded-b-xl w-1 h-full absolute -left-4 md:-left-10 top-14 bg-[linear-gradient(#0D1117,#8471d5)] "></p>
+          <p className="rounded-b-xl w-1 h-full absolute -left-4 md:-left-10 top-14 bg-[linear-gradient(#0D1117,#8471d5)]"></p>
           <div
             className={`${
               isDark ? "text-white" : "text-black"
-            } py-4 px-8 rounded-xl  w-full `}
+            } py-4 px-8 rounded-xl w-full`}
           >
-            <p className=" text-2xl sm:text-4xl font-work_sans font-semibold tracking-wider ">
+            <p className="text-xl sm:text-2xl font-work_sans font-semibold tracking-wider mb-4">
               Features
             </p>
-            <p className=" text-3xl sm:text-5xl ">
-              {" "}
-              <span className=" text-[#08924F]  ">Accelerate</span> the
-              interaction between employees by providing details of the
-              employees
+            <p className="text-2xl sm:text-2xl mb-4">
+              <span className="text-xl sm:text-2xl text-[#08924F] font-bold">
+                Efficient Data Management:
+              </span>
+              <br />
+              Seamlessly export CSV data of reportees, to get detailed
+              information in an instant.
+            </p>
+
+            <p className="text-xl sm:text-2xl mb-4">
+              <span className="text-xl sm:text-2xl text-[#08924F] font-bold">
+                Bulk Employee Addition:{" "}
+              </span>
+              <br />
+              Simplify the process of adding multiple employees simultaneously
+              by supporting JSON data format for quick and efficient data entry.
+            </p>
+            <p className="text-lg sm:text-2xl mb-4">
+              <span className="text-xl sm:text-2xl text-[#08924F] font-bold">
+                Advanced Proficiency Search:{" "}
+              </span>
+              <br />
+              Empower users with a robust search functionality capable of
+              handling a vast array of proficiencies, facilitating quick and
+              accurate retrieval of relevant employee data.
+            </p>
+            <p className="text-lg sm:text-2xl mb-4">
+              <span className="text-xl sm:text-2xl text-[#08924F] font-bold">
+                Customizable Theme Modes:
+              </span>
+              <br />
+              Enhance user experience with both Dark Mode and Light Mode
+              options, allowing users to personalize their interface based on
+              their preferences and environmental conditions.
+            </p>
+            <p className="text-lg sm:text-2xl mb-4">
+              <span className="text-xl sm:text-2xl text-[#08924F] font-bold">
+                Innovative and responsive UI design:{" "}
+              </span>
+              <br />
+              Innovative and responsive UI design is meticulously crafted to
+              provide users with an engaging and seamless experience across
+              various devices and screen sizes.
             </p>
           </div>
         </div>
@@ -134,24 +172,22 @@ const TreeCard = () => {
         <p className=" text-4xl font-semibold tracking-wider ">
           <span className=" text-[#08924F]  ">Organization</span> Tree View
         </p>
-        <div className="  mt-10 h-96 bg-glassmorphism flex justify-between flex-col sm:flex-row lg:w-3/4``  ">
-          <div className="   rounded-lg p-5 h-1/2  sm:w-1/2 sm:h-full sm:flex sm:flex-col sm:justify-between  ">
-            <p className=" text-md text-slate-400 text-xl ">
-              {" "}
-              <span className={` ${isDark ? "text-white" : "text-black"}`}>Organizational Tree View is </span>
-              basically we are showing the organization in the form of tree
-            </p>
-            <p className=" text-xl cursor-pointer  group  w-fit py-2 mt-5 ">
-              {" "}
-              Go to Tree View <br />{" "}
-              <span className=" transition-all duration-500 w-0 h-[0.2rem]  group-hover:w-full bg-[linear-gradient(#0D1117,#8471d5)] "></span>{" "}
+        <div className="mt-10 h-96 bg-glassmorphism flex justify-between flex-col sm:flex-row lg:w-3/4">
+          <div className="rounded-lg p-5 h-1/2 sm:w-1/2 sm:h-full sm:flex sm:flex-col sm:justify-between">
+            <p className="text-md text-slate-400 text-xl">
+              <span className={`${isDark ? "text-white" : "text-black"}`}>
+                The tree layout{" "}
+              </span>
+              provides a clear and concise representation of the employee
+              hierarchy, enabling users to navigate through the organizational
+              structure with ease and efficiency.
             </p>
           </div>
-          <div className=" w-full sm:w-1/2 h-1/2 sm:h-full ">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full relative">
             <img
-              src="https://github.githubassets.com/assets/hero-desktop-a38b0fd77b6c.webp"
+              src="https://static.vecteezy.com/system/resources/previews/004/977/733/original/diagrams-neon-light-icons-set-network-tree-function-graph-flowchart-planning-process-flow-data-visualization-symbolic-representation-of-info-glowing-signs-isolated-illustrations-vector.jpg"
               alt=""
-              className=" pt-10 rounded-lg pl-5 w-full h-full object-cover  object-center "
+              className="absolute inset-0 w-full h-full object-cover object-center rounded-lg"
             />
           </div>
         </div>

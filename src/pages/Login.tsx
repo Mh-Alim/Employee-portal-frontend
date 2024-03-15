@@ -96,10 +96,12 @@ const Login = () => {
           </div>
         </form>
         <p
-          className={` ${isDark ? "text-white" : "text-black"} cursor-pointer `}
+          className={` ${
+            isDark ? "text-white" : "text-black"
+          } relative z-30 cursor-pointer `}
           onClick={() => navigate("/forget/email")}
         >
-          Forget Password
+          Forgot Password
         </p>
       </div>
     </div>

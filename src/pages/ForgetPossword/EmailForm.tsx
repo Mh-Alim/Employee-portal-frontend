@@ -39,7 +39,7 @@ const EmailForm = () => {
     <div className="min-h-[90vh] p-10 sm:p-5 flex justify-center items-center   bg-circule-after bg-circule-before     ">
       {/*  */}
       <div className=" gap-7 p-5 sm:p-5  flex flex-col  justify-center items-center rounded-lg min-h-[80vh] w-[90vw] ">
-        <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl ">
+        <h1 className="  text-white  text-center uppercase tracking-wide font-medium text-3xl relative z-30 ">
           Enter Your Email
         </h1>
         <form
@@ -72,7 +72,7 @@ const EmailForm = () => {
           <p
             className={`text-slate-400 tracking-wider ${
               !showMessage ? "hidden" : "block"
-            } `}
+            } relative z-30 `}
           >
             Check Mail for otp
           </p>

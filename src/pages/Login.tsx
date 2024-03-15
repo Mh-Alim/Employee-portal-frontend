@@ -46,6 +46,7 @@ const Login = () => {
     } catch (err) {
       if (buttonRef.current) buttonRef.current.disabled = false;
       console.log("err: ", err);
+      ToastCallError("Some error occured");
     }
   };
 

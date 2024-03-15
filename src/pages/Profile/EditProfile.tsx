@@ -73,6 +73,8 @@ const EditModel = ({
     profileData.linkedinUrl || ""
   );
 
+  const [pod, setPod] = useState<string>(profileData.pod || "");
+
   useEffect(() => {
     setManagerEmail(manager);
   }, [manager]);
@@ -87,6 +89,8 @@ const EditModel = ({
     setInstagramUrl(profileData.instaUrl || "");
     setTwitterUrl(profileData.twitterUrl || "");
     setLinkedinUrl(profileData.linkedinUrl || "");
+    setPod(profileData.pod || "");
+
     profileData.skills &&
       profileData.skills.length > 0 &&
       setSkills(profileData.skills);
@@ -124,6 +128,7 @@ const EditModel = ({
       interests,
       user_email,
       requested_user_email: getEmailFromLocalStorage() || "",
+      pod,
     };
     await EditInfoApi(data);
     setRenderProfileFlag((prev: boolean) => !prev);
@@ -179,6 +184,16 @@ const EditModel = ({
             name="Designation"
             value={designation}
             setState={setDesignation}
+          />
+        )}
+
+        {admin && (
+          <CustomInput
+            type="text"
+            placeholder="Pod"
+            name="pod"
+            value={pod}
+            setState={setPod}
           />
         )}
 
